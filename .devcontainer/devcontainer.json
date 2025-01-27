@@ -5,5 +5,13 @@
 			"package": "aasvg",
 			"version": "^0.4.2"
 		}
-	}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"emeraldwalk.RunOnSave"
+			]
+		}
+	},
+	"postStartCommand": "python3 -m http.server 8000"
 }
