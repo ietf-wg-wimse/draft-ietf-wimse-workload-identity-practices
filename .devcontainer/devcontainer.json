@@ -1,0 +1,9 @@
+{
+	"image": "mcr.microsoft.com/devcontainers/universal:2",
+	"features": {
+		"ghcr.io/devcontainers-extra/features/npm-package:1": {
+			"package": "aasvg",
+			"version": "^0.4.2"
+		}
+	}
+}
