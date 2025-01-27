@@ -63,6 +63,7 @@ normative:
   RFC8414:
   RFC7519:
   RFC7517:
+  RFC8707:
   RFC8693:
 informative:
   OIDC:
@@ -223,6 +224,12 @@ Platform issuers SHOULD invalidate those when the workload stops, pauses or ceas
 ## Proof of possession
 
 Credentials SHOULD be bound to workloads and proof of possession SHOULD be performed when these credentials are used. This mitigates token theft. This proof of possession applies to the platform credential and the access token of the external authorization domains.
+
+## Audience
+
+For issued credentials in the form of JWTs, they MUST be audienced using the `aud` claim. Each JWT SHOULD only carry a single audience. We RECOMMEND using URIs to specify audiences. See section 3 of {{RFC8707}} for more details and security implications.
+
+Some workload platforms provide credentials for interacting with their own APIs (e.g., Kubernetes). These credentials MUST NOT be authorized for use beyond the platform API. In the example of Kubernetes: A token used for anything else than the Kubernetes API itself MUST NOT carry the Kubernetes server in the `aud` claim.
 
 # IANA Considerations {#IANA}
 
