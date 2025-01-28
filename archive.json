@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-26T00:54:21.739293+00:00",
+  "timestamp": "2025-01-28T00:52:53.509064+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -1010,6 +1010,53 @@
           "createdAt": "2024-11-27T10:17:38Z",
           "updatedAt": "2024-11-27T10:17:38Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOL34A-M6JEVj_",
+      "title": "Add security considerations for audience",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/15",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Adding security considerations for audience:\n\n- Audience required\n- Only single audience recommended\n- Should not be authorized to access platform API (highlight on Kubernetes)\n\nResolves #13",
+      "createdAt": "2025-01-27T11:00:50Z",
+      "updatedAt": "2025-01-27T14:43:40Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "main",
+      "baseRefOid": "ef1f6810807e781ce534ee39aae98601fc2e2706",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "headRefName": "arndt/security-considerations-audience",
+      "headRefOid": "6d1d1d0984ddea012f2bf5b3c0c056e3b063394b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M6ZhRH-",
+          "commit": {
+            "abbreviatedOid": "6d1d1d0"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-27T14:43:40Z",
+          "updatedAt": "2025-01-27T14:43:40Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "```suggestion\r\nSome workload platforms provide credentials for interacting with their own APIs (e.g., Kubernetes). These credentials MUST NOT be used beyond the platform API. In the example of Kubernetes: A token used for anything else than the Kubernetes API itself MUST NOT carry the Kubernetes server in the `aud` claim.\r\n```\r\n\r\nMaybe just writing used instead of \"be authorized for use\" is more fitting.",
+              "createdAt": "2025-01-27T14:43:40Z",
+              "updatedAt": "2025-01-27T14:43:40Z"
+            }
+          ]
         }
       ]
     }
