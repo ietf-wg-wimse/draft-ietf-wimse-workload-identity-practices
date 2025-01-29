@@ -160,19 +160,19 @@ Accessing different protected resources may require steps 2) to 4) again with di
 
 ## Credential issuance
 
-Credentials can be provisioned to the workload through different mechanisms which present different complexity and security risks. The following section highlights the pros and cons of the most widespread solutions.
+Credentials can be provisioned to the workload through different mechanisms which present different complexity and security risks. The following section highlights the pros and cons of most widespread solutions.
 
 ### Enviromental variable
 
-Injecting the credentials into the enviromental variables allows for a simple and fast deployment. Application can directly access them without the need for additional complexity. This flexibility come wiht security drawbacks.
+Injecting the credentials into the enviromental variables allows for simple and fast deployments. Applications can directly access them through system-level mechanism, e.g., through the env command in linux. This flexibility, however, comes wiht security drawbacks.
 
 * 1) enviromental variables are static in nature and more dynamic solutions require to introduces higher complexitiy.
   
-* 2) performing access control to enviromental variable can be difficult and in some case not feasible.
+* 2) performing access control to enviromental variable is not trivial and it might also not reach the same security results.
   
 * 3) enviromental information are often used for debugging purpose and can be printed at start-up or inside logs.
 
-Leveraging enviromental variable to provide credentials should be favored when the provided secrets have a short-term validity, i.e., an initial secret during the set-up of the application, or when simplicity is required, e.g., during the development of PoC.
+Leveraging enviromental variable to provide credentials should be favored when the provided secrets have a short-term validity, i.e., an initial secret during the set-up of the application, and/or when simplicity is required, e.g., during the development of PoC.
 
 ### Volumes
 
@@ -180,20 +180,21 @@ Volumes, e.g., projected volumes in Kubernetes, allow to inject credential to th
 
 * 1) access control to the mounted volume needs to be correctly configure to limit access from unwanted applications. Solution such as DAC (uid and guid) or MAC (seLinux) are avaible in most Operating Systems.
 
-* 2) isolating the mounted volumes ,e.g., through namespaces, is required to avoid that a compromised application is able to escape to the main OS and retrieve private information of other processes.
+* 2) isolating the mounted volumes ,e.g., through namespaces, is required to avoid that a compromised application is able to escape to the main OS and ,for example, retrieve private information of other processes.
 
 * 3) credentials rotation requires a monitoring solution to detect near-to-expiration secrets and subtitute them. This is usually embedded into orchestrators such as Kubernetes, but requires proper configuration.
 
-Leveraging volumes to provision secrets offers all the required security tools, at the cost of a more complex configuration is required. This approach should be favored when multiple process might require to add the same set of information.
+Leveraging volumes to provision secrets offers all the required security tools, at the cost of a more complex configuration. This approach should be favored when multiple process might require to add the same set of information.
 
 ### Network inferaces
 
-Network interfaces rely on the network stack to communicate between the Host OS and the container application. Some implementation of this approach are UNIX Domain Socket (spiffe), loopback interface, Magic (Link-Local) Address (AWS Metadata service). This solutions offer on-demand identity rotation and ensure security thanks to network isolation, but presents addition configuration challenges.
+Network interfaces rely on the network stack to communicate between the Host and the container application. Some examples of this interface are UNIX Domain Socket (spiffe), loopback interface, Magic (Link-Local) Address (AWS Metadata service). These solutions offer on-demand identity rotation and ensure security thanks to network isolation, but introduce new complexity.
 
-* 1) the appliaction is required to support different network stack in orded to allow portability of the container.
+* 1) the appliaction is required to support different network stack in orded to allow portability among different solutions.
+
 * 2) additional latency may be introduced due to the request and additional operational overhead.
 
-Network inferfaces offer additional security and functionallity for dynamic credentials at the cost of the application complexity. To avoid this overhead, they should be used in conjuction with side-cars application and centrally manages identity solution.
+Network inferfaces increase flexibility with respect to on-demand credentials at the cost of application complexity. To avoid this overhead, they should be used in conjuction with side-cars application and centrally manages identity solution.
  
 ## Credential format
 
