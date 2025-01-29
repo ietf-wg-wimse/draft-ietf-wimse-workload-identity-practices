@@ -184,7 +184,7 @@ Volumes, e.g., projected volumes in Kubernetes, allow to inject credential to th
 
 * 3) credentials rotation requires a monitoring solution to detect near-to-expiration secrets and subtitute them. This is usually embedded into orchestrators such as Kubernetes, but requires proper configuration.
 
-Leveraging volumes to provision secrets offers all the required security tools, at the cost of a more complex configuration. This approach should be favored when multiple process might require to add the same set of information.
+Leveraging volumes to provision secrets offers all the required security tools, at the cost of a more complex configuration. This approach should be favored when multiple process might require to access the same set of credentials.
 
 ### Network inferaces
 
