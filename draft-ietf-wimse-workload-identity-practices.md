@@ -170,7 +170,7 @@ Injecting the credentials into the environmental variables allows for simple and
   
 * 2) performing access control to environmental variable is not trivial and it might also not reach the same security results.
   
-* 3) enviromental information are often used for debugging purpose and can be printed at start-up or inside logs.
+* 3) environmental information are often used for debugging purpose and can be printed at start-up or inside logs.
 
 Leveraging environmental variables to provide credentials should be favoured when the provided secrets have a short-term validity, i.e., an initial secret during the set-up of the application, and/or when simplicity is required, e.g., during the development of PoC
 
