@@ -164,7 +164,7 @@ Credentials can be provisioned to the workload through different mechanisms whic
 
 ### Environment variable
 
-Injecting the credentials into the enviromental variables allows for simple and fast deployments. Applications can directly access them through system-level mechanism, e.g., through the env command in linux. This flexibility, however, comes wiht security drawbacks.
+Injecting the credentials into the environmental variables allows for simple and fast deployments. Applications can directly access them through system-level mechanism, e.g., through the env command in linux. This flexibility, however, comes with security drawbacks.
 
 * 1) enviromental variables are static in nature and more dynamic solutions require to introduces higher complexitiy.
   
