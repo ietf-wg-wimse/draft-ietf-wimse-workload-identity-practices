@@ -168,7 +168,7 @@ Injecting the credentials into the environmental variables allows for simple and
 
 * 1) enviromental variables are static in nature and more dynamic solutions require to introduces higher complexitiy.
   
-* 2) performing access control to enviromental variable is not trivial and it might also not reach the same security results.
+* 2) performing access control to environmental variable is not trivial and it might also not reach the same security results.
   
 * 3) enviromental information are often used for debugging purpose and can be printed at start-up or inside logs.
 
