@@ -178,7 +178,7 @@ Leveraging environmental variables to provide credentials should be favoured whe
 
 Volumes, e.g., projected volumes in Kubernetes, allow to inject credential to the container through the file-system. This solution offers higher degree of flexibility thanks to the possibility of dynamically rotate the secrets and perform access control on the injected file. This additional security comes with additional complexity.
 
-* 1) access control to the mounted volume needs to be correctly configure to limit access from unwanted applications. Solution such as DAC (uid and guid) or MAC (seLinux) are avaible in most Operating Systems.
+* 1) access control to the mounted volume should be configure to limit access from unauthorized applications. E.g., on Linux solutions such as DAC (uid and guid) or MAC (SELinux,AppArmor) are available.
 
 * 2) isolating the mounted volumes ,e.g., through namespaces, is required to avoid that a compromised application is able to escape to the main OS and ,for example, retrieve private information of other processes.
 
