@@ -162,7 +162,7 @@ Accessing different protected resources may require steps 2) to 4) again with di
 
 Credentials can be provisioned to the workload through different mechanisms which present different complexity and security risks. The following section highlights the pros and cons of most widespread solutions.
 
-### Enviromental variable
+### Environment variable
 
 Injecting the credentials into the enviromental variables allows for simple and fast deployments. Applications can directly access them through system-level mechanism, e.g., through the env command in linux. This flexibility, however, comes wiht security drawbacks.
 
