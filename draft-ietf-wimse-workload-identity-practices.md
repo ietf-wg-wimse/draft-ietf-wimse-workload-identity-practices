@@ -186,7 +186,7 @@ Volumes, e.g., projected volumes in Kubernetes, allow to inject credential to th
 
 Leveraging volumes to provision secrets offers all the required security tools, at the cost of a more complex configuration. This approach should be favored when multiple process might require to access the same set of credentials.
 
-### Network inferaces
+### Network interfaces
 
 Network interfaces rely on the network stack to communicate between the Host and the container application. Some examples of this interface are UNIX Domain Socket (spiffe), loopback interface, Magic (Link-Local) Address (AWS Metadata service). These solutions offer on-demand identity rotation and ensure security thanks to network isolation, but introduce new complexity.
 
