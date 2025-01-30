@@ -158,6 +158,44 @@ The figure outlines the following steps which are applicable in any pattern.
 
 Accessing different protected resources may require steps 2) to 4) again with different scope parameters. Accessing a protected resource in an entirely different authorization domain often requires the entire flow to be followed again, to retrieve a new platform-issued credential with an audience for the external authorization server. This, however, differs based on the platform and implementation.
 
+## Credential issuance
+
+Credentials can be provisioned to the workload through different mechanisms which present different complexity and security risks. The following section highlights the pros and cons of most widespread solutions.
+
+### Environment variable
+
+Injecting the credentials into the environmental variables allows for simple and fast deployments. Applications can directly access them through system-level mechanism, e.g., through the env command in linux. This flexibility, however, comes with security drawbacks.
+
+* 1) environmental variables are static in nature and more dynamic solutions require to introduces higher complexity.
+  
+* 2) performing access control to environmental variable is not trivial and it might also not reach the same security results.
+  
+* 3) environmental information are often used for debugging purpose and can be printed at start-up or inside logs.
+
+Leveraging environmental variables to provide credentials should be favoured when the provided secrets have a short-term validity, i.e., an initial secret during the set-up of the application, and/or when simplicity is required, e.g., during the development of PoC
+
+### Volumes
+
+Volumes, e.g., projected volumes in Kubernetes, allow to inject credential to the container through the file-system. This solution offers higher degree of flexibility thanks to the possibility of dynamically rotate the secrets and perform access control on the injected file. This additional security comes with additional complexity.
+
+* 1) access control to the mounted volume should be configure to limit access from unauthorized applications. E.g., on Linux solutions such as DAC (uid and guid) or MAC (SELinux,AppArmor) are available.
+
+* 2) isolating the mounted volumes ,e.g., through namespaces, is required to avoid that a compromised application is able to escape to the main OS and ,for example, retrieve private information of other processes.
+
+* 3) credentials rotation requires a monitoring solution to detect near-to-expiration secrets and subtitute them. This is usually embedded into orchestrators such as Kubernetes, but requires proper configuration.
+
+Leveraging volumes to provision secrets offers all the required security tools, at the cost of a more complex configuration. This approach should be favored when multiple process might require to access the same set of credentials.
+
+### Network interfaces
+
+Network interfaces rely on the network stack to communicate between the Host and the container application. Some examples of this interface are UNIX Domain Socket (spiffe), loopback interface, Magic (Link-Local) Address (AWS Metadata service). These solutions offer on-demand identity rotation and ensure security thanks to network isolation, but introduce new complexity.
+
+* 1) the appliaction is required to support different network stack in orded to allow portability among different solutions.
+
+* 2) additional latency may be introduced due to the request and additional operational overhead.
+
+Network inferfaces increase flexibility with respect to on-demand credentials at the cost of application complexity. To avoid this overhead, they should be used in conjuction with side-cars application and centrally manages identity solution.
+ 
 ## Credential format
 
 For the scope of this document we focus on JSON Web Token credential formats. Other formats such as X.509 certificates are possible but not as widely seen as JSON Web Tokens.
