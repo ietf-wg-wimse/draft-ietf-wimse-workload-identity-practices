@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-28T00:52:53.509064+00:00",
+  "timestamp": "2025-01-30T00:51:54.568754+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -1059,6 +1059,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDOL34A-M6JX2LN",
+      "title": "Initial secret provision",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/16",
+      "state": "OPEN",
+      "author": "edoardogiordano",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-01-29T14:40:56Z",
+      "updatedAt": "2025-01-29T14:40:56Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "main",
+      "baseRefOid": "ef1f6810807e781ce534ee39aae98601fc2e2706",
+      "headRepository": "edoardogiordano/draft-ietf-wimse-workload-identity-bcp",
+      "headRefName": "initial-secret-provision",
+      "headRefOid": "9a86e63e34802b7c91cf6ca02c8b1dbbaf35e1a9",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
