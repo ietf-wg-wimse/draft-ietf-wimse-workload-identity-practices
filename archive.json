@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-30T00:51:54.568754+00:00",
+  "timestamp": "2025-02-02T00:55:51.206951+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -1072,19 +1072,508 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-01-29T14:40:56Z",
-      "updatedAt": "2025-01-29T14:40:56Z",
+      "updatedAt": "2025-01-30T16:14:43Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "ef1f6810807e781ce534ee39aae98601fc2e2706",
       "headRepository": "edoardogiordano/draft-ietf-wimse-workload-identity-bcp",
       "headRefName": "initial-secret-provision",
-      "headRefOid": "9a86e63e34802b7c91cf6ca02c8b1dbbaf35e1a9",
+      "headRefOid": "939062083fdca25053f7373db67a5a1c1aad47e2",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "comments": [
+        {
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "body": "```log\r\n*** Run 'make fix-lint' to automatically fix some errors\r\ndraft-ietf-wimse-workload-identity-practices.md contains trailing whitespace\r\nmake[1]: *** [lib/main.mk:247: lint-whitespace] Error 1\r\nmake[1]: Target 'lint' not remade because of errors.\r\nrm draft-ietf-wimse-workload-identity-practices.xml\r\nmake: *** [lib/main.mk:16: all] Error 2\r\n```\r\n\r\nThe github workflow fails ``make fix-lint``should fix the issue.",
+          "createdAt": "2025-01-30T07:46:45Z",
+          "updatedAt": "2025-01-30T07:46:45Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M6Z94TL",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T07:36:39Z",
+          "updatedAt": "2025-01-30T07:36:39Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\r\n### Environment variable\r\n```",
+              "createdAt": "2025-01-30T07:36:39Z",
+              "updatedAt": "2025-01-30T07:36:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z94nH",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T07:37:33Z",
+          "updatedAt": "2025-01-30T07:37:33Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\r\nInjecting the credentials into the environmental variables allows for simple and fast deployments. Applications can directly access them through system-level mechanism, e.g., through the env command in linux. This flexibility, however, comes with security drawbacks.\r\n```",
+              "createdAt": "2025-01-30T07:37:33Z",
+              "updatedAt": "2025-01-30T07:37:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z940A",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T07:38:06Z",
+          "updatedAt": "2025-01-30T07:38:07Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "environmental\r\n```suggestion\r\n* 1) environmental variables are static in nature and more dynamic solutions require to introduces higher complexity.\r\n```",
+              "createdAt": "2025-01-30T07:38:06Z",
+              "updatedAt": "2025-01-30T07:38:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z949A",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T07:38:31Z",
+          "updatedAt": "2025-01-30T07:38:32Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\n* 2) performing access control to environmental variable is not trivial and it might also not reach the same security results.\r\n```",
+              "createdAt": "2025-01-30T07:38:31Z",
+              "updatedAt": "2025-01-30T07:38:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z95Ce",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T07:38:46Z",
+          "updatedAt": "2025-01-30T07:38:47Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "```suggestion\r\n* 3) environmental information are often used for debugging purpose and can be printed at start-up or inside logs.\r\n```",
+              "createdAt": "2025-01-30T07:38:46Z",
+              "updatedAt": "2025-01-30T07:38:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z95Wf",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T07:39:41Z",
+          "updatedAt": "2025-01-30T07:39:41Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\nLeveraging environmental variables to provide credentials should be favoured when the provided secrets have a short-term validity, i.e., an initial secret during the set-up of the application, and/or when simplicity is required, e.g., during the development of PoC\r\n```",
+              "createdAt": "2025-01-30T07:39:41Z",
+              "updatedAt": "2025-01-30T08:17:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z95uE",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T07:40:44Z",
+          "updatedAt": "2025-01-30T07:40:44Z",
+          "comments": [
+            {
+              "originalPosition": 24,
+              "body": "```suggestion\r\n* 1) access control to the mounted volume should be configure to limit access from unauthorized applications. E.g., on Linux solutions such as DAC (uid and guid) or MAC (SELinux,AppArmor) are available.\r\n```",
+              "createdAt": "2025-01-30T07:40:44Z",
+              "updatedAt": "2025-01-30T08:24:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z95_p",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T07:41:31Z",
+          "updatedAt": "2025-01-30T07:41:31Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "```suggestion\r\n* 3) credentials rotation requires a solution to detect near-to-expiration secrets and substitute them. Solutions should enable configuration such that the new secret is renewed _before_ the old secret is invalidated. E.g., the solution can choose to update the secret 1h before the old secret is invalidated. This enables applications time to update their usage of the old secret to the new without downtime.\r\n```",
+              "createdAt": "2025-01-30T07:41:31Z",
+              "updatedAt": "2025-01-30T08:34:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z96MV",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T07:42:04Z",
+          "updatedAt": "2025-01-30T07:42:04Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "```suggestion\r\n### Network interfaces\r\n```",
+              "createdAt": "2025-01-30T07:42:04Z",
+              "updatedAt": "2025-01-30T07:42:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z96U6",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T07:42:27Z",
+          "updatedAt": "2025-01-30T07:42:27Z",
+          "comments": [
+            {
+              "originalPosition": 36,
+              "body": "```suggestion\r\n* 1) the application is required to support various network configurations in order to allow portability among different solutions.\r\n```",
+              "createdAt": "2025-01-30T07:42:27Z",
+              "updatedAt": "2025-01-30T08:47:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z-KBi",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T08:21:12Z",
+          "updatedAt": "2025-01-30T08:21:12Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "```suggestion\r\nVolumes, e.g., projected volumes in Kubernetes, allow to inject credentials into a container through the file-system. Such solutions enable secret rotation, and access control on the injected secret with standard operating system measure for files.\r\n```",
+              "createdAt": "2025-01-30T08:21:12Z",
+              "updatedAt": "2025-01-30T08:21:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z-O_g",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T08:29:24Z",
+          "updatedAt": "2025-01-30T08:29:24Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "```suggestion\r\n* 2) isolating the mounted volumes from critical host OS paths and processes is required. E.g, on Linux this is achieved by utilising namespaces.\r\n```",
+              "createdAt": "2025-01-30T08:29:24Z",
+              "updatedAt": "2025-01-30T08:29:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z-WAD",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T08:43:35Z",
+          "updatedAt": "2025-01-30T08:43:36Z",
+          "comments": [
+            {
+              "originalPosition": 30,
+              "body": "```suggestion\r\nLeveraging volumes to provision secrets offers all the required security tools, at the cost of a more complex configuration.\r\n```",
+              "createdAt": "2025-01-30T08:43:35Z",
+              "updatedAt": "2025-01-30T08:43:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z-Xb7",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "b3n3d17",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T08:46:29Z",
+          "updatedAt": "2025-01-30T08:46:29Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "```suggestion\r\nNetwork interfaces rely on the network stack to communicate between the Host and the containerised application. Some implementations rely on UNIX Domain Sockets (spiffe), loopback interfaces or Magic (Link-Local) Addresses (AWS Metadata service) to provision credentials. These solutions offer on-demand credential rotation and rely on network isolation for their security.\r\n```",
+              "createdAt": "2025-01-30T08:46:29Z",
+              "updatedAt": "2025-01-30T08:46:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z_gTV",
+          "commit": {
+            "abbreviatedOid": "3dd3ed8"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T10:53:09Z",
+          "updatedAt": "2025-01-30T11:35:57Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "It's not just for debugging purposes. I would maybe phrase it more broader like\r\n\"environmental variables have a wide set of use cases and are observed by many components. They are often captured for monitoring, observability, debugging and logging purposes and send to components outside of the workload.\"",
+              "createdAt": "2025-01-30T10:53:09Z",
+              "updatedAt": "2025-01-30T11:35:57Z"
+            },
+            {
+              "originalPosition": 18,
+              "body": "I'm not sure I would favor it. I would more say that it's the easiest for the developer to use but the least secure. I would only \"favor\" it if the other options are not possible. Aka \"last resort\".",
+              "createdAt": "2025-01-30T10:54:24Z",
+              "updatedAt": "2025-01-30T11:36:45Z"
+            },
+            {
+              "originalPosition": 20,
+              "body": "The term `volume` is quite specific to Kubernetes. I see this more as a `file` delivery. How the file is created (e.g. via a mount, other process or kernel) is up to the implementation IMO.",
+              "createdAt": "2025-01-30T10:56:26Z",
+              "updatedAt": "2025-01-30T11:35:57Z"
+            },
+            {
+              "originalPosition": 24,
+              "body": "Isn't it the access control of the actual file that matters?",
+              "createdAt": "2025-01-30T10:57:37Z",
+              "updatedAt": "2025-01-30T11:35:57Z"
+            },
+            {
+              "originalPosition": 26,
+              "body": "Hm .. also some sort of access control in my opinion. But I see that particularly in container environments this is critical. Maybe start with \"In container environments ..\" ?",
+              "createdAt": "2025-01-30T10:59:43Z",
+              "updatedAt": "2025-01-30T11:35:57Z"
+            },
+            {
+              "originalPosition": 28,
+              "body": "I see this a problem outside of provisioning. All of the options require it to keep the lifecycle small without impacting the workload.",
+              "createdAt": "2025-01-30T11:00:42Z",
+              "updatedAt": "2025-01-30T11:35:57Z"
+            },
+            {
+              "originalPosition": 30,
+              "body": "> when multiple process might require to access the same set of credentials.\r\n\r\nI don't see this as a factor here, this can be achieved with all options (env variables, network, etc.) To me the benefits here are:\r\n- no runtime coupling/asynchronous provisioning. A side-process can start, provision in file and terminate. Upon expiry it would start again (some scheduling) and refresh. This is not easily achievable with the other options which either require a peer to answer requests or are limited due to the isolation of environment variables.\r\n- common support to read files.\r\n\r\nI believe it's also worth mentioning that the pattern has established to have an environmental variable containing a file path where the actual credential is stored.",
+              "createdAt": "2025-01-30T11:06:47Z",
+              "updatedAt": "2025-01-30T11:35:57Z"
+            },
+            {
+              "originalPosition": 32,
+              "body": "Not all the options below require a network stack (UDS). Either we split those into 2 separate sections (which will be difficult as SPIFFE can be TCP too) or use a more broader term.\r\n\r\nMaybe \"Local APIs\" or something along those lines?",
+              "createdAt": "2025-01-30T11:12:36Z",
+              "updatedAt": "2025-01-30T11:35:57Z"
+            },
+            {
+              "originalPosition": 34,
+              "body": "> These solutions offer on-demand identity rotation.\r\n\r\nI see multiple flavors at the `on-demand` part. Either these APIs \"push\" new credentials actively to the workload (require some notification mechanism or open channel) or the workload itself needs to have logic to \"re-request\".\r\n\r\nSome ideas from the top of mind:\r\n> Local APIs offer the capability to re-provision updated credentials. Communication between workload and API allows the workload to re-request a new credential (or a different one). Based on the technology it is even possible to pro-actively distribute new credentials to workloads (e.g. upon expiry, during a revocation event or a change in permissions.\r\n\r\n",
+              "createdAt": "2025-01-30T11:21:32Z",
+              "updatedAt": "2025-01-30T11:35:57Z"
+            },
+            {
+              "originalPosition": 36,
+              "body": "Hm. If I understand you correctly you want to highlight the decreased flexibility of changing the implementation?\r\n\r\nHow about something like `The benefit of a more structured delivery comes with less portability between different APIs.`?",
+              "createdAt": "2025-01-30T11:25:36Z",
+              "updatedAt": "2025-01-30T11:35:57Z"
+            },
+            {
+              "originalPosition": 40,
+              "body": "I'm not sure I would agree that sidecars reduce complexity overhead. If not, I believe they increase it.\r\n\r\nMy bottom line to would be:\r\n> Local APIs offer the highest level of access control to protect the credential from un-legitimate access. They particularly thrive in environments of short-lived, narrowly scoped credentials but come with operational overhead if the workload platform does not offer it already. \r\n",
+              "createdAt": "2025-01-30T11:35:17Z",
+              "updatedAt": "2025-01-30T11:35:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6Z_57M",
+          "commit": {
+            "abbreviatedOid": "3dd3ed8"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T11:41:33Z",
+          "updatedAt": "2025-01-30T11:41:34Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "* 3) credentials are only issued when requested reducing unnecessary credential issuance.\r\n* 4) allows for narrowly-scoped & extremely short-lived credentials. For instance one-time credentials or narrowly scoped ones such as JSON Web Tokens with specific audiences.",
+              "createdAt": "2025-01-30T11:41:33Z",
+              "updatedAt": "2025-01-30T11:41:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6aCLmK",
+          "commit": {
+            "abbreviatedOid": "9390620"
+          },
+          "author": "edoardogiordano",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T15:35:21Z",
+          "updatedAt": "2025-01-30T15:35:21Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "Hi, my idea was more to refer to also docker approach where you can mount volumes. Do you think that files describes well this approach? I'm concerned that with files, people would identify normal file saved inside the application image",
+              "createdAt": "2025-01-30T15:35:21Z",
+              "updatedAt": "2025-01-30T15:35:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6aCRZB",
+          "commit": {
+            "abbreviatedOid": "9390620"
+          },
+          "author": "edoardogiordano",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T15:43:23Z",
+          "updatedAt": "2025-01-30T15:43:23Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "I highlighted this problem  here, because for environmental variables the update is quite painful and usually quite not used, while some options of the network section, e.g., spiffe, the workload is responsible to request the updated credentials. Do you think we should just remove it or put as conclusion/introduction for all of them?",
+              "createdAt": "2025-01-30T15:43:23Z",
+              "updatedAt": "2025-01-30T15:43:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6aCaga",
+          "commit": {
+            "abbreviatedOid": "9390620"
+          },
+          "author": "edoardogiordano",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T15:56:44Z",
+          "updatedAt": "2025-01-30T15:56:45Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "I agree that the statement could be confusing. My intention was to state that side-car can lift the requirements on the application to support different APIs, and after retrieving the credentials they can propagate them to the application through more standardize solution.\r\n\r\nBut I also support your conclusion, not sure I would repeat them also in the pointed list, I was trying to point out more the limitations there. WDYT?",
+              "createdAt": "2025-01-30T15:56:45Z",
+              "updatedAt": "2025-01-30T15:56:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6aCetx",
+          "commit": {
+            "abbreviatedOid": "9390620"
+          },
+          "author": "edoardogiordano",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T16:02:56Z",
+          "updatedAt": "2025-01-30T16:02:56Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "In my view most of this limitations and solution are applied in container environments, do you think we should remark it anyway?",
+              "createdAt": "2025-01-30T16:02:56Z",
+              "updatedAt": "2025-01-30T16:02:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6aCmUi",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "edoardogiordano",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T16:14:43Z",
+          "updatedAt": "2025-01-30T16:14:43Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "I tried to rephrase it, I'll push it with the next commit",
+              "createdAt": "2025-01-30T16:14:43Z",
+              "updatedAt": "2025-01-30T16:14:43Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
