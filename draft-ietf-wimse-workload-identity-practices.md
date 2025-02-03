@@ -176,7 +176,7 @@ Leveraging environmental variables to provide credentials presents many security
 
 ### Volumes
 
-Volumes, e.g., projected volumes in Kubernetes, allow to inject credential to the container through the file-system. This solution offers higher degree of flexibility thanks to the possibility of dynamically rotate the secrets and perform access control on the injected file. This additional security comes with additional complexity.
+Volumes, e.g., projected volumes in Kubernetes, allow to inject credentials into a container through the file-system. Such solutions enable secret rotation, and access control on the injected secret with standard operating system measure for files.
 
 * 1) access control to the mounted volume and/or file should be configure to limit access from unauthorized applications. E.g., on Linux solutions such as DAC (uid and guid) or MAC (SELinux,AppArmor) are available.
 
@@ -186,7 +186,7 @@ Volumes, e.g., projected volumes in Kubernetes, allow to inject credential to th
 
 Volume solutions find their main benefit in the asynchronous provisioning of the credentials to the workload. This allows the workload to run independently of the credentials update, and to access them by reading the file, which path can be provisioned through environmental variables, only when required.
 
-### Local APIs 
+### Local APIs
 
 This set of solution rely on local APIs to communicate between the Host and the containerised application. Some implementations rely on UNIX Domain Sockets (SPIFFE), loopback interfaces or Magic (Link-Local) Addresses (AWS Metadata service) to provision credentials. Local APIs offer the capability to re-provision updated credentials. Communication between workload and API allows the workload to re-request a new credential (or a different one). Based on the technology it is even possible to pro-actively distribute new credentials to workloads (e.g. upon expiry, during a revocation event or a change in permissions). This group of solutions rely on network isolation for their security.
 
