@@ -167,9 +167,9 @@ Credentials can be provisioned to the workload through different mechanisms whic
 Injecting the credentials into the environmental variables allows for simple and fast deployments. Applications can directly access them through system-level mechanism, e.g., through the env command in linux. This flexibility, however, comes with security drawbacks.
 
 * 1) environmental variables are static in nature and more dynamic solutions require to introduces higher complexity.
-  
+
 * 2) performing access control to environmental variable is not trivial and it might also not reach the same security results.
-  
+
 * 3) environmental variables have a wide set of use cases and are observed by many components. They are often captured for monitoring, observability, debugging and logging purposes and send to components outside of the workload.
 
 Leveraging environmental variables to provide credentials presents many security limitations. This approach should be limited to cases where simplicity of the application is required, e.g., during PoCs, and the provided secrets should have a short-term validity, i.e., an initial secret during the set-up of the application.
@@ -197,7 +197,7 @@ This set of solution rely on local APIs to communicate between the Host and the 
 * 3) additional latency may be introduced due to the request and additional operational overhead.
 
 Local APIs offer the highest level of access control to protect the credential from un-legitimate access. They particularly thrive in environments of short-lived, narrowly scoped credentials, but come with operational overhead if the workload platform does not offer it already.
- 
+
 ## Credential format
 
 For the scope of this document we focus on JSON Web Token credential formats. Other formats such as X.509 certificates are possible but not as widely seen as JSON Web Tokens.
