@@ -170,31 +170,33 @@ Injecting the credentials into the environmental variables allows for simple and
   
 * 2) performing access control to environmental variable is not trivial and it might also not reach the same security results.
   
-* 3) environmental information are often used for debugging purpose and can be printed at start-up or inside logs.
+* 3) environmental variables have a wide set of use cases and are observed by many components. They are often captured for monitoring, observability, debugging and logging purposes and send to components outside of the workload.
 
-Leveraging environmental variables to provide credentials should be favoured when the provided secrets have a short-term validity, i.e., an initial secret during the set-up of the application, and/or when simplicity is required, e.g., during the development of PoC
+Leveraging environmental variables to provide credentials presents many security limitations. This approach should be limited to cases where simplicity of the application is required, e.g., during PoCs, and the provided secrets should have a short-term validity, i.e., an initial secret during the set-up of the application.
 
 ### Volumes
 
 Volumes, e.g., projected volumes in Kubernetes, allow to inject credential to the container through the file-system. This solution offers higher degree of flexibility thanks to the possibility of dynamically rotate the secrets and perform access control on the injected file. This additional security comes with additional complexity.
 
-* 1) access control to the mounted volume should be configure to limit access from unauthorized applications. E.g., on Linux solutions such as DAC (uid and guid) or MAC (SELinux,AppArmor) are available.
+* 1) access control to the mounted volume and/or file should be configure to limit access from unauthorized applications. E.g., on Linux solutions such as DAC (uid and guid) or MAC (SELinux,AppArmor) are available.
 
-* 2) isolating the mounted volumes ,e.g., through namespaces, is required to avoid that a compromised application is able to escape to the main OS and ,for example, retrieve private information of other processes.
+* 2) isolating the mounted volumes from critical host OS paths and processes is required. E.g, on Linux this is achieved by utilising namespaces.
 
-* 3) credentials rotation requires a monitoring solution to detect near-to-expiration secrets and subtitute them. This is usually embedded into orchestrators such as Kubernetes, but requires proper configuration.
+* 3) credentials rotation requires a solution to detect near-to-expiration secrets and substitute them. Solutions should enable configuration such that the new secret is renewed _before_ the old secret is invalidated. E.g., the solution can choose to update the secret 1h before the old secret is invalidated. This enables applications time to update their usage of the old secret to the new without downtime.
 
-Leveraging volumes to provision secrets offers all the required security tools, at the cost of a more complex configuration. This approach should be favored when multiple process might require to access the same set of credentials.
+Volume solutions find their main benefit in the asynchronous provisioning of the credentials to the workload. This allows the workload to run independently of the credentials update, and to access them by reading the file, which path can be provisioned through environmental variables, only when required.
 
-### Network interfaces
+### Local APIs
 
-Network interfaces rely on the network stack to communicate between the Host and the container application. Some examples of this interface are UNIX Domain Socket (spiffe), loopback interface, Magic (Link-Local) Address (AWS Metadata service). These solutions offer on-demand identity rotation and ensure security thanks to network isolation, but introduce new complexity.
+This set of solution rely on local APIs to communicate between the Host and the containerised application. Some implementations rely on UNIX Domain Sockets (SPIFFE), loopback interfaces or Magic (Link-Local) Addresses (AWS Metadata service) to provision credentials. Local APIs offer the capability to re-provision updated credentials. Communication between workload and API allows the workload to re-request a new credential (or a different one). Based on the technology it is even possible to pro-actively distribute new credentials to workloads (e.g. upon expiry, during a revocation event or a change in permissions). This group of solutions rely on network isolation for their security.
 
-* 1) the appliaction is required to support different network stack in orded to allow portability among different solutions.
+* 1) credentials are only issued when request, thus reducing unnecessary credential issuance and allowing for a narrowly-scoped and short-lived secrets. For instance one-time credentials or narrowly scoped ones such as JSON Web Tokens with specific audiences.
 
-* 2) additional latency may be introduced due to the request and additional operational overhead.
+* 2) the benefit of a more structured delivery comes with less portability between different APIs.
 
-Network inferfaces increase flexibility with respect to on-demand credentials at the cost of application complexity. To avoid this overhead, they should be used in conjuction with side-cars application and centrally manages identity solution.
+* 3) additional latency may be introduced due to the request and additional operational overhead.
+
+Local APIs offer the highest level of access control to protect the credential from un-legitimate access. They particularly thrive in environments of short-lived, narrowly scoped credentials, but come with operational overhead if the workload platform does not offer it already.
  
 ## Credential format
 
