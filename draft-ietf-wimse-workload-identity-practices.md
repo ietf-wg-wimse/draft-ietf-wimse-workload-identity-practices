@@ -229,7 +229,7 @@ Credentials SHOULD be bound to workloads and proof of possession SHOULD be perfo
 
 For issued credentials in the form of JWTs, they MUST be audienced using the `aud` claim. Each JWT SHOULD only carry a single audience. We RECOMMEND using URIs to specify audiences. See section 3 of {{RFC8707}} for more details and security implications.
 
-Some workload platforms provide credentials for interacting with their own APIs (e.g., Kubernetes). These credentials MUST NOT be authorized for use beyond the platform API. In the example of Kubernetes: A token used for anything else than the Kubernetes API itself MUST NOT carry the Kubernetes server in the `aud` claim.
+Some workload platforms provide credentials for interacting with their own APIs (e.g., Kubernetes). These credentials MUST NOT be used beyond the platform API. In the example of Kubernetes: A token used for anything else than the Kubernetes API itself MUST NOT carry the Kubernetes server in the `aud` claim.
 
 # IANA Considerations {#IANA}
 
