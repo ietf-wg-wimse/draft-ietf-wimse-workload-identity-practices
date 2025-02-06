@@ -5,13 +5,13 @@
 Workload Identity in Multi System Environments   A. Schwenkschuster, Ed.
 Internet-Draft                                                     SPIRL
 Intended status: Informational                                B. Hofmann
-Expires: 31 July 2025                                      H. Tschofenig
+Expires: 10 August 2025                                    H. Tschofenig
                                                                  Siemens
                                                              E. Giordano
                                                                    Nokia
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                         27 January 2025
+                                                         6 February 2025
 
 
                       Workload Identity Practices
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 July 2025.
+   This Internet-Draft will expire on 10 August 2025.
 
 Copyright Notice
 
@@ -308,9 +308,9 @@ Table of Contents
 
    Some workload platforms provide credentials for interacting with
    their own APIs (e.g., Kubernetes).  These credentials MUST NOT be
-   authorized for use beyond the platform API.  In the example of
-   Kubernetes: A token used for anything else than the Kubernetes API
-   itself MUST NOT carry the Kubernetes server in the aud claim.
+   used beyond the platform API.  In the example of Kubernetes: A token
+   used for anything else than the Kubernetes API itself MUST NOT carry
+   the Kubernetes server in the aud claim.
 
 5.  IANA Considerations
 
