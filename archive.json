@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-06T00:53:53.346380+00:00",
+  "timestamp": "2025-02-09T00:56:38.745416+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -1025,13 +1025,13 @@
       "labels": [],
       "body": "Adding security considerations for audience:\n\n- Audience required\n- Only single audience recommended\n- Should not be authorized to access platform API (highlight on Kubernetes)\n\nResolves #13",
       "createdAt": "2025-01-27T11:00:50Z",
-      "updatedAt": "2025-01-27T14:43:40Z",
+      "updatedAt": "2025-02-06T09:33:16Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "ef1f6810807e781ce534ee39aae98601fc2e2706",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "headRefName": "arndt/security-considerations-audience",
-      "headRefOid": "6d1d1d0984ddea012f2bf5b3c0c056e3b063394b",
+      "headRefOid": "80247bae77e0e3c08528cf29cd0359cad6289859",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -1072,7 +1072,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-01-29T14:40:56Z",
-      "updatedAt": "2025-02-03T11:30:55Z",
+      "updatedAt": "2025-02-06T09:29:56Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "ef1f6810807e781ce534ee39aae98601fc2e2706",
@@ -1570,6 +1570,26 @@
               "body": "I tried to rephrase it, I'll push it with the next commit",
               "createdAt": "2025-01-30T16:14:43Z",
               "updatedAt": "2025-01-30T16:14:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6a3DNL",
+          "commit": {
+            "abbreviatedOid": "9a86e63"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-06T09:29:56Z",
+          "updatedAt": "2025-02-06T09:29:56Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "There is this existing pattern where a another process stores the credential as a file which the workload picks up. Or in general, the platform when bootstrapping the file system puts a credential into it.\r\n\r\nI think that mounts are just a way to attach it, for our purposes it doesn't matter whether it's a mount, link, or anything else. For the purpose here what matters is that access is via the file system, Open, Close, etc. not exactly how the file got there.",
+              "createdAt": "2025-02-06T09:29:56Z",
+              "updatedAt": "2025-02-06T09:29:56Z"
             }
           ]
         }
