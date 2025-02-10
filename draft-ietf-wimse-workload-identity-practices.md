@@ -176,7 +176,7 @@ Leveraging environmental variables to provide credentials presents many security
 
 ### Files
 
-Files allow to inject credentials into a container through the file-system primitives, e.g., Open, Close, etc. Such solutions enable secret rotation, and access control on the injected secret with standard operating system measure for files.
+Files allow to inject credentials into a container through the file-system and access them through primitives, e.g., Open, Close, etc. Such solutions enable secret rotation, and access control on the injected secret with standard operating system measure for files.
 
 * 1) access control to the mounted file should be configure to limit access from unauthorized applications. E.g., on Linux solutions such as DAC (uid and guid) or MAC (SELinux,AppArmor) are available.
 
