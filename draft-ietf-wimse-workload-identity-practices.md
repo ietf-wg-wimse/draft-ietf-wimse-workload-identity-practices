@@ -174,13 +174,13 @@ Injecting the credentials into the environmental variables allows for simple and
 
 Leveraging environmental variables to provide credentials presents many security limitations. This approach should be limited to cases where simplicity of the application is required, e.g., during PoCs, and the provided secrets should have a short-term validity, i.e., an initial secret during the set-up of the application.
 
-### Volumes
+### Files
 
-Volumes, e.g., projected volumes in Kubernetes, allow to inject credentials into a container through the file-system. Such solutions enable secret rotation, and access control on the injected secret with standard operating system measure for files.
+Files allow to inject credentials into a container through the file-system primitives, e.g., Open, Close, etc. Such solutions enable secret rotation, and access control on the injected secret with standard operating system measure for files.
 
-* 1) access control to the mounted volume and/or file should be configure to limit access from unauthorized applications. E.g., on Linux solutions such as DAC (uid and guid) or MAC (SELinux,AppArmor) are available.
+* 1) access control to the mounted file should be configure to limit access from unauthorized applications. E.g., on Linux solutions such as DAC (uid and guid) or MAC (SELinux,AppArmor) are available.
 
-* 2) isolating the mounted volumes from critical host OS paths and processes is required. E.g, on Linux this is achieved by utilising namespaces.
+* 2) isolating the mounted shared memory from critical host OS paths and processes is required. E.g, on Linux this is achieved by utilising namespaces.
 
 * 3) credentials rotation requires a solution to detect near-to-expiration secrets and substitute them. Solutions should enable configuration such that the new secret is renewed _before_ the old secret is invalidated. E.g., the solution can choose to update the secret 1h before the old secret is invalidated. This enables applications time to update their usage of the old secret to the new without downtime.
 
