@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-09T00:56:38.745416+00:00",
+  "timestamp": "2025-02-11T00:53:40.714223+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -1072,13 +1072,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-01-29T14:40:56Z",
-      "updatedAt": "2025-02-06T09:29:56Z",
+      "updatedAt": "2025-02-10T14:19:47Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "ef1f6810807e781ce534ee39aae98601fc2e2706",
       "headRepository": "edoardogiordano/draft-ietf-wimse-workload-identity-bcp",
       "headRefName": "initial-secret-provision",
-      "headRefOid": "93f466417b8a7a70d338cc7c99560516724b59bd",
+      "headRefOid": "823f21cb74899a27b001e5e93cdcd5cb9fa8a129",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
