@@ -1204,6 +1204,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.6">
                 <p id="section-toc.1-1.4.2.6.1"><a href="#section-4.6" class="auto internal xref">4.6</a>.  <a href="#name-proof-of-possession" class="internal xref">Proof of possession</a></p>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.7">
+                <p id="section-toc.1-1.4.2.7.1"><a href="#section-4.7" class="auto internal xref">4.7</a>.  <a href="#name-audience" class="internal xref">Audience</a></p>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
@@ -1574,6 +1577,15 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <p id="section-4.6-1">Credentials SHOULD be bound to workloads and proof of possession SHOULD be performed when these credentials are used. This mitigates token theft. This proof of possession applies to the platform credential and the access token of the external authorization domains.<a href="#section-4.6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="audience">
+<section id="section-4.7">
+        <h3 id="name-audience">
+<a href="#section-4.7" class="section-number selfRef">4.7. </a><a href="#name-audience" class="section-name selfRef">Audience</a>
+        </h3>
+<p id="section-4.7-1">For issued credentials in the form of JWTs, they MUST be audienced using the <code>aud</code> claim. Each JWT SHOULD only carry a single audience. We RECOMMEND using URIs to specify audiences. See section 3 of <span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span> for more details and security implications.<a href="#section-4.7-1" class="pilcrow">¶</a></p>
+<p id="section-4.7-2">Some workload platforms provide credentials for interacting with their own APIs (e.g., Kubernetes). These credentials MUST NOT be used beyond the platform API. In the example of Kubernetes: A token used for anything else than the Kubernetes API itself MUST NOT carry the Kubernetes server in the <code>aud</code> claim.<a href="#section-4.7-2" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="IANA">
@@ -1636,8 +1648,12 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Sakimura, N.</span>, and <span class="refAuthor">J. Bradley</span>, <span class="refTitle">"OAuth 2.0 Authorization Server Metadata"</span>, <span class="seriesInfo">RFC 8414</span>, <span class="seriesInfo">DOI 10.17487/RFC8414</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8414">https://www.rfc-editor.org/rfc/rfc8414</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8693">[RFC8693]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Nadalin, A.</span>, <span class="refAuthor">Campbell, B., Ed.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"OAuth 2.0 Token Exchange"</span>, <span class="seriesInfo">RFC 8693</span>, <span class="seriesInfo">DOI 10.17487/RFC8693</span>, <time datetime="2020-01" class="refDate">January 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8693">https://www.rfc-editor.org/rfc/rfc8693</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8707">[RFC8707]</dt>
+      <dd>
+<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Resource Indicators for OAuth 2.0"</span>, <span class="seriesInfo">RFC 8707</span>, <span class="seriesInfo">DOI 10.17487/RFC8707</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8707">https://www.rfc-editor.org/rfc/rfc8707</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>

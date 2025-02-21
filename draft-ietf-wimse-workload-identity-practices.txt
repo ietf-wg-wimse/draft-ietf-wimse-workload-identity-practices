@@ -81,6 +81,7 @@ Table of Contents
      4.4.  Token lifetime
      4.5.  Workload lifecycle and invalidation
      4.6.  Proof of possession
+     4.7.  Audience
    5.  IANA Considerations
    6.  Acknowledgements
    7.  References
@@ -395,6 +396,19 @@ Table of Contents
    credential and the access token of the external authorization
    domains.
 
+4.7.  Audience
+
+   For issued credentials in the form of JWTs, they MUST be audienced
+   using the aud claim.  Each JWT SHOULD only carry a single audience.
+   We RECOMMEND using URIs to specify audiences.  See section 3 of
+   [RFC8707] for more details and security implications.
+
+   Some workload platforms provide credentials for interacting with
+   their own APIs (e.g., Kubernetes).  These credentials MUST NOT be
+   used beyond the platform API.  In the example of Kubernetes: A token
+   used for anything else than the Kubernetes API itself MUST NOT carry
+   the Kubernetes server in the aud claim.
+
 5.  IANA Considerations
 
    This document does not require actions by IANA.
@@ -447,6 +461,10 @@ Table of Contents
               and C. Mortimore, "OAuth 2.0 Token Exchange", RFC 8693,
               DOI 10.17487/RFC8693, January 2020,
               <https://www.rfc-editor.org/rfc/rfc8693>.
+
+   [RFC8707]  Campbell, B., Bradley, J., and H. Tschofenig, "Resource
+              Indicators for OAuth 2.0", RFC 8707, DOI 10.17487/RFC8707,
+              February 2020, <https://www.rfc-editor.org/rfc/rfc8707>.
 
 7.2.  Informative References
 
