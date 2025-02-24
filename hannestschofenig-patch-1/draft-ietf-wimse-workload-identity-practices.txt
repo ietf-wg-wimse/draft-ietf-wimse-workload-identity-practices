@@ -33,7 +33,7 @@ Abstract
    in Appendix A.  It referes to existing industry practices that are
    mainly built on top of OAuth.  It may not be in line with the
    (currently work in progress) WIMSE architecture [I-D.ietf-wimse-arch]
-   and other protocols [I-D.ietf-wimse-s2s-protocol].
+   and other protocols, such as [I-D.ietf-wimse-s2s-protocol].
 
 Status of This Memo
 
