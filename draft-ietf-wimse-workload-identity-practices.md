@@ -91,7 +91,7 @@ informative:
 
 The use of the OAuth 2.0 framework in container orchestration systems poses challenges, particularly in managing credentials such as client_id and client_secret, which can be complex and prone to errors. To address this, the industry has shifted towards a federation-based approach where credentials of the underlying workload platform are used as assertions towards an OAuth authorization server, leveraging the Assertion Framework for OAuth 2.0 Client Authentication {{RFC7521}}, specifically {{RFC7523}}.
 
-This specification describes a meta flow in {{overview}}, gives security recommendations in {{recommendations}} and outlines concrete patterns in {{patterns}}. It referes to existing industry practices that are mainly built on top of OAuth. It may not be in line with the (currently work in progress) WIMSE architecture {{I-D.ietf-wimse-arch}} and other protocols {{I-D.ietf-wimse-s2s-protocol}}.
+This specification describes a meta flow in {{overview}}, gives security recommendations in {{recommendations}} and outlines concrete patterns in {{patterns}}. It referes to existing industry practices that are mainly built on top of OAuth. It may not be in line with the (currently work in progress) WIMSE architecture {{I-D.ietf-wimse-arch}} and other protocols, such as {{I-D.ietf-wimse-s2s-protocol}}.
 
 --- middle
 
