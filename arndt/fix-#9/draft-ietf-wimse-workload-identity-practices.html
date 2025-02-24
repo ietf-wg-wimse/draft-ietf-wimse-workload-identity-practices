@@ -12,7 +12,7 @@
 <meta content="Yaroslav Rosomakho" name="author">
 <meta content="
        The use of the OAuth 2.0 framework in container orchestration systems poses challenges, particularly in managing credentials such as client_id and client_secret, which can be complex and prone to errors. To address this, the industry has shifted towards a federation-based approach where credentials of the underlying workload platform are used as assertions towards an OAuth authorization server, leveraging the Assertion Framework for OAuth 2.0 Client Authentication  , specifically  . 
-       This specification describes a meta flow in  , gives security recommendations in   and outlines concrete patterns in  . It referes to existing industry practices that are mainly built on top of OAuth. It may not be in line with the (currently work in progress)   and other protocols. 
+       This specification describes a meta flow in  , gives security recommendations in   and outlines concrete patterns in  . It referes to existing industry practices that are mainly built on top of OAuth. It may not be in line with the (currently work in progress) WIMSE architecture   and other protocols, such as  . 
     " name="description">
 <meta content="xml2rfc 3.27.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
@@ -1102,7 +1102,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">The use of the OAuth 2.0 framework in container orchestration systems poses challenges, particularly in managing credentials such as client_id and client_secret, which can be complex and prone to errors. To address this, the industry has shifted towards a federation-based approach where credentials of the underlying workload platform are used as assertions towards an OAuth authorization server, leveraging the Assertion Framework for OAuth 2.0 Client Authentication <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span>, specifically <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-<p id="section-abstract-2">This specification describes a meta flow in <a href="#overview" class="auto internal xref">Section 3.1</a>, gives security recommendations in <a href="#recommendations" class="auto internal xref">Section 4</a> and outlines concrete patterns in <a href="#patterns" class="auto internal xref">Appendix A</a>. It referes to existing industry practices that are mainly built on top of OAuth. It may not be in line with the (currently work in progress) <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> and other protocols.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">This specification describes a meta flow in <a href="#overview" class="auto internal xref">Section 3.1</a>, gives security recommendations in <a href="#recommendations" class="auto internal xref">Section 4</a> and outlines concrete patterns in <a href="#patterns" class="auto internal xref">Appendix A</a>. It referes to existing industry practices that are mainly built on top of OAuth. It may not be in line with the (currently work in progress) WIMSE architecture <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> and other protocols, such as <span>[<a href="#I-D.ietf-wimse-s2s-protocol" class="cite xref">I-D.ietf-wimse-s2s-protocol</a>]</span>.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1667,6 +1667,10 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <dt id="I-D.ietf-wimse-arch">[I-D.ietf-wimse-arch]</dt>
         <dd>
 <span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-03</span>, <time datetime="2025-01-07" class="refDate">7 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-03">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-wimse-s2s-protocol">[I-D.ietf-wimse-s2s-protocol]</dt>
+        <dd>
+<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Salowey, J.</span>, <span class="refAuthor">Schwenkschuster, A.</span>, and <span class="refAuthor">Y. Sheffer</span>, <span class="refTitle">"WIMSE Service to Service Authentication"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-s2s-protocol-02</span>, <time datetime="2025-01-17" class="refDate">17 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol-02">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="KubernetesServiceAccount">[KubernetesServiceAccount]</dt>
         <dd>

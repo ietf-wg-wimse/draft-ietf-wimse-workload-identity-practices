@@ -32,8 +32,8 @@ Abstract
    security recommendations in Section 4 and outlines concrete patterns
    in Appendix A.  It referes to existing industry practices that are
    mainly built on top of OAuth.  It may not be in line with the
-   (currently work in progress) [I-D.ietf-wimse-arch] and other
-   protocols.
+   (currently work in progress) WIMSE architecture [I-D.ietf-wimse-arch]
+   and other protocols, such as [I-D.ietf-wimse-s2s-protocol].
 
 Status of This Memo
 
@@ -478,6 +478,14 @@ Table of Contents
               ietf-wimse-arch-03, 7 January 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
               arch-03>.
+
+   [I-D.ietf-wimse-s2s-protocol]
+              Campbell, B., Salowey, J., Schwenkschuster, A., and Y.
+              Sheffer, "WIMSE Service to Service Authentication", Work
+              in Progress, Internet-Draft, draft-ietf-wimse-s2s-
+              protocol-02, 17 January 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              s2s-protocol-02>.
 
    [KubernetesServiceAccount]
               "Kubernetes Service Account", May 2024,
