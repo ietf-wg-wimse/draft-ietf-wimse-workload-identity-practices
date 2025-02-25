@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-23T00:58:38.295437+00:00",
+  "timestamp": "2025-02-25T00:55:37.126629+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -100,7 +100,7 @@
       "id": "I_kwDOL34A-M6SpYNW",
       "title": "Provisioning token to the workload",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/7",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "edoardogiordano",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -109,8 +109,8 @@
       "labels": [],
       "body": "Following the discussion on the mailing list, I wanted to give my take on the different options to provision the workload with the token.  Maybe we can use it to start the discussion before starting the PR. \r\n\r\nIdentity provision mechanisms:\r\nCurrent workload systems mainly rely on three solution to provide the Identity to a running workload:\r\n1. Environmental variables: they provide the easiest solution to inject the container with information, but presents some drawbacks:\r\n* Static nature: the information are injected when the container is started and cannot be modified at runtime\r\n * Access control: restricting access to environmental variable is more challenging and are usually exposed inside logs and to debugging tools\r\nENV variables should be used with short-live credentials, when simplicity is a requirement.\r\n2. Volumes, i.e., Projected volumes as named in Kubernetes, offer the possibility to pass information through the file-system. This allows to inject dynamical credentials, rotate them and perform a better access control. The main drawbacks of this solution is the additional complexity. Indeed, the solution requires multiple configurations:\r\n* The files need to have a proper access control definition, to prevent the unauthorized access of a different process\r\n* The mounted volume needs to be correctly isolated to prevent a compromised container to be able to gain more control over the host machine\r\n* The additional burden of monitoring the different workload to maintain valid credentials in each container (this last element can be handled by the orchestrator). \r\nThe main advantages of this approach, with respect to the previous one, is in a better access control of the resource and the possibility to rotate the credentials without the need to restart the container. This solution fits well when multiple different process in the container need to access the credential's file.\r\n3. Loopback interface relies on a local endpoint, usually exposing an HTTP or a gRPC interface, to provide the identity information to the workload. This solution, present additional advantages to the cost of complexity:\r\n* Limiting the exposure of the credential thanks to the properties of network isolation in the loopback interface. \r\n* It also allows an on-demand fetching and rotation of the credentials. \r\nNevertheless, there are also some drawback in using this solution:\r\n* The dependency on the network stack, which may differ based on the host machine, and creating a one-for-all solution might require additional code.\r\n* The additional latency due to the request and the increase of the operational overhead.\r\nThis approach should be preferred in conjunction with side-cars/agents and centrally managed identities solutions for application that requires dynamic credentials. \r\n",
       "createdAt": "2024-08-12T08:11:15Z",
-      "updatedAt": "2024-12-16T08:02:43Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-24T13:36:05Z",
+      "closedAt": "2025-02-24T13:36:05Z",
       "comments": [
         {
           "author": "b3n3d17",
@@ -125,6 +125,13 @@
           "body": "Hi @b3n3d17, sorry for the late response.\r\n\r\nRegarding the environmental variables, my point is that it can often happen that people print the env at the start of the program to show how the program was launched, or if a problem happens to help with the debugging. If you don't think this is anymore the case we can just remove it. \r\nRegarding the possibility to rotate env Variable, do you have any reference? I was not aware of this possibility without restarting the application.\r\n\r\nFor the last two point thanks for the references. I'll include them while preparing the pr.\r\n\r\nThanks.",
           "createdAt": "2024-12-16T08:02:41Z",
           "updatedAt": "2024-12-16T08:02:41Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Resolved with #16 ",
+          "createdAt": "2025-02-24T13:36:03Z",
+          "updatedAt": "2025-02-24T13:36:03Z"
         }
       ]
     },
@@ -239,9 +246,17 @@
       "labels": [],
       "body": "- client authentication vs client assertion\r\n- clear terms when it's used as access token vs something else\r\n- guidance on ID tokens and refresh tokens ",
       "createdAt": "2024-12-02T13:31:01Z",
-      "updatedAt": "2024-12-02T13:49:15Z",
+      "updatedAt": "2025-02-24T13:53:14Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We need to highlight current situation that different token types are difficult to differentiate. We may reference RFC7523bis draft that suggests explicit typing.",
+          "createdAt": "2025-02-24T13:53:11Z",
+          "updatedAt": "2025-02-24T13:53:11Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -1652,13 +1667,13 @@
       "labels": [],
       "body": "Add wording to mention that this MAY not align with WIMSE architecture and other derived work such as S2S. Resolves #9 ",
       "createdAt": "2025-02-21T14:08:52Z",
-      "updatedAt": "2025-02-21T14:50:40Z",
+      "updatedAt": "2025-02-24T15:16:24Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "1c71fe700cb70b1f9acad67229122e952f0b27f2",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "headRefName": "arndt/fix-#9",
-      "headRefOid": "7b133065759ed2c083f7c67dbb60f2b42411a51c",
+      "headRefOid": "9d6ee59d6e593feed1b1005e922f1ee60e099453",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -1684,8 +1699,89 @@
               "updatedAt": "2025-02-21T14:50:40Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6dNMnj",
+          "commit": {
+            "abbreviatedOid": "9d6ee59"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-24T15:16:24Z",
+          "updatedAt": "2025-02-24T15:16:24Z",
+          "comments": []
         }
       ]
+    },
+    {
+      "number": 18,
+      "id": "PR_kwDOL34A-M6MS07E",
+      "title": "Update draft-ietf-wimse-workload-identity-practices.md",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/18",
+      "state": "MERGED",
+      "author": "hannestschofenig",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-24T13:57:23Z",
+      "updatedAt": "2025-02-24T14:49:59Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "arndt/fix-#9",
+      "baseRefOid": "5847fb96cf883aee42f7352857046f2113f1b3b7",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "headRefName": "hannestschofenig-patch-1",
+      "headRefOid": "140282f34e2e305378a2a841c91d7a255b606ecc",
+      "closedAt": "2025-02-24T14:49:55Z",
+      "mergedAt": "2025-02-24T14:49:54Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "9d6ee59d6e593feed1b1005e922f1ee60e099453"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M6dM1P2",
+          "commit": {
+            "abbreviatedOid": "1a4f8f0"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-24T14:49:01Z",
+          "updatedAt": "2025-02-24T14:49:01Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "id": "PR_kwDOL34A-M6MUm27",
+      "title": "Add details about token typing and add relations to OIDC to considerations",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/19",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-24T16:41:56Z",
+      "updatedAt": "2025-02-24T16:41:56Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "main",
+      "baseRefOid": "1c71fe700cb70b1f9acad67229122e952f0b27f2",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "headRefName": "arndt/id_token",
+      "headRefOid": "8a989e63ee4ba3070c8fb218674dfb1ce400b84f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
