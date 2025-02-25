@@ -5,13 +5,13 @@
 Workload Identity in Multi System Environments   A. Schwenkschuster, Ed.
 Internet-Draft                                                     SPIRL
 Intended status: Informational                                B. Hofmann
-Expires: 25 August 2025                                    H. Tschofenig
+Expires: 29 August 2025                                    H. Tschofenig
                                                                  Siemens
                                                              E. Giordano
                                                                    Nokia
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                        21 February 2025
+                                                        25 February 2025
 
 
                       Workload Identity Practices
@@ -30,7 +30,10 @@ Abstract
 
    This specification describes a meta flow in Section 3.1, gives
    security recommendations in Section 4 and outlines concrete patterns
-   in Appendix A.
+   in Appendix A.  It referes to existing industry practices that are
+   mainly built on top of OAuth.  It may not be in line with the
+   (currently work in progress) WIMSE architecture [I-D.ietf-wimse-arch]
+   and other protocols, such as [I-D.ietf-wimse-s2s-protocol].
 
 Status of This Memo
 
@@ -47,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 August 2025.
+   This Internet-Draft will expire on 29 August 2025.
 
 Copyright Notice
 
@@ -467,6 +470,22 @@ Table of Contents
               February 2020, <https://www.rfc-editor.org/rfc/rfc8707>.
 
 7.2.  Informative References
+
+   [I-D.ietf-wimse-arch]
+              Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
+              "Workload Identity in a Multi System Environment (WIMSE)
+              Architecture", Work in Progress, Internet-Draft, draft-
+              ietf-wimse-arch-03, 7 January 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              arch-03>.
+
+   [I-D.ietf-wimse-s2s-protocol]
+              Campbell, B., Salowey, J., Schwenkschuster, A., and Y.
+              Sheffer, "WIMSE Service to Service Authentication", Work
+              in Progress, Internet-Draft, draft-ietf-wimse-s2s-
+              protocol-02, 17 January 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
+              s2s-protocol-02>.
 
    [KubernetesServiceAccount]
               "Kubernetes Service Account", May 2024,
