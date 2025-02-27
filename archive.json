@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-25T00:55:37.126629+00:00",
+  "timestamp": "2025-02-27T00:55:33.639242+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -140,15 +140,15 @@
       "id": "I_kwDOL34A-M6eSc2H",
       "title": "Point out that this document highlights current patterns ",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/9",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "... and is not a 'best practices' document new implementations should leverage.",
       "createdAt": "2024-11-13T14:07:37Z",
-      "updatedAt": "2024-11-13T14:08:17Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-25T14:17:36Z",
+      "closedAt": "2025-02-25T14:17:36Z",
       "comments": [
         {
           "author": "arndt-s",
@@ -173,7 +173,7 @@
       "labels": [],
       "body": "Hi \ud83d\udc4b, first time contributing so please direct me elsewhere if appropriate.\r\n\r\nI believe GitHub Actions currently supports the model defined by this document and refers to it as '[Security hardening with OpenID Connect](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect)'. The tokens GitHub Actions issues are referred to as '[OIDC tokens](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect#understanding-the-oidc-token)' / '[ID Tokens](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect#understanding-the-oidc-token)'.\r\n\r\nhttps://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-bcp/blob/3916596e1656d1d21108ca660bbf060a3b57b234/draft-ietf-wimse-workload-identity-bcp.md?plain=1#L204\r\n\r\nIs there a reason/explanation behind why ID tokens must not be accepted? Is it to ensure the token (i.e., the `sub`) represents the workload identity, and not a user identity?\r\n\r\nAside/context: Within my organization, and our customer base, people refer to the pattern described as 'OIDC support' or 'OIDC federated identity'. We build a product in the CI/CD tooling space.",
       "createdAt": "2024-11-18T05:57:43Z",
-      "updatedAt": "2025-02-21T21:13:25Z",
+      "updatedAt": "2025-02-26T09:09:14Z",
       "closedAt": null,
       "comments": [
         {
@@ -189,6 +189,13 @@
           "body": "@arndt-s I agree with your assessment that current practices are assertions according to RFC7523 and nothing else. The ID token in the GitHub Actions implementation I refer is an ID token by name only. It doesn't conform to the OIDC spec as its missing a large number of claims. It also is being used outside of the intended use, as it doesn't represent a human identity authentication proof, as you mention. Therefore I agree that ID tokens must not be accepted in the true sense of what one is. \n\nMy remaining question is what is the goal of this document? Is it to refer to existing practices, or to do define a best practice moving forward? Given the pattern I describe is becoming the defacto, at least in the CI/CD space, what's the best way to represent this pattern, even if the token naming is confusing?",
           "createdAt": "2025-02-21T21:13:23Z",
           "updatedAt": "2025-02-21T21:13:23Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The goal of this document is just to document the patterns out there and acknowledge they exist. We are adding some additional aspects like how the credential can be delivered to the workload and more to it. \n\nThere's been a lot of discussions whether this document should be called \"Best Practices\" - and if it should define something new. For that we have decided that the value of describing the current practices is already there and based on the feedback and interested we collect we can work on a document that improves security and usability afterwards.\n\nPR #19 aims to address some of the aspects discussed here and also adds a section describing the situation with OIDC. It would be great to get your review on it! \n\n----\nBTW, there's changes happening on RFC7523. I recommend to track that too as it certainly affects this flow here. https://datatracker.ietf.org/doc/draft-ietf-oauth-rfc7523bis/\n",
+          "createdAt": "2025-02-26T09:07:38Z",
+          "updatedAt": "2025-02-26T09:08:05Z"
         }
       ]
     },
@@ -246,7 +253,7 @@
       "labels": [],
       "body": "- client authentication vs client assertion\r\n- clear terms when it's used as access token vs something else\r\n- guidance on ID tokens and refresh tokens ",
       "createdAt": "2024-12-02T13:31:01Z",
-      "updatedAt": "2025-02-24T13:53:14Z",
+      "updatedAt": "2025-02-26T09:09:08Z",
       "closedAt": null,
       "comments": [
         {
@@ -1660,24 +1667,26 @@
       "id": "PR_kwDOL34A-M6MDhvA",
       "title": "Highlight relationship to other WIMSE work",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/17",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Add wording to mention that this MAY not align with WIMSE architecture and other derived work such as S2S. Resolves #9 ",
       "createdAt": "2025-02-21T14:08:52Z",
-      "updatedAt": "2025-02-24T15:16:24Z",
+      "updatedAt": "2025-02-25T14:17:35Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "1c71fe700cb70b1f9acad67229122e952f0b27f2",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "headRefName": "arndt/fix-#9",
       "headRefOid": "9d6ee59d6e593feed1b1005e922f1ee60e099453",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-02-25T14:17:34Z",
+      "mergedAt": "2025-02-25T14:17:34Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "645a599fbb28f4fbdbaca8c942211bb761cfacb1"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1769,7 +1778,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-02-24T16:41:56Z",
-      "updatedAt": "2025-02-24T16:41:56Z",
+      "updatedAt": "2025-02-26T09:08:49Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "1c71fe700cb70b1f9acad67229122e952f0b27f2",
@@ -1780,7 +1789,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This PR relates to #11 and #14 ",
+          "createdAt": "2025-02-26T09:08:48Z",
+          "updatedAt": "2025-02-26T09:08:48Z"
+        }
+      ],
       "reviews": []
     }
   ]
