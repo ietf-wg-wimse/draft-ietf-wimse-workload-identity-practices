@@ -5,13 +5,13 @@
 Workload Identity in Multi System Environments   A. Schwenkschuster, Ed.
 Internet-Draft                                                     SPIRL
 Intended status: Informational                                B. Hofmann
-Expires: 31 August 2025                                    H. Tschofenig
+Expires: 4 September 2025                                  H. Tschofenig
                                                                  Siemens
                                                              E. Giordano
                                                                    Nokia
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                        27 February 2025
+                                                            3 March 2025
 
 
                       Workload Identity Practices
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 August 2025.
+   This Internet-Draft will expire on 4 September 2025.
 
 Copyright Notice
 
@@ -412,7 +412,7 @@ Table of Contents
    the Workload Identity Token as "OIDC ID Token" defined in [OIDC].
    The authors of this document want to highlight that this pattern is
    not related to OpenID Connect [OIDC] and the issued Workload Identity
-   Tokens by the platforms are no "ID Tokens" in the sense of OIDC.
+   Tokens by the platforms are not "ID Tokens" in the sense of OIDC.
 
    However, it is common practice for the authorization server to
    leverage [OIDCDiscovery] to retrieve the signing keys needed for
@@ -495,9 +495,9 @@ Table of Contents
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-03, 7 January 2025,
+              ietf-wimse-arch-04, 2 March 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-03>.
+              arch-04>.
 
    [I-D.ietf-wimse-s2s-protocol]
               Campbell, B., Salowey, J., Schwenkschuster, A., and Y.
