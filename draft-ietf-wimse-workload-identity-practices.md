@@ -64,16 +64,25 @@ normative:
   RFC7519:
   RFC7517:
   RFC8707:
+  RFC8725:
+  RFC8414:
   RFC8693:
 informative:
+  I-D.ietf-oauth-rfc7523bis:
   I-D.ietf-wimse-arch:
   I-D.ietf-wimse-s2s-protocol:
   OIDC:
      author:
-        org: Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore
+       org: Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore
      title: OpenID Connect Core 1.0 incorporating errata set 1
      target: https://openid.net/specs/openid-connect-core-1_0.html
      date: 8 November 2014
+  OIDCDiscovery:
+    author:
+      org: Sakimura, N., Bradley, J., Jones, M. and Jay, E.
+    title: OpenID Connect Discovery 1.0 incorporating errata set 2
+    target: https://openid.net/specs/openid-connect-discovery-1_0.html
+    date: 15 December 2023
   KubernetesServiceAccount:
      title: Kubernetes Service Account
      target: https://kubernetes.io/docs/concepts/security/service-accounts/
@@ -220,7 +229,7 @@ For the scope of this specification, the claims can be described the following. 
 
 {:vspace}
 iss
-: The issuer of the workload platform. While this can have any format, it is important to highlight that many authorization servers leverage OpenID Connect {{OIDC}} and/or OAuth 2.0 Authorization Server Metadata {{RFC8414}} to retrieve JSON Web Keys {{RFC7517}} for validation purposes.
+: The issuer of the workload platform. While this can have any format, it is important to highlight that many authorization servers leverage OpenID Connect Discovery {{OIDCDiscovery}} and/or OAuth 2.0 Authorization Server Metadata {{RFC8414}} to retrieve JSON Web Keys {{RFC7517}} for validation purposes.
 
 sub
 : Subject which identifies the workload within the domain/workload platform instance.
@@ -232,20 +241,11 @@ audience
 
 All security considerations in section 8 of {{RFC7521}} apply.
 
-## Issuer, subject and audience validation
+## Token typing
 
-Any authorization server that validates and accepts platform-issued credentials MUST take the following claims into account before accepting assertions:
+Issuers SHOULD strongly type the issued tokens to workload via the JOSE `typ` header and authorization servers SHOULD validate the value of it according to policy. See Section 3.1 of {{RFC8725}} for details on explicit typing.
 
-* Issuer
-* Subject
-* Audience
-* Expiration
-
-Failure to verify any of these properties can result in impersonation or accepting an assertion that was issued for a different purpose.
-
-## Token type validation
-
-Authorization servers MUST validate the token type of the assertion. For example, OAuth Refresh or ID tokens MUST NOT be accepted.
+Issuers SHOULD use `authorization-grant+jwt` as a `typ` value according to {{I-D.ietf-oauth-rfc7523bis}}. For broad support `JWT` or `JOSE` MAY be used by issuers and accepted by authorization servers but it's important to highlight that a wide range of tokens, meant for all sorts of purposes, use these values and would be accepted.
 
 ## Custom claims are important for context
 
@@ -272,6 +272,14 @@ Credentials SHOULD be bound to workloads and proof of possession SHOULD be perfo
 For issued credentials in the form of JWTs, they MUST be audienced using the `aud` claim. Each JWT SHOULD only carry a single audience. We RECOMMEND using URIs to specify audiences. See section 3 of {{RFC8707}} for more details and security implications.
 
 Some workload platforms provide credentials for interacting with their own APIs (e.g., Kubernetes). These credentials MUST NOT be used beyond the platform API. In the example of Kubernetes: A token used for anything else than the Kubernetes API itself MUST NOT carry the Kubernetes server in the `aud` claim.
+
+# Other considerations
+
+## Relation to OpenID Connect and its ID Token
+
+The outlined pattern has been referred to as "OIDC" and respectively, the Workload Identity Token as "OIDC ID Token" defined in {{OIDC}}. The authors of this document want to highlight that this pattern is not related to OpenID Connect {{OIDC}} and the issued Workload Identity Tokens by the platforms are not "ID Tokens" in the sense of OIDC.
+
+However, it is common practice for the authorization server to leverage {{OIDCDiscovery}} to retrieve the signing keys needed for token validation. The use of {{RFC8414}} or any other key distribution remain valid.
 
 # IANA Considerations {#IANA}
 
