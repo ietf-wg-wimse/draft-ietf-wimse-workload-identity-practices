@@ -607,6 +607,12 @@ While {{RFC7521}} and {{RFC7523}} are the proposed standards for this pattern, s
 
    [[ To be removed from the final specification ]]
 
+   -01
+
+   * Add credential delivery mechanisms
+   * Highlight relationship to other WIMSE work
+   * Add details about token typing and relation to OpenID Connect
+   * Add security considerations for audience
 
    -00
 
