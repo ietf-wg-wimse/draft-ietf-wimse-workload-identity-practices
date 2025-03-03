@@ -5,13 +5,13 @@
 Workload Identity in Multi System Environments   A. Schwenkschuster, Ed.
 Internet-Draft                                                     SPIRL
 Intended status: Informational                                B. Hofmann
-Expires: 29 August 2025                                    H. Tschofenig
+Expires: 4 September 2025                                  H. Tschofenig
                                                                  Siemens
                                                              E. Giordano
                                                                    Nokia
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                        25 February 2025
+                                                            3 March 2025
 
 
                       Workload Identity Practices
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 August 2025.
+   This Internet-Draft will expire on 4 September 2025.
 
 Copyright Notice
 
@@ -78,18 +78,19 @@ Table of Contents
        3.2.3.  Local APIs
      3.3.  Credential format
    4.  Security Recommendations
-     4.1.  Issuer, subject and audience validation
-     4.2.  Token type validation
-     4.3.  Custom claims are important for context
-     4.4.  Token lifetime
-     4.5.  Workload lifecycle and invalidation
-     4.6.  Proof of possession
-     4.7.  Audience
-   5.  IANA Considerations
-   6.  Acknowledgements
-   7.  References
-     7.1.  Normative References
-     7.2.  Informative References
+     4.1.  Token typing
+     4.2.  Custom claims are important for context
+     4.3.  Token lifetime
+     4.4.  Workload lifecycle and invalidation
+     4.5.  Proof of possession
+     4.6.  Audience
+   5.  Other considerations
+     5.1.  Relation to OpenID Connect and its ID Token
+   6.  IANA Considerations
+   7.  Acknowledgements
+   8.  References
+     8.1.  Normative References
+     8.2.  Informative References
    Appendix A.  Patterns
      A.1.  Kubernetes
      A.2.  Secure Production Identity Framework For Everyone (SPIFFE)
@@ -320,9 +321,9 @@ Table of Contents
    iss
       The issuer of the workload platform.  While this can have any
       format, it is important to highlight that many authorization
-      servers leverage OpenID Connect [OIDC] and/or OAuth 2.0
-      Authorization Server Metadata [RFC8414] to retrieve JSON Web Keys
-      [RFC7517] for validation purposes.
+      servers leverage OpenID Connect Discovery [OIDCDiscovery] and/or
+      OAuth 2.0 Authorization Server Metadata [RFC8414] to retrieve JSON
+      Web Keys [RFC7517] for validation purposes.
 
    sub
       Subject which identifies the workload within the domain/workload
@@ -338,29 +339,20 @@ Table of Contents
 
    All security considerations in section 8 of [RFC7521] apply.
 
-4.1.  Issuer, subject and audience validation
+4.1.  Token typing
 
-   Any authorization server that validates and accepts platform-issued
-   credentials MUST take the following claims into account before
-   accepting assertions:
+   Issuers SHOULD strongly type the issued tokens to workload via the
+   JOSE typ header and authorization servers SHOULD validate the value
+   of it according to policy.  See Section 3.1 of [RFC8725] for details
+   on explicit typing.
 
-   *  Issuer
+   Issuers SHOULD use authorization-grant+jwt as a typ value according
+   to [I-D.ietf-oauth-rfc7523bis].  For broad support JWT or JOSE MAY be
+   used by issuers and accepted by authorization servers but it's
+   important to highlight that a wide range of tokens, meant for all
+   sorts of purposes, use these values and would be accepted.
 
-   *  Subject
-
-   *  Audience
-
-   *  Expiration
-
-   Failure to verify any of these properties can result in impersonation
-   or accepting an assertion that was issued for a different purpose.
-
-4.2.  Token type validation
-
-   Authorization servers MUST validate the token type of the assertion.
-   For example, OAuth Refresh or ID tokens MUST NOT be accepted.
-
-4.3.  Custom claims are important for context
+4.2.  Custom claims are important for context
 
    Some platform issued credentials have custom claims that are vital
    for context and are required to be validated.  For example in a
@@ -374,7 +366,7 @@ Table of Contents
    these claims.  Platform issuers SHOULD allow differentiation based on
    the subject claim alone.
 
-4.4.  Token lifetime
+4.3.  Token lifetime
 
    Tokens SHOULD NOT exceed the lifetime of the workloads they
    represent.  For example, a workload that has an expected lifetime of
@@ -385,13 +377,13 @@ Table of Contents
    external authorization domain, a short-lived credential is
    recommended.
 
-4.5.  Workload lifecycle and invalidation
+4.4.  Workload lifecycle and invalidation
 
    Platform issuers SHOULD invalidate those when the workload stops,
    pauses or ceases to exist.  How these credentials are invalidated is
    not in scope of this specification.
 
-4.6.  Proof of possession
+4.5.  Proof of possession
 
    Credentials SHOULD be bound to workloads and proof of possession
    SHOULD be performed when these credentials are used.  This mitigates
@@ -399,7 +391,7 @@ Table of Contents
    credential and the access token of the external authorization
    domains.
 
-4.7.  Audience
+4.6.  Audience
 
    For issued credentials in the form of JWTs, they MUST be audienced
    using the aud claim.  Each JWT SHOULD only carry a single audience.
@@ -412,17 +404,32 @@ Table of Contents
    used for anything else than the Kubernetes API itself MUST NOT carry
    the Kubernetes server in the aud claim.
 
-5.  IANA Considerations
+5.  Other considerations
+
+5.1.  Relation to OpenID Connect and its ID Token
+
+   The outlined pattern has been referred to as "OIDC" and respectively,
+   the Workload Identity Token as "OIDC ID Token" defined in [OIDC].
+   The authors of this document want to highlight that this pattern is
+   not related to OpenID Connect [OIDC] and the issued Workload Identity
+   Tokens by the platforms are not "ID Tokens" in the sense of OIDC.
+
+   However, it is common practice for the authorization server to
+   leverage [OIDCDiscovery] to retrieve the signing keys needed for
+   token validation.  The use of [RFC8414] or any other key distribution
+   remain valid.
+
+6.  IANA Considerations
 
    This document does not require actions by IANA.
 
-6.  Acknowledgements
+7.  Acknowledgements
 
    Add your name here.
 
-7.  References
+8.  References
 
-7.1.  Normative References
+8.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -469,15 +476,28 @@ Table of Contents
               Indicators for OAuth 2.0", RFC 8707, DOI 10.17487/RFC8707,
               February 2020, <https://www.rfc-editor.org/rfc/rfc8707>.
 
-7.2.  Informative References
+   [RFC8725]  Sheffer, Y., Hardt, D., and M. Jones, "JSON Web Token Best
+              Current Practices", BCP 225, RFC 8725,
+              DOI 10.17487/RFC8725, February 2020,
+              <https://www.rfc-editor.org/rfc/rfc8725>.
+
+8.2.  Informative References
+
+   [I-D.ietf-oauth-rfc7523bis]
+              Jones, M. B., Campbell, B., and C. Mortimore, "JSON Web
+              Token (JWT) Profile for OAuth 2.0 Client Authentication
+              and Authorization Grants", Work in Progress, Internet-
+              Draft, draft-ietf-oauth-rfc7523bis-00, 21 February 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
+              rfc7523bis-00>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-03, 7 January 2025,
+              ietf-wimse-arch-04, 2 March 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-03>.
+              arch-04>.
 
    [I-D.ietf-wimse-s2s-protocol]
               Campbell, B., Salowey, J., Schwenkschuster, A., and Y.
@@ -496,6 +516,12 @@ Table of Contents
               C. Mortimore, "OpenID Connect Core 1.0 incorporating
               errata set 1", November 2014,
               <https://openid.net/specs/openid-connect-core-1_0.html>.
+
+   [OIDCDiscovery]
+              Sakimura, N., Bradley, J., Jones, M. and Jay, E., "OpenID
+              Connect Discovery 1.0 incorporating errata set 2",
+              December 2023, <https://openid.net/specs/openid-connect-
+              discovery-1_0.html>.
 
    [TokenRequestV1]
               "Kubernetes Token Request API V1", August 2024,
