@@ -957,6 +957,16 @@ Appendix C.  Document History
 
    [[ To be removed from the final specification ]]
 
+   -01
+
+   *  Add credential delivery mechanisms
+
+   *  Highlight relationship to other WIMSE work
+
+   *  Add details about token typing and relation to OpenID Connect
+
+   *  Add security considerations for audience
+
    -00
 
    *  Rename draft with no content changes.
