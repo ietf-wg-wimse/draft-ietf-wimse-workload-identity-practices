@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-23T01:01:33.319631+00:00",
+  "timestamp": "2025-03-25T00:58:17.001932+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -47,6 +47,11 @@
       "name": "wontfix",
       "description": "This will not be worked on",
       "color": "ffffff"
+    },
+    {
+      "name": "feedback-dean",
+      "description": "",
+      "color": "d4c5f9"
     }
   ],
   "issues": [
@@ -285,6 +290,165 @@
       "body": "I reviewed this draft and have the following comments:\n\nNed Smith review of current repo build of draft-ietf-wimse-workload-identity-practices.\n\nSection 3:\n\t- The title of section 3 is specific to OAuth, but \u00a73.2 seems to consider other credential types besides OAuth (but doesn\u2019t include JWT as one of the possible types).\n\nSection 3.2.1:\n\t- S/environmental/environment/ - It is uncommon in Linux to describe environment variables as environmental variables.\n\t\nSection 3.2.2:\n\t- First sentence: \u201cFiles allow to inject\u2026\u201d seems to be missing a word that identifies who or what is doing the injection. Awkward reader flow.\n\t\nSection 3.2.3:\n\t- Last paragraph: S/un-legitimate/illegitimate/ or /unauthorized/\n\nSection 3.3:\n\t- This section indicates \u201cJSON Web Token\u201d is a credential format, but section 3.2 omits it as a possible credential in terms of credential issuance / provisioning techniques. The reader is unclear what the relationship is between the provisioning technique and the format of the provisioned credential. For example, a file could contain a JWT, but also describes OS DAC access mechanisms which typically are not JWT structures. Possibly, JWT should be added to the list in Section 3.2?\n\n\t- For completeness the formatting of all of the credential types listed in \u00a73.2 should be explained in this section? Alternatively, the formatting considerations could be subsections for each credential type listed in \u00a73.2?\n\n\t- Certificates are mentioned as a credential format, but not listed as a credential type in \u00a73.2.\n\nSection 4: \n\t- RFC3552 requires all RFCs to have a Security Considerations section. Possibly, this section should be renamed as that. Or the security considerations should say that the entire RFC is about security?\n\t- The first sentence seems to suggest this is a security considerations section.\n\nSection 4.1:\n\t- Although \u00a73.3 mentions JWT, it is unclear if the other credential provisioning types are presumed to be types of \u201ctokens\u201d and therefore omitted from section 4.1. Or is this section intended to focus only on JWT tokens and OAuth2 provisioning flows?\n\t- It seems unexpected for an informational RFC to contain upper case normative.\n\nSection 5:\n\t- Inconsistent use of capitalization in header text. S/considerations/Considerations/\n\nSection 5.1:\n\t- \u201cThe outlined pattern\u2026\u201d is ambiguous as it refers to some other part of the document, but it is unclear which part.\n\t- Last paragraph: \u201cThe use of [RFC8414] or any other key distribution remains valid.\u201d It is unclear what part of RFC8414 is the subject of the sentence. It is also unclear for what purpose a \u201ckey distribution\u201d remain valid. Section 3.2 didn\u2019t identify \u201ckey distribution\u201d as a possible credential type or format yet it seems to be related to credential issuance / provisioning.\n\nIf this document chooses to have a separate security considerations section (Section 7?) it might include content that describes:\n\t- Expectations for integrity protection of the credential (or security techniques that ensure integrity of the access policy).\n\t\t- In transit.\n\t\t- At rest.\n\t- Credential lifecycle expectations - can it be updated and if so, what security capabilities are assumed to be at play to ensure update integrity?\n\t- What authority / privileges does the workload have in terms of the credential lifecycle - if any?\n\t- How does the workload itself get provisioned?\n\t- How is a workload confidentiality protected? Note: the WIMSE arch talks about TLS/SPIFFE, but it is unclear if TLS/SPIFFE is a \u201ccurrent practice\u201d.\n\nMy intention in reviewing the current practices draft was to highlight gaps in security based on current practice to motivate the need for better practices and security mechanisms. I\u2019m finding it difficult to approach the document because it seems to both describe current practice, but also specific new practice; and it doesn\u2019t give equal attention to the various types of credentials both in terms of describing current practice and in specifying new practice.\n\nI'm happy to help improve this draft.\n",
       "createdAt": "2025-03-20T23:39:19Z",
       "updatedAt": "2025-03-20T23:39:19Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 22,
+      "id": "I_kwDOL34A-M6vY9I0",
+      "title": "Clarify Document Intent",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/22",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "feedback-dean"
+      ],
+      "body": "There's confusion about whether this document is informational or a specification. While the headers indicate it's informational, the abstract and terminology sections use specification-style language. We should revise the document to ensure consistent presentation as an informational document that captures the current state of workload identity practices.",
+      "createdAt": "2025-03-24T09:17:05Z",
+      "updatedAt": "2025-03-24T14:38:11Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "jricher",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I don't think this is a problem. Informational documents can use normative and \"specification style\" language just fine.",
+          "createdAt": "2025-03-24T14:09:01Z",
+          "updatedAt": "2025-03-24T14:09:01Z"
+        },
+        {
+          "author": "dhs-BI",
+          "authorAssociation": "NONE",
+          "body": "Thanks for that clarification, @jricher.  I was unaware that informational documents can use the normative language as well.  \n\n@arndt-s feel free to close this as a non-issue.",
+          "createdAt": "2025-03-24T14:38:10Z",
+          "updatedAt": "2025-03-24T14:38:10Z"
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "id": "I_kwDOL34A-M6vY-DR",
+      "title": "Inconsistent Presentation of Credential Issuance Mechanisms",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/23",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "feedback-dean"
+      ],
+      "body": "The three credential issuance mechanisms (environment variables, file-based, local APIs) are presented inconsistently. Section 3.2.1 discusses security limitations, 3.2.2 focuses on benefits, and 3.2.3 makes assertions about access control levels. \n\nWe should:\n* Use a consistent structure to present each mechanism\n* Create a summary table comparing pros/cons of each approach\n* Ensure security considerations are addressed for all mechanisms",
+      "createdAt": "2025-03-24T09:17:44Z",
+      "updatedAt": "2025-03-24T09:17:58Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 24,
+      "id": "I_kwDOL34A-M6vY_dN",
+      "title": "Reconsider section 3.3",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/24",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "feedback-dean"
+      ],
+      "body": "Section 3.3 describes JWT claims based on RFC7523 but doesn't cover other token formats. \n\nWe should either\n* Remove this section (doesn't really add value)\n* Add complementary sections covering other formats (x.509 certificates, etc.) and include a comparison of different token formats' strengths and weaknesses",
+      "createdAt": "2025-03-24T09:19:11Z",
+      "updatedAt": "2025-03-24T09:19:11Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 25,
+      "id": "I_kwDOL34A-M6vZAwu",
+      "title": "Security considerations limited to JWT",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/25",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "feedback-dean"
+      ],
+      "body": "Our security considerations are limited to JWT only. We should also cover other credential formats.",
+      "createdAt": "2025-03-24T09:20:35Z",
+      "updatedAt": "2025-03-24T09:20:36Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 26,
+      "id": "I_kwDOL34A-M6vZBXL",
+      "title": "Inappropriate Use of BCP14 Language",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/26",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "feedback-dean"
+      ],
+      "body": "An informational document that describes current practices should typically avoid BCP14 imperative language (MUST, SHOULD, etc.) unless making normative recommendations. Review sections 4.4 and 4.5 to determine if imperative language is appropriate or should be replaced with descriptive language about current practices.",
+      "createdAt": "2025-03-24T09:21:10Z",
+      "updatedAt": "2025-03-24T09:21:10Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 27,
+      "id": "I_kwDOL34A-M6vZBuN",
+      "title": "Unclear Pattern Reference in Section 5",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/27",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "feedback-dean"
+      ],
+      "body": "Section 5 begins with \"The outlined pattern has been referred to as 'OIDC' [...]\" without clearly identifying which pattern is being referenced. Add a description of this pattern to help readers understand why it's not considered a proper implementation of OIDC.",
+      "createdAt": "2025-03-24T09:21:43Z",
+      "updatedAt": "2025-03-24T09:21:43Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 28,
+      "id": "I_kwDOL34A-M6vZCZo",
+      "title": "Terminology Conflict with Other Drafts",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/28",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "feedback-dean"
+      ],
+      "body": "The term \"Workload Identity Token\" in Section 5 may be confused with the same term defined in wimse-s2s. We should find other wording.",
+      "createdAt": "2025-03-24T09:22:23Z",
+      "updatedAt": "2025-03-24T09:22:23Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 29,
+      "id": "I_kwDOL34A-M6vZEZ3",
+      "title": "Move patterns into main document",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/29",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "feedback-dean"
+      ],
+      "body": "We should consider moving the patterns into the main document. They add a lot of value and being informational I suppose we can do that.",
+      "createdAt": "2025-03-24T09:24:38Z",
+      "updatedAt": "2025-03-24T09:24:38Z",
       "closedAt": null,
       "comments": []
     }
