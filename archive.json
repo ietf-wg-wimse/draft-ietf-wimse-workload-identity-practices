@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-30T01:02:28.499598+00:00",
+  "timestamp": "2025-04-01T01:05:17.438218+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -451,6 +451,44 @@
       "updatedAt": "2025-03-24T09:24:38Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 30,
+      "id": "I_kwDOL34A-M6wfW92",
+      "title": "Structure of this document",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/30",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on the recent feedback I propose take a step back first and settle on a document structure before we work in all the feedback.\n\nMy top of mind is the following:\n\n* Credential delivery mechanisms (env, file, api) \n   * theory\n      * env\n      * file\n      * api\n   * practice \n      * kubernetes (all)\n      * cloud (api)\n      * build systems (mainly env & file)\n      * spiffe (api)\n* Credential usage\n   * within the trust domain (direct access)\n   * Into an OAuth ecosystem (federation via assertion flow, token exchange, custom)\n* Format\n    * JWT (bearer)\n        * `iss` for discovery.\n        * audience for scoping\n        * Custom claims for context\n    * X509 (mTLS)\n       * Key distribution out of band?!\n       * SAN for identification\n\nAre others seeing more topics or alternatives structures? I, personally, am not sure if \"format\" is bringing much value, WDYT?",
+      "createdAt": "2025-03-31T16:42:46Z",
+      "updatedAt": "2025-03-31T19:05:35Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "co-authors @hannestschofenig @yaroslavros @b3n3d17 @edoardogiordano \nprevious reviewers @adeinega @nedmsmith @dhs-BI @heymarcel",
+          "createdAt": "2025-03-31T16:46:06Z",
+          "updatedAt": "2025-03-31T16:46:42Z"
+        },
+        {
+          "author": "heymarcel",
+          "authorAssociation": "NONE",
+          "body": "I'd still begin with an abstract flow to tell the overall story, and and provide a pattern to understand specific practices. Then I'd provide concrete examples of those practices (e.g. Kubernetes, cloud providers, etc.). The details of credential delivery mechanisms (e.g. environment variable) make more sense once the reader understands where those mechanisms matter, so I think it's appropriate to follow the practice examples, or perhaps include as an appendix..\n\nThat's Part I -- understanding current practices. Part II is where the document can make specific recommendations, referring back to the patterns in Part I.\n\nThe JWT/X.509 format section has utility in that it can highlight some differences between workload usage and human usage, or in the case of X.509, the differences between WIMSE/SPIFFE and traditional PKI. It would make sense as an appendix.",
+          "createdAt": "2025-03-31T17:30:20Z",
+          "updatedAt": "2025-03-31T17:30:20Z"
+        },
+        {
+          "author": "dhs-BI",
+          "authorAssociation": "NONE",
+          "body": "I agree with @heymarcel, with the exception that the format section could be in the body of the doc and not in the appendix.  ",
+          "createdAt": "2025-03-31T19:05:34Z",
+          "updatedAt": "2025-03-31T19:05:34Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -2035,6 +2073,32 @@
       "mergeCommit": {
         "oid": "897cd014f366cee0d4bf80587be82abeec395fb0"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 31,
+      "id": "PR_kwDOL34A-M6Q2RGD",
+      "title": "Fix grammar and typos",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/31",
+      "state": "OPEN",
+      "author": "heymarcel",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "As per our last discussion, here are some grammar/typo fixes I noticed on my first read of the document. It doesn't address the proposed structure changes in #30. ",
+      "createdAt": "2025-04-01T00:10:44Z",
+      "updatedAt": "2025-04-01T00:10:44Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "main",
+      "baseRefOid": "897cd014f366cee0d4bf80587be82abeec395fb0",
+      "headRepository": "heymarcel/draft-ietf-wimse-workload-identity-practices",
+      "headRefName": "main",
+      "headRefOid": "e8ae9853f71511056fa11d9178edd634c843e9ef",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
