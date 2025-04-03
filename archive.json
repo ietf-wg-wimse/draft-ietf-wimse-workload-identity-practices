@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-01T01:05:17.438218+00:00",
+  "timestamp": "2025-04-03T00:58:19.429195+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -464,7 +464,7 @@
       "labels": [],
       "body": "Based on the recent feedback I propose take a step back first and settle on a document structure before we work in all the feedback.\n\nMy top of mind is the following:\n\n* Credential delivery mechanisms (env, file, api) \n   * theory\n      * env\n      * file\n      * api\n   * practice \n      * kubernetes (all)\n      * cloud (api)\n      * build systems (mainly env & file)\n      * spiffe (api)\n* Credential usage\n   * within the trust domain (direct access)\n   * Into an OAuth ecosystem (federation via assertion flow, token exchange, custom)\n* Format\n    * JWT (bearer)\n        * `iss` for discovery.\n        * audience for scoping\n        * Custom claims for context\n    * X509 (mTLS)\n       * Key distribution out of band?!\n       * SAN for identification\n\nAre others seeing more topics or alternatives structures? I, personally, am not sure if \"format\" is bringing much value, WDYT?",
       "createdAt": "2025-03-31T16:42:46Z",
-      "updatedAt": "2025-03-31T19:05:35Z",
+      "updatedAt": "2025-04-02T13:37:48Z",
       "closedAt": null,
       "comments": [
         {
@@ -487,6 +487,20 @@
           "body": "I agree with @heymarcel, with the exception that the format section could be in the body of the doc and not in the appendix.  ",
           "createdAt": "2025-03-31T19:05:34Z",
           "updatedAt": "2025-03-31T19:05:34Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks for your input @heymarcel @dhs-BI.\n\nSo we would start with how credentials are used (assertion flow pattern) and then go to the delivery part? The benefit I'm seeing with starting with the delivery first is that the concrete patterns can then already highlight which delivery they use (e.g. CI/CD/build systems mostly use env). If we start with patterns first we would need to reference forward or pick the patterns up later in the document again.\n\nAn alternative option would be to do the theory first (general pattern + delivery) and compare to concrete systems (practical part) later:\n\n* Theory\n  * General pattern\n  * Delivery patterns\n* Practices\n  * Kubernetes\n  * Build systems\n  * Cloud providers\n  * SPIFFE\n",
+          "createdAt": "2025-04-02T11:11:32Z",
+          "updatedAt": "2025-04-02T11:12:07Z"
+        },
+        {
+          "author": "nedmsmith",
+          "authorAssociation": "NONE",
+          "body": "> An alternative option would be to do the theory first (general pattern + delivery) and compare to concrete systems (practical part) later:\n> \n> * Theory\n>   \n>   * General pattern\n>   * Delivery patterns\n> * Practices\n>   \n>   * Kubernetes\n>   * Build systems\n>   * Cloud providers\n>   * SPIFFE\n\n+1 for this approach",
+          "createdAt": "2025-04-02T13:37:47Z",
+          "updatedAt": "2025-04-02T13:37:47Z"
         }
       ]
     }
@@ -2088,7 +2102,7 @@
       "labels": [],
       "body": "As per our last discussion, here are some grammar/typo fixes I noticed on my first read of the document. It doesn't address the proposed structure changes in #30. ",
       "createdAt": "2025-04-01T00:10:44Z",
-      "updatedAt": "2025-04-01T00:10:44Z",
+      "updatedAt": "2025-04-02T15:34:16Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "897cd014f366cee0d4bf80587be82abeec395fb0",
