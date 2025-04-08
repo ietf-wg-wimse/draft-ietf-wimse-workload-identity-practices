@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-03T00:58:19.429195+00:00",
+  "timestamp": "2025-04-08T00:58:23.952436+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -2102,7 +2102,7 @@
       "labels": [],
       "body": "As per our last discussion, here are some grammar/typo fixes I noticed on my first read of the document. It doesn't address the proposed structure changes in #30. ",
       "createdAt": "2025-04-01T00:10:44Z",
-      "updatedAt": "2025-04-02T15:34:16Z",
+      "updatedAt": "2025-04-07T15:02:42Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "897cd014f366cee0d4bf80587be82abeec395fb0",
@@ -2114,7 +2114,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M6jvoF-",
+          "commit": {
+            "abbreviatedOid": "e8ae985"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM, thank you for doing this!",
+          "createdAt": "2025-04-07T15:02:42Z",
+          "updatedAt": "2025-04-07T15:02:42Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
