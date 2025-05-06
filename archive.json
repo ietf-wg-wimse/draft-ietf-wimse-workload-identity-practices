@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-08T00:58:23.952436+00:00",
+  "timestamp": "2025-05-06T01:01:16.106200+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -503,6 +503,22 @@
           "updatedAt": "2025-04-02T13:37:47Z"
         }
       ]
+    },
+    {
+      "number": 32,
+      "id": "I_kwDOL34A-M61PR6f",
+      "title": "Unclear document title, abstract and structure",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/32",
+      "state": "OPEN",
+      "author": "the--dud",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Reading the document I don't understand the purpose of this document. What is it trying to say?\n\nThe title \"Workload Identity Practices\" feels imprecise - it leads me to think that the document either will list (best) practices or different patterns related to Workload Identity\". Which is not what it does.\n\nThe abstract is also quite confusing, it starts by addressing secret sprawl, then states \"the industry has shifted towards a federation-based approach where credentials of the underlying workload platform are used as assertions towards an OAuth authorization server, leveraging the Assertion Framework for OAuth 2.0 Client Authentication [RFC7521], specifically [RFC7523].\". In my opinion the document states this very bluntly but it hasn't given me any context besides a brief reference to secret sprawl.\nThe second paragraph of the abstract refers to three sections of the document but this is not terribly helpful because the reader has not yet read the document.\nIn general I feel that this abstract doesn't fulfill the requirements specified in https://www.rfc-editor.org/rfc/rfc7322.html#section-4.3. It doesn't summarize and give a clear understanding of the document.\n\nReading the document itself it seems to me that it's actually describing a (proposed) WIMSE pattern of using tokens (eg, google/aws workload identity token, kubernetes service account token) as an assertion towards an AS in a different trust domain using an assertion_grant flow. I'm not clear if the document also proposes this pattern within the same trust domain.\n\nI feel that the abstract needs to be rewritten, inline with RFC7322 \"provides a concise and comprehensive overview of the purpose and contents of the entire document\".\n\nI also find that a lot of the most practical actionable information is \"buried\" in Appendix A. This appendix is the part that gives me most context of what the document is trying to achieve.",
+      "createdAt": "2025-05-05T19:56:14Z",
+      "updatedAt": "2025-05-05T19:56:14Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
