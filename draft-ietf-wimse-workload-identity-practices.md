@@ -98,29 +98,31 @@ informative:
 
 --- abstract
 
-Just like people, the workloads inside container orchestration systems (e.g.
-Kubernetes) need identities to authenticate with other systems. The use of the
-OAuth 2.0 framework in this context poses challenges, particularly in managing
-credentials, which can be complex and prone to errors. To address this, the
-industry has shifted to a federation-based approach where credentials of the
-underlying workload platform are used as assertions when presented to an OAuth
-authorization server, leveraging the Assertion Framework for OAuth 2.0 Client
-Authentication {{RFC7521}}, specifically {{RFC7523}}.
-
-This specification describes a general flow and credential delivery patterns,
-and outlines concrete practices. It refers to existing industry practices that
-are mainly built on top of OAuth. Therefore, it does not take into account the
-standards work in progress for the WIMSE architecture {{I-D.ietf-wimse-arch}}
-and other protocols, such as {{I-D.ietf-wimse-s2s-protocol}}.
+This specification describes current industry practices by which workloads in
+container orchestration systems can obtain identity tokens for authentication
+with external resources without managing secrets directly. It presents a general
+credential delivery flow, specific delivery patterns, and concrete practice
+examples. These practices are mainly built on top of OAuth 2.0. Therefore, it
+does not take into account the standards work in progress for the WIMSE
+architecture {{I-D.ietf-wimse-arch}} and other protocols, such as
+{{I-D.ietf-wimse-s2s-protocol}}.
 
 --- middle
 
 # Introduction
 
-Workloads usually require access to external resources to perform their tasks.
-These resources include databases, web servers, or other workloads. These
-resources are protected by an authorization server and require authentication
-via access token. The challenge for workloads is to obtain a token.
+Just like people, the workloads inside container orchestration systems (e.g.
+Kubernetes) need identities to authenticate with other systems. These resources
+include databases, web servers, or other workloads. These resources are
+protected by an authorization server and require authentication via access
+token. The challenge for workloads is to obtain a token.
+
+The common use of the OAuth 2.0 framework in this context poses challenges,
+particularly in managing credentials. To address this, the industry has shifted
+to a federation-based approach where credentials of the underlying workload
+platform are used as assertions when presented to an OAuth Authorization Server,
+leveraging the Assertion Framework for OAuth 2.0 Client Authentication
+{{RFC7521}}, specifically {{RFC7523}}.
 
 Traditionally, workloads were provisioned with client credentials and use the
 corresponding client credential flow (Section 1.3.4 {{RFC6749}}) to retrieve an
@@ -567,7 +569,7 @@ In case the workload needs to access a resource outside of the cloud (protected 
 
 * B3) Using the access token, the workload is able to access the protected resource in the external authorization domain.
 
-## Continuoues integration/deployment systems {#cicd}
+## Continuous Integration and Deployment Systems {#cicd}
 
 Continuous integration and deployment systems allow their pipelines/workflows to receive identity every time they run. Particularly in situations where build outputs need to be uploaded to resources protected by other authorization server, deployments need to be made, or more generally, protected resources to be accessed, {{RFC7523}} is used to federate the pipeline/workflow identity to an identity of the other authorization server.
 
