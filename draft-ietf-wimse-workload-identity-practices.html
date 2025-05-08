@@ -11,21 +11,21 @@
 <meta content="Edoardo Giordano" name="author">
 <meta content="Yaroslav Rosomakho" name="author">
 <meta content="
-       The use of the OAuth 2.0 framework in container orchestration systems poses challenges, particularly in managing credentials such as client_id and client_secret, which can be complex and prone to errors. To address this, the industry has shifted towards a federation-based approach where credentials of the underlying workload platform are used as assertions towards an OAuth authorization server, leveraging the Assertion Framework for OAuth 2.0 Client Authentication  , specifically  . 
-       This specification describes a meta flow in  , gives security recommendations in   and outlines concrete patterns in  . It referes to existing industry practices that are mainly built on top of OAuth. It may not be in line with the (currently work in progress) WIMSE architecture   and other protocols, such as  . 
+       Just like people, the workloads inside container orchestration systems (e.g. Kubernetes) need identities to authenticate with other systems. The use of the OAuth 2.0 framework in this context poses challenges, particularly in managing credentials, which can be complex and prone to errors. To address this, the industry has shifted to a federation-based approach where credentials of the underlying workload platform are used as assertions when presented to an OAuth authorization server, leveraging the Assertion Framework for OAuth 2.0 Client Authentication  , specifically  . 
+       This specification describes an abstract flow in  , gives security recommendations in   and outlines concrete patterns in  . It refers to existing industry practices that are mainly built on top of OAuth. Therefore, it does not take into account the standards work in progress for the WIMSE architecture   and other protocols, such as  . 
     " name="description">
-<meta content="xml2rfc 3.28.0" name="generator">
+<meta content="xml2rfc 3.28.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-wimse-workload-identity-practices-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.28.0
-    Python 3.12.9
+  xml2rfc 3.28.1
+    Python 3.12.10
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
-    Jinja2 3.1.5
+    Jinja2 3.1.6
     lxml 5.3.0
-    platformdirs 4.3.6
+    platformdirs 4.3.7
     pycountry 24.6.1
     PyYAML 6.0.2
     requests 2.32.3
@@ -1049,11 +1049,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Workload Identity</td>
-<td class="right">March 2025</td>
+<td class="right">May 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Schwenkschuster, et al.</td>
-<td class="center">Expires 4 September 2025</td>
+<td class="center">Expires 9 November 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-workload-identity-practices-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-03-03" class="published">3 March 2025</time>
+<time datetime="2025-05-08" class="published">8 May 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-09-04">4 September 2025</time></dd>
+<dd class="expires"><time datetime="2025-11-09">9 November 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1101,8 +1101,8 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Workload Identity Practices</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">The use of the OAuth 2.0 framework in container orchestration systems poses challenges, particularly in managing credentials such as client_id and client_secret, which can be complex and prone to errors. To address this, the industry has shifted towards a federation-based approach where credentials of the underlying workload platform are used as assertions towards an OAuth authorization server, leveraging the Assertion Framework for OAuth 2.0 Client Authentication <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span>, specifically <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-<p id="section-abstract-2">This specification describes a meta flow in <a href="#overview" class="auto internal xref">Section 3.1</a>, gives security recommendations in <a href="#recommendations" class="auto internal xref">Section 4</a> and outlines concrete patterns in <a href="#patterns" class="auto internal xref">Appendix A</a>. It referes to existing industry practices that are mainly built on top of OAuth. It may not be in line with the (currently work in progress) WIMSE architecture <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> and other protocols, such as <span>[<a href="#I-D.ietf-wimse-s2s-protocol" class="cite xref">I-D.ietf-wimse-s2s-protocol</a>]</span>.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">Just like people, the workloads inside container orchestration systems (e.g. Kubernetes) need identities to authenticate with other systems. The use of the OAuth 2.0 framework in this context poses challenges, particularly in managing credentials, which can be complex and prone to errors. To address this, the industry has shifted to a federation-based approach where credentials of the underlying workload platform are used as assertions when presented to an OAuth authorization server, leveraging the Assertion Framework for OAuth 2.0 Client Authentication <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span>, specifically <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">This specification describes an abstract flow in <a href="#overview" class="auto internal xref">Section 3.1</a>, gives security recommendations in <a href="#recommendations" class="auto internal xref">Section 4</a> and outlines concrete patterns in <a href="#patterns" class="auto internal xref">Appendix A</a>. It refers to existing industry practices that are mainly built on top of OAuth. Therefore, it does not take into account the standards work in progress for the WIMSE architecture <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> and other protocols, such as <span>[<a href="#I-D.ietf-wimse-s2s-protocol" class="cite xref">I-D.ietf-wimse-s2s-protocol</a>]</span>.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1123,7 +1123,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 September 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 9 November 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1274,9 +1274,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">Workloads often require access to external resources to perform their tasks. For example, access to a database, a web server or another workload. These resources are protected by an authorization server and can only be accessed with an access token. The challenge for workloads is to get this access token issued.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">Traditionally, workloads were provisioned with client credentials and use the corresponding client credential flow (Section 1.3.4 <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>) to retrieve an access token. This model comes with a set of challenges that make it insecure and high-maintenance. Secret materials need to be provisioned and rotated, which often happens manually. It also can be stolen and used by attackers to impersonate the workload.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">A solution to this problem is to not provision secret material to the workload and use the platform the workload runs on to attest for it. Many workload platforms offer a credential, in most cases a JWT token. Signed by a platform-internal authorization server, the credential attests the workload and its attributes. Based on <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span> and its JWT profile <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>, this credential can then be used as a client assertion towards a different authorization server.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-1">Workloads usually require access to external resources to perform their tasks. These resources include databases, web servers, or other workloads. These resources are protected by an authorization server and require authentication via access token. The challenge for workloads is to obtain a token.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">Traditionally, workloads were provisioned with client credentials and use the corresponding client credential flow (Section 1.3.4 <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>) to retrieve an access token. This model presents a number of security and maintenance issues. Secret materials must be provisioned and rotated, which require either automation to be built, or periodic manual effort. Secret materials can be stolen and used by attackers to impersonate the workload.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">Instead of provisioning secret material to the workload, one solution to this problem is to attest the workload by using its underlying platform. Many platforms provision workloads with a credential, such as a JWT token. Signed by a platform authorization server, this credential attests the workload and its attributes. Based on <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span> and its JWT profile <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>, this credential can then be used as a client assertion when presented to a different authorization server.<a href="#section-1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="terminology">
@@ -1304,7 +1304,7 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-overview" class="section-name selfRef">Overview</a>
         </h3>
 <p id="section-3.1-1"><a href="#fig-overview" class="auto internal xref">Figure 1</a> illustrates a generic pattern that applies across all of the patterns described in <a href="#patterns" class="auto internal xref">Appendix A</a>:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<span id="name-oauth2-assertion-flow-in-ge"></span><div id="fig-overview">
+<span id="name-abstract-oauth2-based-asser"></span><div id="fig-overview">
 <figure id="figure-1">
           <div id="section-3.1-2.1">
             <div class="alignLeft art-svg artwork" id="section-3.1-2.1.1">
@@ -1383,16 +1383,16 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
 </div>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
-<a href="#name-oauth2-assertion-flow-in-ge" class="selfRef">OAuth2 Assertion Flow in generic Workload Environment</a>
+<a href="#name-abstract-oauth2-based-asser" class="selfRef">Abstract OAuth2-Based Assertion Flow in generic Workload Environment</a>
           </figcaption></figure>
 </div>
 <p id="section-3.1-3">The figure outlines the following steps which are applicable in any pattern.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1-4.1">
-            <p id="section-3.1-4.1.1">1) retrieve credential issued by platform. The way this is achieved and whether this is workload (pull) or platform (push) initiated differs based on the platform.<a href="#section-3.1-4.1.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-4.1.1">1) Platform issues credential to workload. The way this is achieved and whether this is workload (pull) or platform (push) initiated differs based on the platform.<a href="#section-3.1-4.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-4.2">
-            <p id="section-3.1-4.2.1">2) present credential as an assertion towards an authorization server in an external authorization domain. This step uses the assertion_grant flow defined in <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span> and, in case of JWT format, <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>.<a href="#section-3.1-4.2.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-4.2.1">2) Workload presents credential to an authorization server in an external authorization domain. This step uses the assertion_grant flow defined in <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span> and, in case of JWT format, <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>.<a href="#section-3.1-4.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-4.3">
             <p id="section-3.1-4.3.1">3) On success, an access token is returned to the workload to access the protected resource.<a href="#section-3.1-4.3.1" class="pilcrow">¶</a></p>
@@ -1409,7 +1409,7 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
         <h3 id="name-credential-issuance">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-credential-issuance" class="section-name selfRef">Credential issuance</a>
         </h3>
-<p id="section-3.2-1">Credentials can be provisioned to the workload through different mechanisms which present different complexity and security risks. The following section highlights the pros and cons of most widespread solutions.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">Credentials can be provisioned to the workload through different mechanisms, which present different complexity and security risks. The following section highlights the pros and cons of most widespread solutions.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <div id="environment-variable">
 <section id="section-3.2.1">
           <h4 id="name-environment-variable">
@@ -1427,7 +1427,7 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
               <p id="section-3.2.1-2.3.1">3) environmental variables have a wide set of use cases and are observed by many components. They are often captured for monitoring, observability, debugging and logging purposes and send to components outside of the workload.<a href="#section-3.2.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-3.2.1-3">Leveraging environmental variables to provide credentials presents many security limitations. This approach should be limited to cases where simplicity of the application is required, e.g., during PoCs, and the provided secrets should have a short-term validity, i.e., an initial secret during the set-up of the application.<a href="#section-3.2.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-3">Leveraging environmental variables to provide credentials presents many security limitations. This approach should be limited to cases where simplicity of the application is required, e.g., during PoCs, and the provided secrets should have a short-term validity, i.e., an initial secret during the setup of the application.<a href="#section-3.2.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="files">
@@ -1435,16 +1435,16 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
           <h4 id="name-files">
 <a href="#section-3.2.2" class="section-number selfRef">3.2.2. </a><a href="#name-files" class="section-name selfRef">Files</a>
           </h4>
-<p id="section-3.2.2-1">Files allow to inject credentials into a container through the file-system and access them through primitives, e.g., Open, Close, etc. Such solutions enable secret rotation, and access control on the injected secret with standard operating system measure for files.<a href="#section-3.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.2-1">File-based delivery allows both container secret injection and access control. Systems making use of it have to address the following:<a href="#section-3.2.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2.2-2.1">
-              <p id="section-3.2.2-2.1.1">1) access control to the mounted file should be configure to limit access from unauthorized applications. E.g., on Linux solutions such as DAC (uid and guid) or MAC (SELinux,AppArmor) are available.<a href="#section-3.2.2-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-3.2.2-2.1.1">1) Access control to the mounted file should be configured to limit reads to authorized applications. Linux supports solutions such as DAC (uid and guid) or MAC (e.g. SELinux, AppArmor).<a href="#section-3.2.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.2-2.2">
-              <p id="section-3.2.2-2.2.1">2) isolating the mounted shared memory from critical host OS paths and processes is required. E.g, on Linux this is achieved by utilising namespaces.<a href="#section-3.2.2-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-3.2.2-2.2.1">2) Isolation of mounted shared memory from other host OS paths and processes. On Linux this is achieved by using namespaces.<a href="#section-3.2.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.2-2.3">
-              <p id="section-3.2.2-2.3.1">3) credentials rotation requires a solution to detect near-to-expiration secrets and substitute them. Solutions should enable configuration such that the new secret is renewed <em>before</em> the old secret is invalidated. E.g., the solution can choose to update the secret 1h before the old secret is invalidated. This enables applications time to update their usage of the old secret to the new without downtime.<a href="#section-3.2.2-2.3.1" class="pilcrow">¶</a></p>
+              <p id="section-3.2.2-2.3.1">3) Credential rotation requires a solution to detect soon-to-expire secrets as a rotation trigger. Solutions should enable configuration such that the new secret is renewed <em>before</em> the old secret is invalidated. For example, the solution can choose to update the secret an hour before it is invalidated. This gives applications time to update without downtime.<a href="#section-3.2.2-2.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-3.2.2-3">Volume solutions find their main benefit in the asynchronous provisioning of the credentials to the workload. This allows the workload to run independently of the credentials update, and to access them by reading the file, which path can be provisioned through environmental variables, only when required.<a href="#section-3.2.2-3" class="pilcrow">¶</a></p>
@@ -1455,7 +1455,7 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
           <h4 id="name-local-apis">
 <a href="#section-3.2.3" class="section-number selfRef">3.2.3. </a><a href="#name-local-apis" class="section-name selfRef">Local APIs</a>
           </h4>
-<p id="section-3.2.3-1">This set of solution rely on local APIs to communicate between the Host and the containerised application. Some implementations rely on UNIX Domain Sockets (SPIFFE), loopback interfaces or Magic (Link-Local) Addresses (AWS Metadata service) to provision credentials. Local APIs offer the capability to re-provision updated credentials. Communication between workload and API allows the workload to re-request a new credential (or a different one). Based on the technology it is even possible to pro-actively distribute new credentials to workloads (e.g. upon expiry, during a revocation event or a change in permissions). This group of solutions rely on network isolation for their security.<a href="#section-3.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.3-1">This set of solution rely on local APIs to communicate between the Host and the containerised application. Some implementations rely on UNIX Domain Sockets (SPIFFE), loopback interfaces or link-local "magic addresses" (e.g. AWS's IMDS) to provision credentials. Local APIs offer the capability to re-provision updated credentials. Communication between workload and API allows the workload to refresh a credential or request a different one. Based on the API it is even possible to proactively distribute new credentials to workloads (e.g. upon expiry, during a revocation event or a change in permissions). This group of solutions relies on network isolation for their security.<a href="#section-3.2.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2.3-2.1">
               <p id="section-3.2.3-2.1.1">1) credentials are only issued when request, thus reducing unnecessary credential issuance and allowing for a narrowly-scoped and short-lived secrets. For instance one-time credentials or narrowly scoped ones such as JSON Web Tokens with specific audiences.<a href="#section-3.2.3-2.1.1" class="pilcrow">¶</a></p>
@@ -1467,7 +1467,7 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
               <p id="section-3.2.3-2.3.1">3) additional latency may be introduced due to the request and additional operational overhead.<a href="#section-3.2.3-2.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-3.2.3-3">Local APIs offer the highest level of access control to protect the credential from un-legitimate access. They particularly thrive in environments of short-lived, narrowly scoped credentials, but come with operational overhead if the workload platform does not offer it already.<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.3-3">Local APIs thrive in environments of short-lived, narrowly scoped credentials, but require more operational overhead.<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1531,7 +1531,7 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
         <h3 id="name-custom-claims-are-important">
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-custom-claims-are-important" class="section-name selfRef">Custom claims are important for context</a>
         </h3>
-<p id="section-4.2-1">Some platform issued credentials have custom claims that are vital for context and are required to be validated. For example in a continuous integration and deployment platform where a workload is scheduled for a GIT repository, the branch is crucial. A 'main' branch may be protected and considered trusted to federate to external authorization servers, other branches may not be and are not allowed to access protected resources.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">Some platform issued credentials have custom claims that are vital for context and are required to be validated. For example in a continuous integration and deployment platform where a workload is scheduled for a Git repository, the branch is crucial. A 'main' branch may be protected and considered trusted to federate to external authorization servers. But other branches may not be allowed to access protected resources.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <p id="section-4.2-2">Authorization servers that validate assertions SHOULD make use of these claims. Platform issuers SHOULD allow differentiation based on the subject claim alone.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1549,7 +1549,7 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
         <h3 id="name-workload-lifecycle-and-inva">
 <a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-workload-lifecycle-and-inva" class="section-name selfRef">Workload lifecycle and invalidation</a>
         </h3>
-<p id="section-4.4-1">Platform issuers SHOULD invalidate those when the workload stops, pauses or ceases to exist. How these credentials are invalidated is not in scope of this specification.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+<p id="section-4.4-1">Platform issuers SHOULD invalidate tokens when the workload stops, pauses or ceases to exist. How these credentials are invalidated depends on platform authentication mechanisms and is not in scope of this specification.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="proof-of-possession">
@@ -1669,7 +1669,7 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <dl class="references">
 <dt id="I-D.ietf-oauth-rfc7523bis">[I-D.ietf-oauth-rfc7523bis]</dt>
         <dd>
-<span class="refAuthor">Jones, M. B.</span>, <span class="refAuthor">Campbell, B.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-rfc7523bis-00</span>, <time datetime="2025-02-21" class="refDate">21 February 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-00">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-00</a>&gt;</span>. </dd>
+<span class="refAuthor">Jones, M. B.</span>, <span class="refAuthor">Campbell, B.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"Updates to Audience Values for OAuth 2.0 Authorization Servers"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-rfc7523bis-01</span>, <time datetime="2025-04-23" class="refDate">23 April 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-01">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-wimse-arch">[I-D.ietf-wimse-arch]</dt>
         <dd>
@@ -1677,7 +1677,7 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 <dt id="I-D.ietf-wimse-s2s-protocol">[I-D.ietf-wimse-s2s-protocol]</dt>
         <dd>
-<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Salowey, J.</span>, <span class="refAuthor">Schwenkschuster, A.</span>, and <span class="refAuthor">Y. Sheffer</span>, <span class="refTitle">"WIMSE Service to Service Authentication"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-s2s-protocol-02</span>, <time datetime="2025-01-17" class="refDate">17 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol-02">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol-02</a>&gt;</span>. </dd>
+<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Salowey, J.</span>, <span class="refAuthor">Schwenkschuster, A.</span>, and <span class="refAuthor">Y. Sheffer</span>, <span class="refTitle">"WIMSE Workload to Workload Authentication"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-s2s-protocol-03</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol-03">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol-03</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="KubernetesServiceAccount">[KubernetesServiceAccount]</dt>
         <dd>
