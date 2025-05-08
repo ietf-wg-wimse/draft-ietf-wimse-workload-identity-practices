@@ -718,43 +718,76 @@ TODO Reference to attestation might be handy here
 
 ## Token typing
 
-Issuers SHOULD strongly type the issued tokens to workload via the JOSE `typ` header and authorization servers SHOULD validate the value of it according to policy. See Section 3.1 of {{RFC8725}} for details on explicit typing.
+Issuers SHOULD strongly type the issued tokens to workload via the JOSE `typ`
+header and authorization servers SHOULD validate the value of it according to
+policy. See Section 3.1 of {{RFC8725}} for details on explicit typing.
 
-Issuers SHOULD use `authorization-grant+jwt` as a `typ` value according to {{I-D.ietf-oauth-rfc7523bis}}. For broad support `JWT` or `JOSE` MAY be used by issuers and accepted by authorization servers but it's important to highlight that a wide range of tokens, meant for all sorts of purposes, use these values and would be accepted.
+Issuers SHOULD use `authorization-grant+jwt` as a `typ` value according to
+{{I-D.ietf-oauth-rfc7523bis}}. For broad support `JWT` or `JOSE` MAY be used by
+issuers and accepted by authorization servers but it is important to highlight
+that a wide range of tokens, meant for all sorts of purposes, use these values
+and would be accepted.
 
 ## Custom claims are important for context
 
-Some platform issued credentials have custom claims that are vital for context and are required to be validated. For example in a continuous integration and deployment platform where a workload is scheduled for a Git repository, the branch is crucial. A 'main' branch may be protected and considered trusted to federate to external authorization servers. But other branches may not be allowed to access protected resources.
+Some platform-issued credentials have custom claims that are vital for context
+and are required to be validated. For example, in a continuous integration and
+deployment platform where a workload is scheduled for a Git repository, the
+branch is crucial. A "main" branch may be protected and considered trusted to
+federate to external authorization servers. But other branches may not be
+allowed to access protected resources.
 
-Authorization servers that validate assertions SHOULD make use of these claims. Platform issuers SHOULD allow differentiation based on the subject claim alone.
+Authorization servers that validate assertions SHOULD make use of these claims.
+Platform issuers SHOULD allow differentiation based on the subject claim alone.
 
 ## Token lifetime
 
-Tokens SHOULD NOT exceed the lifetime of the workloads they represent. For example, a workload that has an expected lifetime of an hour should not receive a token valid for 2 hours or more.
+Tokens SHOULD NOT exceed the lifetime of the workloads they represent. For
+example, a workload that has an expected lifetime of an hour should not receive
+a token valid for 2 hours or more.
 
-For the scope of this specification, where a platform issued credential is used to authenticate to retrieve an access token for an external authorization domain, a short-lived credential is recommended.
+For the scope of this specification, where a platform-issued credential is used
+to authenticate to retrieve an access token for an external authorization
+domain, a short-lived credential is recommended.
 
 ## Workload lifecycle and invalidation
 
-Platform issuers SHOULD invalidate tokens when the workload stops, pauses or ceases to exist. How these credentials are invalidated depends on platform authentication mechanisms and is not in scope of this specification.
+Platform issuers SHOULD invalidate tokens when the workload stops, pauses or
+ceases to exist. How these credentials are invalidated depends on platform
+authentication mechanisms and is not in scope of this specification.
 
 ## Proof of possession
 
-Credentials SHOULD be bound to workloads and proof of possession SHOULD be performed when these credentials are used. This mitigates token theft. This proof of possession applies to the platform credential and the access token of the external authorization domains.
+Credentials SHOULD be bound to workloads and proof of possession SHOULD be
+performed when these credentials are used. This mitigates token theft. This
+proof of possession applies to the platform credential and the access token of
+the external authorization domains.
 
 ## Audience
 
-For issued credentials in the form of JWTs, they MUST be audienced using the `aud` claim. Each JWT SHOULD only carry a single audience. We RECOMMEND using URIs to specify audiences. See section 3 of {{RFC8707}} for more details and security implications.
+For issued credentials in the form of JWTs, they MUST be audienced using the
+`aud` claim. Each JWT SHOULD only carry a single audience. We RECOMMEND using
+URIs to specify audiences. See section 3 of {{RFC8707}} for more details and
+security implications.
 
-Some workload platforms provide credentials for interacting with their own APIs (e.g., Kubernetes). These credentials MUST NOT be used beyond the platform API. In the example of Kubernetes: A token used for anything else than the Kubernetes API itself MUST NOT carry the Kubernetes server in the `aud` claim.
+Some workload platforms provide credentials for interacting with their own APIs
+(e.g., Kubernetes). These credentials MUST NOT be used beyond the platform API.
+In the example of Kubernetes: A token used for anything else than the Kubernetes
+API itself MUST NOT carry the Kubernetes server in the `aud` claim.
 
 # Other considerations
 
 ## Relation to OpenID Connect and its ID Token
 
-The outlined pattern has been referred to as "OIDC" and respectively, the Workload Identity Token as "OIDC ID Token" defined in {{OIDC}}. The authors of this document want to highlight that this pattern is not related to OpenID Connect {{OIDC}} and the issued Workload Identity Tokens by the platforms are not "ID Tokens" in the sense of OIDC.
+The outlined pattern has been referred to as "OIDC" and respectively, the
+Workload Identity Token as "OIDC ID Token" defined in {{OIDC}}. The authors of
+this document want to highlight that this pattern is not related to OpenID
+Connect {{OIDC}} and the issued Workload Identity Tokens by the platforms are
+not "ID Tokens" in the sense of OIDC.
 
-However, it is common practice for the authorization server to leverage {{OIDCDiscovery}} to retrieve the signing keys needed for token validation. The use of {{RFC8414}} or any other key distribution remain valid.
+However, it is common practice for the authorization server to leverage
+{{OIDCDiscovery}} to retrieve the signing keys needed for token validation. The
+use of {{RFC8414}} or any other key distribution remain valid.
 
 # IANA Considerations {#IANA}
 
@@ -784,6 +817,10 @@ While {{RFC7521}} and {{RFC7523}} are the proposed standards for this pattern, s
 
    [[ To be removed from the final specification ]]
 
+   -02
+
+   * Rework structure as per https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/30
+   
    -01
 
    * Add credential delivery mechanisms
