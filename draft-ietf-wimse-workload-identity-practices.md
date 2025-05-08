@@ -98,19 +98,19 @@ informative:
 
 --- abstract
 
-The use of the OAuth 2.0 framework in container orchestration systems poses challenges, particularly in managing credentials such as client_id and client_secret, which can be complex and prone to errors. To address this, the industry has shifted towards a federation-based approach where credentials of the underlying workload platform are used as assertions towards an OAuth authorization server, leveraging the Assertion Framework for OAuth 2.0 Client Authentication {{RFC7521}}, specifically {{RFC7523}}.
+Just like people, the workloads inside container orchestration systems (e.g. Kubernetes) need identities to authenticate with other systems. The use of the OAuth 2.0 framework in this context poses challenges, particularly in managing credentials, which can be complex and prone to errors. To address this, the industry has shifted to a federation-based approach where credentials of the underlying workload platform are used as assertions when presented to an OAuth authorization server, leveraging the Assertion Framework for OAuth 2.0 Client Authentication {{RFC7521}}, specifically {{RFC7523}}.
 
-This specification describes a meta flow in {{overview}}, gives security recommendations in {{recommendations}} and outlines concrete patterns in {{patterns}}. It referes to existing industry practices that are mainly built on top of OAuth. It may not be in line with the (currently work in progress) WIMSE architecture {{I-D.ietf-wimse-arch}} and other protocols, such as {{I-D.ietf-wimse-s2s-protocol}}.
+This specification describes an abstract flow in {{overview}}, gives security recommendations in {{recommendations}} and outlines concrete patterns in {{patterns}}. It refers to existing industry practices that are mainly built on top of OAuth. Therefore, it does not take into account the standards work in progress for the WIMSE architecture {{I-D.ietf-wimse-arch}} and other protocols, such as {{I-D.ietf-wimse-s2s-protocol}}.
 
 --- middle
 
 # Introduction
 
-Workloads often require access to external resources to perform their tasks. For example, access to a database, a web server or another workload. These resources are protected by an authorization server and can only be accessed with an access token. The challenge for workloads is to get this access token issued.
+Workloads usually require access to external resources to perform their tasks. These resources include databases, web servers, or other workloads. These resources are protected by an authorization server and require authentication via access token. The challenge for workloads is to obtain a token.
 
-Traditionally, workloads were provisioned with client credentials and use the corresponding client credential flow (Section 1.3.4 {{RFC6749}}) to retrieve an access token. This model comes with a set of challenges that make it insecure and high-maintenance. Secret materials need to be provisioned and rotated, which often happens manually. It also can be stolen and used by attackers to impersonate the workload.
+Traditionally, workloads were provisioned with client credentials and use the corresponding client credential flow (Section 1.3.4 {{RFC6749}}) to retrieve an access token. This model presents a number of security and maintenance issues. Secret materials must be provisioned and rotated, which require either automation to be built, or periodic manual effort. Secret materials can be stolen and used by attackers to impersonate the workload.
 
-A solution to this problem is to not provision secret material to the workload and use the platform the workload runs on to attest for it. Many workload platforms offer a credential, in most cases a JWT token. Signed by a platform-internal authorization server, the credential attests the workload and its attributes. Based on {{RFC7521}} and its JWT profile {{RFC7523}}, this credential can then be used as a client assertion towards a different authorization server.
+Instead of provisioning secret material to the workload, one solution to this problem is to attest the workload by using its underlying platform. Many platforms provision workloads with a credential, such as a JWT token. Signed by a platform authorization server, this credential attests the workload and its attributes. Based on {{RFC7521}} and its JWT profile {{RFC7523}}, this credential can then be used as a client assertion when presented to a different authorization server.
 
 # Terminology
 
@@ -156,13 +156,13 @@ Even though, technically, the platform credential is also issued by an authoriza
  |  +--------------------------+    push   +-------------+  |
  +----------------------------------------------------------+
 ~~~
-{: #fig-overview title="OAuth2 Assertion Flow in generic Workload Environment"}
+{: #fig-overview title="Abstract OAuth2-Based Assertion Flow in generic Workload Environment"}
 
 The figure outlines the following steps which are applicable in any pattern.
 
-* 1) retrieve credential issued by platform. The way this is achieved and whether this is workload (pull) or platform (push) initiated differs based on the platform.
+* 1) Platform issues credential to workload. The way this is achieved and whether this is workload (pull) or platform (push) initiated differs based on the platform.
 
-* 2) present credential as an assertion towards an authorization server in an external authorization domain. This step uses the assertion_grant flow defined in {{RFC7521}} and, in case of JWT format, {{RFC7523}}.
+* 2) Workload presents credential to an authorization server in an external authorization domain. This step uses the assertion_grant flow defined in {{RFC7521}} and, in case of JWT format, {{RFC7523}}.
 
 * 3) On success, an access token is returned to the workload to access the protected resource.
 
@@ -172,7 +172,7 @@ Accessing different protected resources may require steps 2) to 4) again with di
 
 ## Credential issuance
 
-Credentials can be provisioned to the workload through different mechanisms which present different complexity and security risks. The following section highlights the pros and cons of most widespread solutions.
+Credentials can be provisioned to the workload through different mechanisms, which present different complexity and security risks. The following section highlights the pros and cons of most widespread solutions.
 
 ### Environment variable
 
@@ -184,23 +184,23 @@ Injecting the credentials into the environmental variables allows for simple and
 
 * 3) environmental variables have a wide set of use cases and are observed by many components. They are often captured for monitoring, observability, debugging and logging purposes and send to components outside of the workload.
 
-Leveraging environmental variables to provide credentials presents many security limitations. This approach should be limited to cases where simplicity of the application is required, e.g., during PoCs, and the provided secrets should have a short-term validity, i.e., an initial secret during the set-up of the application.
+Leveraging environmental variables to provide credentials presents many security limitations. This approach should be limited to cases where simplicity of the application is required, e.g., during PoCs, and the provided secrets should have a short-term validity, i.e., an initial secret during the setup of the application.
 
 ### Files
 
-Files allow to inject credentials into a container through the file-system and access them through primitives, e.g., Open, Close, etc. Such solutions enable secret rotation, and access control on the injected secret with standard operating system measure for files.
+File-based delivery allows both container secret injection and access control. Systems making use of it have to address the following:
 
-* 1) access control to the mounted file should be configure to limit access from unauthorized applications. E.g., on Linux solutions such as DAC (uid and guid) or MAC (SELinux,AppArmor) are available.
+* 1) Access control to the mounted file should be configured to limit reads to authorized applications. Linux supports solutions such as DAC (uid and guid) or MAC (e.g. SELinux, AppArmor).
 
-* 2) isolating the mounted shared memory from critical host OS paths and processes is required. E.g, on Linux this is achieved by utilising namespaces.
+* 2) Isolation of mounted shared memory from other host OS paths and processes. On Linux this is achieved by using namespaces.
 
-* 3) credentials rotation requires a solution to detect near-to-expiration secrets and substitute them. Solutions should enable configuration such that the new secret is renewed _before_ the old secret is invalidated. E.g., the solution can choose to update the secret 1h before the old secret is invalidated. This enables applications time to update their usage of the old secret to the new without downtime.
+* 3) Credential rotation requires a solution to detect soon-to-expire secrets as a rotation trigger. Solutions should enable configuration such that the new secret is renewed _before_ the old secret is invalidated. For example, the solution can choose to update the secret an hour before it is invalidated. This gives applications time to update without downtime.
 
 Volume solutions find their main benefit in the asynchronous provisioning of the credentials to the workload. This allows the workload to run independently of the credentials update, and to access them by reading the file, which path can be provisioned through environmental variables, only when required.
 
 ### Local APIs
 
-This set of solution rely on local APIs to communicate between the Host and the containerised application. Some implementations rely on UNIX Domain Sockets (SPIFFE), loopback interfaces or Magic (Link-Local) Addresses (AWS Metadata service) to provision credentials. Local APIs offer the capability to re-provision updated credentials. Communication between workload and API allows the workload to re-request a new credential (or a different one). Based on the technology it is even possible to pro-actively distribute new credentials to workloads (e.g. upon expiry, during a revocation event or a change in permissions). This group of solutions rely on network isolation for their security.
+This set of solution rely on local APIs to communicate between the Host and the containerised application. Some implementations rely on UNIX Domain Sockets (SPIFFE), loopback interfaces or link-local "magic addresses" (e.g. AWS's IMDS) to provision credentials. Local APIs offer the capability to re-provision updated credentials. Communication between workload and API allows the workload to refresh a credential or request a different one. Based on the API it is even possible to proactively distribute new credentials to workloads (e.g. upon expiry, during a revocation event or a change in permissions). This group of solutions relies on network isolation for their security.
 
 * 1) credentials are only issued when request, thus reducing unnecessary credential issuance and allowing for a narrowly-scoped and short-lived secrets. For instance one-time credentials or narrowly scoped ones such as JSON Web Tokens with specific audiences.
 
@@ -208,7 +208,7 @@ This set of solution rely on local APIs to communicate between the Host and the 
 
 * 3) additional latency may be introduced due to the request and additional operational overhead.
 
-Local APIs offer the highest level of access control to protect the credential from un-legitimate access. They particularly thrive in environments of short-lived, narrowly scoped credentials, but come with operational overhead if the workload platform does not offer it already.
+Local APIs thrive in environments of short-lived, narrowly scoped credentials, but require more operational overhead.
 
 ## Credential format
 
@@ -249,7 +249,7 @@ Issuers SHOULD use `authorization-grant+jwt` as a `typ` value according to {{I-D
 
 ## Custom claims are important for context
 
-Some platform issued credentials have custom claims that are vital for context and are required to be validated. For example in a continuous integration and deployment platform where a workload is scheduled for a GIT repository, the branch is crucial. A 'main' branch may be protected and considered trusted to federate to external authorization servers, other branches may not be and are not allowed to access protected resources.
+Some platform issued credentials have custom claims that are vital for context and are required to be validated. For example in a continuous integration and deployment platform where a workload is scheduled for a Git repository, the branch is crucial. A 'main' branch may be protected and considered trusted to federate to external authorization servers. But other branches may not be allowed to access protected resources.
 
 Authorization servers that validate assertions SHOULD make use of these claims. Platform issuers SHOULD allow differentiation based on the subject claim alone.
 
@@ -261,7 +261,7 @@ For the scope of this specification, where a platform issued credential is used 
 
 ## Workload lifecycle and invalidation
 
-Platform issuers SHOULD invalidate those when the workload stops, pauses or ceases to exist. How these credentials are invalidated is not in scope of this specification.
+Platform issuers SHOULD invalidate tokens when the workload stops, pauses or ceases to exist. How these credentials are invalidated depends on platform authentication mechanisms and is not in scope of this specification.
 
 ## Proof of possession
 
