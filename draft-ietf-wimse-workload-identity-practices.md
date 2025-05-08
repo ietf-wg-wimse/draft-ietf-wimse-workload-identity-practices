@@ -820,7 +820,7 @@ While {{RFC7521}} and {{RFC7523}} are the proposed standards for this pattern, s
    -02
 
    * Rework structure as per https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/30
-   
+
    -01
 
    * Add credential delivery mechanisms
