@@ -56,17 +56,16 @@ author:
 
 normative:
   RFC2119:
+  RFC6749:
+  RFC7517:
+  RFC7519:
   RFC7521:
   RFC7523:
-  RFC6749:
   RFC8174:
   RFC8414:
-  RFC7519:
-  RFC7517:
+  RFC8693:
   RFC8707:
   RFC8725:
-  RFC8414:
-  RFC8693:
 informative:
   I-D.ietf-oauth-rfc7523bis:
   I-D.ietf-wimse-arch:
@@ -95,6 +94,10 @@ informative:
      title: Kubernetes Token Request API V1
      target: https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/token-request-v1/
      date: 28 August 2024
+  SPIFFE:
+     title: Secure Production Identity Framework for Everyone (SPIFFE)
+     target: https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE.md
+     date: 10 May 2023
 
 --- abstract
 
@@ -163,7 +166,7 @@ refers to it as "platform issuer" or just "platform".
 ## Overview
 
 {{fig-overview}} illustrates a generic pattern that applies across all of the
-patterns described in {{practices}}:
+practices described in {{practices}}:
 
 ~~~ aasvg
  +----------------------------------------------------------+
@@ -191,7 +194,7 @@ patterns described in {{practices}}:
  |  +--------------------------+    push   +-------------+  |
  +----------------------------------------------------------+
 ~~~
-{: #fig-overview title="Abstract OAuth2-Based Assertion Flow in generic Workload Environment"}
+{: #fig-overview title="Generic workload identity pattern"}
 
 The figure outlines the following steps which are applicable in any pattern.
 
@@ -243,7 +246,7 @@ iss
 : The issuer of the workload platform. While this can have any format, it is
 important to highlight that many authorization servers leverage OpenID Connect
 Discovery {{OIDCDiscovery}} and/or OAuth 2.0 Authorization Server Metadata {{RFC8414}}
-to retrieve JSON Web Keys {{RFC7517}} for validation purposes. Therefore, it would
+to retrieve JSON Web Keys (JWKs) {{RFC7517}} for validation purposes. Therefore, it would
 be represented as a URL using the "https" scheme with no query or fragment components.
 
 sub
@@ -385,21 +388,28 @@ To validate service account tokens, Kubernetes allows workloads to:
 |                                                       |
 +-------------------------------------------------------+
 ~~~
-{: #fig-kubernetes title="OAuth2 Assertion Flow in a Kubernetes Workload Environment"}
+{: #fig-kubernetes title="Kubernetes workload identity in practice"}
 
 The steps shown in {{fig-kubernetes}} are:
 
-* 1) The Kubernetes Control Plane schedules the workload. This is much simplified and technically happens asynchronously.
+* 1) The Kubernetes Control Plane schedules the workload. This step is
+     simplified and actually happens asynchronously.
 
-* 2) The Kubernetes Control Plane projects the service account token into the workload. This step is also much simplified and technically happens alongside the scheduling with step 1.
+* 2) The Kubernetes Control Plane projects the service account token into the
+     workload. This step is also simplified and actually happens alongside the
+     scheduling in Step 1.
 
-* 3) Workloads present the projected service account token as a client assertion towards an external authorization server according to {{RFC7523}}.
+* 3) Workloads present the projected service account token to an external
+     authorization server as a client assertion as per {{RFC7523}}.
 
-* 4) On success, an access token is returned to the workload to access the protected resource.
+* 4) On success, an access token is returned to the workload to access the
+     protected resource.
 
-* 5) The access token is used to access the protected resource in the external authorization domain.
+* 5) The access token is used to access the protected resource in the external
+     authorization domain.
 
-As an example, the following JSON showcases the claims a Kubernetes Service Account token carries.
+As an example, the following JSON illustrates the claims contained in a Kubernetes Service
+Account token.
 
 ~~~json
 {
@@ -434,21 +444,33 @@ As an example, the following JSON showcases the claims a Kubernetes Service Acco
 
 ## Secure Production Identity Framework For Everyone (SPIFFE) {#spiffe}
 
-Secure Production Identity Framework For Everyone, also known as SPIFFE, is a cloud native compute foundation (CNCF) adopted project which defines an API defined called "Workload API" to delivery machine identity to workloads. Workloads can retrieve either X509 based or JWT credentials without the need to authenticate making it very easy to use. How workloads authenticate on the API is not part of the specification. It is common to use platform metadata from the operating system and the workload platform for authentication on the Workload API.
+The Secure Production Identity Framework For Everyone, also known as SPIFFE [SPIFFE], is
+a Cloud Native Computing Foundation (CNCF) project that defines a "Workload API"
+to deliver machine identity to workloads. Workloads can retrieve either X.509
+certificates or JWTs. How workloads authenticate on the API is not part of the
+specification. It is common to use platform metadata from the operating system
+and the workload platform for authentication to the Workload API.
 
-For the scope of this document, the JWT formatted credential is the most relevant one. SPIFFE referres to it as "JWT-SVID" (JWT - SPIFFE Verifiable Identity Document).
+SPIFFE referres to the JWT-formmatted credential as a "JWT-SVID" (JWT - SPIFFE
+Verifiable Identity Document).
 
-Workloads are required to specify at least one audience when requesting a JWT-SVID from the Workload API.
+Workloads are required to specify at least one audience when requesting a
+JWT-SVID from the Workload API.
 
-To allow validation, SPIFFE offers
+For validation, SPIFFE offers:
 
-* to download a set JWK encoded public keys that can be used to validate JWT signatures. In SPIFFE this is referred to as the "JWT trust bundle".
+* A set of public keys encoded in JWK format that can be used to
+  validate JWT signatures. In SPIFFE this is referred to as the "JWT trust
+  bundle".
 
-* invoke a validation method on the Workload API to validate JWT-SVIDs
+* A validation method on the Workload API to validate JWT-SVIDs.
 
-Additionally, many SPIFFE deployments choose to separately publish the signing keys as a JSON Web Key Set on a web server to allow validation where the Workload API is not available.
+Additionally, many SPIFFE deployments choose to separately publish the signing
+keys as a JWK Set on a web server to allow validation where the
+Workload API is not available.
 
-The following figure illustrates how a workload can use its JWT-SVID to access a protected resource outside of SPIFFE.
+The following figure illustrates how a workload can use its JWT-SVID to access a
+protected resource outside of SPIFFE.
 
 ~~~aasvg
 +---------------------------------------------------------+
@@ -457,15 +479,15 @@ The following figure illustrates how a workload can use its JWT-SVID to access a
 |   |                       |   |                      |  |
 |   | Authorization Server  |   |  Protected Resource  |  |
 |   |                       |   |                      |  |
-|   +-----^-----------------+   +--------^-------------+  |
-+---------+------------+-----------------+----------------+
+|   +-----------------------+   +----------------------+  |
++---------^------------+-----------------^----------------+
           |            |                 |
  2) present assertion  |             4) access
           |            |                 |
           |       3) access token        |
           |            |                 |
-+---------+------------+-----------------+----------------+
-|  +------+------------v-----------------+----+  Workload |
++---------+------------v-----------------+----------------+
+|  +------+------------------------------+----+  Workload |
 |  |                                          |  Platform |
 |  |                  Workload                |           |
 |  |                                          |           |
@@ -473,26 +495,31 @@ The following figure illustrates how a workload can use its JWT-SVID to access a
 |                        |                                |
 |                 1) get JWT-SVID                         |
 |                        |                                |
-|  +---------------------v--------------------+           |
+|                        v                                |
+|  +------------------------------------------+           |
 |  |                                          |           |
 |  |           SPIFFE Workload API            |           |
 |  |                                          |           |
 |  +------------------------------------------+           |
 +---------------------------------------------------------+
 ~~~
-{: #fig-spiffe title="OAuth2 Assertion Flow in a SPIFFE Environment"}
+{: #fig-spiffe title="Workload identity in SPIFFE"}
 
 The steps shown in {{fig-spiffe}} are:
 
-* 1) The workload request a JWT-SVID from the SPIFFE Workload API with an audience that identifies the external authorization server.
+* 1) The workload requests a JWT-SVID from the SPIFFE Workload API with an
+     audience that identifies the external authorization server.
 
-* 2) The workload presents the JWT-SVID as a client assertion in the assertion flow based on {{RFC7523}}.
+* 2) The workload presents the JWT-SVID as a client assertion in the assertion
+     flow based on {{RFC7523}}.
 
-* 3) On success, an access token is returned to the workload to access the protected resource.
+* 3) On success, an access token is returned to the workload to access the
+     protected resource.
 
-* 4) The access token is used to access the protected resource in the external authorization domain.
+* 4) The access token is used to access the protected resource in the external
+     authorization domain.
 
-The claims of a JWT-SVID for example look like this:
+Here are example claims for a JWT-SVID:
 
 ~~~json
 {
@@ -509,13 +536,31 @@ TODO: write about "iss" in JWT-SVID.
 
 ## Cloud Providers {#cloudproviders}
 
-Workload in cloud platforms can have any shape or form. Historically, virtual machines were the most common, with the introduction of containerization, hosted container environment or Kubernetes clusters were introduced, and lately, `serverless` functions are offered. Regardless of the actual workload packaging, distribution and runtime platform, all are in need of identity.
+Workload in cloud platforms can have any shape or form. Historically, virtual
+machines were the most common. The introduction of containerization brought
+hosted container environment or Kubernetes clusters. Containers have evolved
+into `serverless` offerings. Regardless of the actual workload packaging,
+distribution, or runtime platform, all these workloads need identities.
 
-To create a common identity interface across cloud services and offerings, the pattern of an `Instance Metadata Endpoint` has been established by the biggest cloud providers. Next to the option for workloads to get metadata about themselves, it also allows them to receive identity. The credential types offered can vary. JWT, however, is the one that is common across all of them. The issued credential allows proof to anyone it is being presented to, that the workload platform has attested the workload and it can be considered authenticated.
+The biggest cloud providers have established the pattern of an "Instance
+Metadata Endpoint". Aside from allowing workloads to retrieve metadata about
+themselves, it also allows them to receive identity. The credential types
+offered can vary. JWT, however, is the one that is common across all of them.
+The issued credential allows proof to anyone it is being presented to, that the
+workload platform has attested the workload and it can be considered
+authenticated.
 
-Within a cloud provider the issued credential can often directly be used to access resources of any kind across the platform making integration between the services easy and `credential less`. While the term is technically misleading, from a user perspective, no credential needs to be issued, provisioned, rotated or revoked, as everything is handled internally by the platform.
+Within a cloud provider the issued credential can often directly be used to
+access resources of any kind across the platform making integration between the
+services easy and "credentialless". While the term is technically misleading,
+from a user perspective, no credential needs to be issued, provisioned, rotated
+or revoked, as everything is handled internally by the platform.
 
-Resources outside of the platform, for example resources or workloads in other clouds, generic web servers or on-premise resources, are most of the time, however, protected by different domains and authorization servers and deny the platform issued credential. In this scenario, the pattern of using the platform issued credential as an assertion in the context of {{RFC7521}}, for JWT particularly {{RFC7523}} towards the authorization server that protected the resource to get an access token.
+This is not true for resources outside of the platform, such as on-premise
+resources, generic web servers or other cloud provider resources. Here we see
+the pattern of using the platform issued-credential as an assertion in the
+context of {{RFC7521}}, for JWT particularly {{RFC7523}} towards the
+Authorization Server that protects the resource.
 
 ~~~aasvg
    +-----------------------------------------------------+
@@ -551,27 +596,38 @@ B1) present as assertion |              B3) access
    |   +------------------------+                           |
    +--------------------------------------------------------+
 ~~~
-{: #fig-cloud title="OAuth2 Assertion Flow in a cloud environment"}
+{: #fig-cloud title="Workload identity in a cloud provider"}
 
 The steps shown in {{fig-cloud}} are:
 
 * 1) The workload retrieves identity from the Instance Metadata Endpoint.
 
-In case the workload needs to access a resource within the cloud (protected by the same authorization server that issued the workload identity)
+When the workload needs to access a resource within the cloud (protected by
+the same authorization server that issued the workload identity):
 
-* A1) The workload directly access the protected resource with the credential issued in step 1.
+* A1) The workload directly access the protected resource with the credential
+  issued in Step 1.
 
-In case the workload needs to access a resource outside of the cloud (protected by a different authorization server). This can also be the same cloud but different context (tenant, account).
+When the workload needs to access a resource outside of the cloud (protected by
+a different authorization server). This can also be the same cloud but different
+context (tenant, account):
 
-* B1) The workload presents cloud-issued credential as an assertion towards the external authorization server using {{RFC7523}}.
+* B1) The workload presents cloud-issued credential as an assertion towards the
+  external authorization server using {{RFC7523}}.
 
-* B2) On success, an access token is returned to the workload to access the protected resource.
+* B2) On success, an access token is returned to the workload to access the
+  protected resource.
 
-* B3) Using the access token, the workload is able to access the protected resource in the external authorization domain.
+* B3) Using the access token, the workload is able to access the protected
+  resource in the external authorization domain.
 
 ## Continuous Integration and Deployment Systems {#cicd}
 
-Continuous integration and deployment systems allow their pipelines/workflows to receive identity every time they run. Particularly in situations where build outputs need to be uploaded to resources protected by other authorization server, deployments need to be made, or more generally, protected resources to be accessed, {{RFC7523}} is used to federate the pipeline/workflow identity to an identity of the other authorization server.
+Continuous integration and deployment (CI-CD) systems allow their pipelines (or
+workflows) to receive an identity every time they run. Build outputs and other
+artifacts are commonly uploaded to external resources. In this case {{RFC7523}}
+is used to federate the pipeline/workflow identity to an identity of the other
+Authorization Server.
 
 ~~~aasvg
 +----------------------------------------------------------+
@@ -606,17 +662,25 @@ Continuous integration and deployment systems allow their pipelines/workflows to
 
 The steps shown in {{fig-cicd}} are:
 
-* 1) The continuous integration / deployment platform (CI-CD platform) schedules a task (considered a workload) to be performed.
+* 1) The CI-CD platform schedules a task (a workload for our purposes).
 
-* 2) The workload is able to retrieve identity from the CI-CD platform. This can differ based on the platform and potentially is already supplied during scheduling phase in step 1.
+* 2) The workload is able to receive identity from the CI-CD platform. This can
+     vary based on the platform and potentially is already supplied during
+     scheduling phase in Step 1.
 
-* 3) The workload presents the CI-CD issued credential as an assertion towards the authorization server in the external authorization domain based on {{RFC7521}}. In case of JWT also {{RFC7523}}.
+* 3) The workload presents the CI-CD issued credential as an assertion towards
+     the authorization server in the external authorization domain based on
+     {{RFC7521}}. In case of JWT, {{RFC7523}} also applies.
 
-* 4) On success, an access token is returned to the workload to access the protected resource.
+* 4) On success, an access token is returned to the workload to access the
+     protected resource.
 
-* 5) Using the access token, the workload is able to access the protected resource in the external authorization domain.
+* 5) Using the access token, the workload is able to access the protected
+     resource in the external authorization domain.
 
-Tokens of different providers look different, but all of them contain claims carrying the basic context of the executed tasks such as source code management data (e.g. git branch), initiation and more.
+Tokens of different providers look different, but all contain claims carrying
+the basic context of the executed tasks, such as source code management data
+(e.g. git branch), initiation and more.
 
 # Security Recommendations {#security}
 
