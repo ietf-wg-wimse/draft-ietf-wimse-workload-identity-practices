@@ -1,3 +1,3 @@
 # Automatically generated CODEOWNERS
 # Regenerate with `make update-codeowners`
-draft-ietf-wimse-workload-identity-bcp.md hofmann.benedikt@siemens.com hannes.tschofenig@gmx.net edoardo.giordano@nokia.com yrosomakho@zscaler.com arndts.ietf@gmail.com
+draft-ietf-wimse-workload-identity-practices.md arndts.ietf@gmail.com hofmann.benedikt@siemens.com hannes.tschofenig@gmx.net edoardo.giordano@nokia.com yrosomakho@zscaler.com
