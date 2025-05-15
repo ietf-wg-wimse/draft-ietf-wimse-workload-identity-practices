@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-11T01:05:41.054696+00:00",
+  "timestamp": "2025-05-15T00:58:56.698082+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -22,11 +22,6 @@
       "name": "enhancement",
       "description": "New feature or request",
       "color": "a2eeef"
-    },
-    {
-      "name": "good first issue",
-      "description": "Good for newcomers",
-      "color": "7057ff"
     },
     {
       "name": "help wanted",
@@ -339,7 +334,7 @@
       "id": "I_kwDOL34A-M6vY-DR",
       "title": "Inconsistent Presentation of Credential Issuance Mechanisms",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/23",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -348,8 +343,8 @@
       ],
       "body": "The three credential issuance mechanisms (environment variables, file-based, local APIs) are presented inconsistently. Section 3.2.1 discusses security limitations, 3.2.2 focuses on benefits, and 3.2.3 makes assertions about access control levels. \n\nWe should:\n* Use a consistent structure to present each mechanism\n* Create a summary table comparing pros/cons of each approach\n* Ensure security considerations are addressed for all mechanisms",
       "createdAt": "2025-03-24T09:17:44Z",
-      "updatedAt": "2025-05-09T21:22:23Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-13T15:32:21Z",
+      "closedAt": "2025-05-13T15:32:20Z",
       "comments": [
         {
           "author": "heymarcel",
@@ -357,6 +352,20 @@
           "body": "The restructuring in #33 has addressed the third point. I suggest taking another read of the latest version to see which of these problems still remain.",
           "createdAt": "2025-05-09T21:22:22Z",
           "updatedAt": "2025-05-09T21:22:22Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I feel like this issue is addressed by  #33. @heymarcel if you agree feel free to close this issue.",
+          "createdAt": "2025-05-13T09:40:14Z",
+          "updatedAt": "2025-05-13T09:40:14Z"
+        },
+        {
+          "author": "heymarcel",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I agree, but I don't have permissions to close.",
+          "createdAt": "2025-05-13T15:28:58Z",
+          "updatedAt": "2025-05-13T15:28:58Z"
         }
       ]
     },
@@ -607,7 +616,7 @@
       "labels": [],
       "body": "Reading the document I don't understand the purpose of this document. What is it trying to say?\n\nThe title \"Workload Identity Practices\" feels imprecise - it leads me to think that the document either will list (best) practices or different patterns related to Workload Identity\". Which is not what it does.\n\nThe abstract is also quite confusing, it starts by addressing secret sprawl, then states \"the industry has shifted towards a federation-based approach where credentials of the underlying workload platform are used as assertions towards an OAuth authorization server, leveraging the Assertion Framework for OAuth 2.0 Client Authentication [RFC7521], specifically [RFC7523].\". In my opinion the document states this very bluntly but it hasn't given me any context besides a brief reference to secret sprawl.\nThe second paragraph of the abstract refers to three sections of the document but this is not terribly helpful because the reader has not yet read the document.\nIn general I feel that this abstract doesn't fulfill the requirements specified in https://www.rfc-editor.org/rfc/rfc7322.html#section-4.3. It doesn't summarize and give a clear understanding of the document.\n\nReading the document itself it seems to me that it's actually describing a (proposed) WIMSE pattern of using tokens (eg, google/aws workload identity token, kubernetes service account token) as an assertion towards an AS in a different trust domain using an assertion_grant flow. I'm not clear if the document also proposes this pattern within the same trust domain.\n\nI feel that the abstract needs to be rewritten, inline with RFC7322 \"provides a concise and comprehensive overview of the purpose and contents of the entire document\".\n\nI also find that a lot of the most practical actionable information is \"buried\" in Appendix A. This appendix is the part that gives me most context and practical information on what the document is trying to achieve.",
       "createdAt": "2025-05-05T19:56:14Z",
-      "updatedAt": "2025-05-09T22:22:21Z",
+      "updatedAt": "2025-05-13T09:58:36Z",
       "closedAt": null,
       "comments": [
         {
@@ -637,6 +646,65 @@
           "body": "Thanks @heymarcel! First off - that was very quick \ud83d\udc4d \n\nThe document is, in my opinion, vastly improved so great job. The overall structure is better, it's much clearer what is the purpose and the abstract makes sense. \n\nI have a couple of thoughts:\n1. Is it possible to change the document name to something more precise at this point? Maybe \"Workload Identity Current Industry Practices\"? To call it \"Workload Identity Practices\" still feels very imprecise to me, it doesn't say much about anything.\n2. Is it really necessary to \"import\" half the SPIFFE spec into this spec? Maybe a briefer overview with a reference to SPIFFE docs? If this section had something important to say about *how current SPIFFE practices relates to WIMSE and this document*, it might justify such a lengthy section, but I don't really see that at the moment.\n3. On kubernetes would it be worth mentioning this quirk https://stackoverflow.com/a/69581779? Quick summary the default TTL for a k8s SA token appears to be 3607 seconds, and k8s will renew the token each hour but the \"exp\" is always set to **ONE YEAR**. This \"quirk\" has existed in kubernetes for years now.\n\nA suggestion: consider adding an Istio section. Istio actually uses an interesting mechanism with Envoy to establish mTLS between workloads and these x.509 certificates actually have SPIFFE IDs. So these certificates can be considered Workload Identity Credentials. This even work multi-cluster if you have a control plane configured for shared CA root.",
           "createdAt": "2025-05-09T22:22:20Z",
           "updatedAt": "2025-05-09T22:22:20Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "1. This specification used to be named \"Workload Identity Current Best Practices\" and after various discussions we ended at our current title \"Workload Identity Practices\". \n\n* `Current` got cut because it may not reflect the \"current practices\" at a future time. \n* `Best` got cut after various discussions resulting in the fact that many aspects of the document cannot be framed as \"best practices\" - for instance the fact that most of the tokens are Bearer tokens.\n\n2. I checked and we roughly introduce SPIFFE as much as we introduce K8S, Cloud providers and CI/CD/build systems. We mentioned SPIFFE also add the local APIs but only briefly. Do you think we should generally cut the introductions and refer to documentation instead?\n\n3. Thank you for sharing this. I'm not an expert but I always thought this to be only a migration thing to gradually migrate clusters away from unlimited/1year expirations?\n\nRegarding Istio: I'm indecisive about it. On one hand service meshes are a very common pattern that is deployed widely. On the other hand it is totally opaque to the workload, they cannot get any token from it. I feel like if we add Istio we should also talk about workload to workload auth with JWT and with mTLS. What do you think? (PS: I created #35 for it as I believe it deserves a dedicated issue)",
+          "createdAt": "2025-05-13T09:02:12Z",
+          "updatedAt": "2025-05-13T09:04:57Z"
+        },
+        {
+          "author": "dagdagdag83",
+          "authorAssociation": "NONE",
+          "body": "1. I see, some interesting history there. What about \"Workload Identity Industry Practices\" then?\n2. I suppose these sections are fine, they have compiled useful information which is difficult to find elsewhere. SPIFFES/SPIRE is well-documented but perhaps it's not so easy to find practical information on how SPIFFE is used for workload authentication. \n3. Yes I believe it was temporary, but the default configuration on the latest kubernetes still have the \"temporary workaround\" enabled. To disabled it you need to specifically do that in configuration, which very few people do. At the end of the day this is an issue for the kubernetes maintainers I suppose. \n\nThanks for creating the other issue for istio, let's continue discussing it there?",
+          "createdAt": "2025-05-13T09:58:35Z",
+          "updatedAt": "2025-05-13T09:58:35Z"
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "id": "I_kwDOL34A-M62WURK",
+      "title": "Cover Service Meshes",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/35",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Split from #32 where @dagdagdag83 suggested:\n\n> A suggestion: consider adding an Istio section. Istio actually uses an interesting mechanism with Envoy to establish mTLS between workloads and these x.509 certificates actually have SPIFFE IDs. So these certificates can be considered Workload Identity Credentials. This even work multi-cluster if you have a control plane configured for shared CA root.\n\n",
+      "createdAt": "2025-05-13T09:04:01Z",
+      "updatedAt": "2025-05-13T20:29:28Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "dagdagdag83",
+          "authorAssociation": "NONE",
+          "body": "This use case is further supported by this very brief section on RFC 8705: https://www.rfc-editor.org/rfc/rfc8705.html#name-tls-termination\n\n> An authorization server or resource server MAY choose to terminate TLS connections at a load balancer, reverse proxy, or other network intermediary. How the client certificate metadata is securely communicated between the intermediary and the application server, in this case, is out of scope of this specification.",
+          "createdAt": "2025-05-13T09:34:19Z",
+          "updatedAt": "2025-05-13T09:34:19Z"
+        },
+        {
+          "author": "dagdagdag83",
+          "authorAssociation": "NONE",
+          "body": "@arndt-s said in #32:\n> Regarding Istio: I'm indecisive about it. On one hand service meshes are a very common pattern that is deployed widely. On the other hand it is totally opaque to the workload, they cannot get any token from it. I feel like if we add Istio we should also talk about workload to workload auth with JWT and with mTLS. What do you think?\n\nI agree that the mechanism is quite different. I would argue that the XFCC headers can be considered a type of token, but they are not signed of course. The trust would not be in a signature, rather you put trust in the istio service mesh and your platform (headers can't be overwritten or tampered with, you trust that istio does proper certificate validation, istio itself won't be compromised, etc).\n\n\"workload to workload auth with JWT and with mTLS\" is clearly the purpose of https://www.ietf.org/archive/id/draft-ietf-wimse-s2s-protocol-03.html. Maybe that's a good point, talking about istio is more in the realm of that specification. It's not directly applicable to \"industry practices for **workload identity**\". Istio does use SPIFFE IDs to identify workloads (actually k8s service accounts), but the primary use case is definitivey Workload to Workload Authentication (in the service mesh).",
+          "createdAt": "2025-05-13T10:10:32Z",
+          "updatedAt": "2025-05-13T10:10:32Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Just because we cover workload to workload auth with JWT and mTLS in the S2S protocol doesn't mean we can't cover it here. It may actually be beneficial as they have different scope and intent. This doc aims to document the patterns, S2S specifies a new pattern that solves certain problems and has better security attributes. We may also just describe S2S as a pattern here and put it side by side to others, such as Istio.\n\nI'm syncing with the co-authors to discuss if we want to open up the scope for this or not and will be back.",
+          "createdAt": "2025-05-13T16:58:18Z",
+          "updatedAt": "2025-05-13T16:58:18Z"
+        },
+        {
+          "author": "dagdagdag83",
+          "authorAssociation": "NONE",
+          "body": "Thanks for the update, that sounds reasonable. I'm looking forward to hearing yours (and co-authors) thoughts.",
+          "createdAt": "2025-05-13T20:29:27Z",
+          "updatedAt": "2025-05-13T20:29:27Z"
         }
       ]
     }
