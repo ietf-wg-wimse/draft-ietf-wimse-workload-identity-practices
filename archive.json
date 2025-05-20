@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-15T00:58:56.698082+00:00",
+  "timestamp": "2025-05-20T01:03:01.819880+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -377,13 +377,15 @@
       "state": "OPEN",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "feedback-dean"
       ],
       "body": "Section 3.3 describes JWT claims based on RFC7523 but doesn't cover other token formats. \n\nWe should either\n* Remove this section (doesn't really add value)\n* Add complementary sections covering other formats (x.509 certificates, etc.) and include a comparison of different token formats' strengths and weaknesses",
       "createdAt": "2025-03-24T09:19:11Z",
-      "updatedAt": "2025-05-09T21:20:21Z",
+      "updatedAt": "2025-05-19T15:22:40Z",
       "closedAt": null,
       "comments": [
         {
@@ -392,6 +394,13 @@
           "body": "Related to #25: Should the document cover x.509 certificates as well?",
           "createdAt": "2025-05-09T21:20:20Z",
           "updatedAt": "2025-05-09T21:20:20Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I feel more and more towards removing that section.Without it we would actually cover more than just JWT, wouldn't we?",
+          "createdAt": "2025-05-19T15:22:39Z",
+          "updatedAt": "2025-05-19T15:22:39Z"
         }
       ]
     },
@@ -409,7 +418,7 @@
       ],
       "body": "Our security considerations are limited to JWT only. We should also cover other credential formats.",
       "createdAt": "2025-03-24T09:20:35Z",
-      "updatedAt": "2025-05-09T21:18:40Z",
+      "updatedAt": "2025-05-19T15:22:07Z",
       "closedAt": null,
       "comments": [
         {
@@ -418,6 +427,13 @@
           "body": "In Section 3.2 (\"Credential Format\") the document explicitly names JWTs as the focus. Does that suffice? Or is it perhaps an inappropriate limitation?",
           "createdAt": "2025-05-09T21:18:40Z",
           "updatedAt": "2025-05-09T21:18:40Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I feel like we should remove the credential format section - we don't really introduce anything here and basically repeat RFC 7523. Without it we would actually cover more than just JWT, wouldn't we?\n\n---\n\nUpdate: this comment is much more relevant in #24. Sorry for the noise.\n",
+          "createdAt": "2025-05-19T15:21:01Z",
+          "updatedAt": "2025-05-19T15:22:06Z"
         }
       ]
     },
@@ -504,7 +520,7 @@
       "id": "I_kwDOL34A-M6vZEZ3",
       "title": "Move patterns into main document",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/29",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -513,8 +529,8 @@
       ],
       "body": "We should consider moving the patterns into the main document. They add a lot of value and being informational I suppose we can do that.",
       "createdAt": "2025-03-24T09:24:38Z",
-      "updatedAt": "2025-05-09T21:08:30Z",
-      "closedAt": null,
+      "updatedAt": "2025-05-19T15:21:19Z",
+      "closedAt": "2025-05-19T15:21:18Z",
       "comments": [
         {
           "author": "heymarcel",
