@@ -120,11 +120,11 @@ include databases, web servers, or other workloads. These resources are
 protected by an authorization server and require authentication via access
 token. The challenge for workloads is to obtain a token.
 
-The common use of the OAuth 2.0 framework in this context poses challenges,
-particularly in managing credentials. To address this, the industry has shifted
-to a federation-based approach where credentials of the underlying workload
-platform are used to authenticate to other Identity Providers, which in turn,
-issue credentials that grant access to resources.
+The common use of the OAuth 2.0 framework {{RFC6749}} in this context poses 
+challenges, particularly in managing credentials. To address this, the industry
+has shifted to a federation-based approach where credentials of the underlying 
+workload platform are used to authenticate to other identity providers, which in
+ turn, issue credentials that grant access to resources.
 
 Traditionally, workloads were provisioned with client credentials and use for
 example the corresponding client credential flow (Section 1.3.4 {{RFC6749}}) to
@@ -135,9 +135,9 @@ materials can be stolen and used by attackers to impersonate the workload.
 
 Instead of provisioning secret material to the workload, one solution to this
 problem is to attest the workload by using its underlying platform. Many
-platforms provision workloads with a credential, such as a JWT token. Signed by
-a platform authorization server, this credential attests the workload and its
-attributes.
+platforms provision workloads with a credential, such as a JWT token 
+({{RFC7519}}). Cryptographically signed by the platform's authorization server,
+this credential attests the workload and its attributes.
 
 {{fig-overview}} illustrates a generic pattern that is seen across many workload
 platforms, more concrete variations are found in {{practices}}.
