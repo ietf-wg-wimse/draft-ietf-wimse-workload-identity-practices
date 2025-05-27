@@ -123,21 +123,21 @@ token. The challenge for workloads is to obtain a token.
 The common use of the OAuth 2.0 framework in this context poses challenges,
 particularly in managing credentials. To address this, the industry has shifted
 to a federation-based approach where credentials of the underlying workload
-platform are used to authenticate to other Identity Providers, which in turn, 
+platform are used to authenticate to other Identity Providers, which in turn,
 issue credentials that grant access to resources.
 
-Traditionally, workloads were provisioned with client credentials and use for 
-example the corresponding client credential flow (Section 1.3.4 {{RFC6749}}) to 
+Traditionally, workloads were provisioned with client credentials and use for
+example the corresponding client credential flow (Section 1.3.4 {{RFC6749}}) to
 retrieve an OAuth 2.0 access token. This model presents a number of security and
-maintenance issues. Secret materials must be provisioned and rotated, which 
-require either automation to be built, or periodic manual effort. Secret 
+maintenance issues. Secret materials must be provisioned and rotated, which
+require either automation to be built, or periodic manual effort. Secret
 materials can be stolen and used by attackers to impersonate the workload.
 
 Instead of provisioning secret material to the workload, one solution to this
 problem is to attest the workload by using its underlying platform. Many
 platforms provision workloads with a credential, such as a JWT token. Signed by
 a platform authorization server, this credential attests the workload and its
-attributes. 
+attributes.
 
 {{fig-overview}} illustrates a generic pattern that is seen across many workload
 platforms, more concrete variations are found in {{practices}}.
@@ -304,9 +304,9 @@ To programatically use service accounts, workloads can:
 * Have the token "projected" into the file system of the workload. This is
   similar to volume mounting in non-Kubernetes environments, and is commonly
   referred to as "projected service account token".
-  
+
 * Use the Token Request API {{TokenReviewV1}} of the control plane. This option,
-  however, requires an initial projected service account token as a mean of 
+  however, requires an initial projected service account token as a mean of
   authentication.
 
 Both options allow workloads to:
@@ -486,7 +486,7 @@ The steps shown in {{fig-spiffe}} are:
 
 * 1) The workload requests a JWT-SVID from the SPIFFE Workload API.
 
-* A) The JWT-SVID can be used to directly access resources or other workloads 
+* A) The JWT-SVID can be used to directly access resources or other workloads
      within the same SPIFFE Trust Domain.
 
 * B1) To access resource proctected by other Identity Providers the workload
@@ -495,7 +495,7 @@ The steps shown in {{fig-spiffe}} are:
 * B2) Once federated, the workload can access resources outside of its trust
       domain.
 
-> TODO: We should talk about native SPIFFE federation. Maybe a C) flow in the 
+> TODO: We should talk about native SPIFFE federation. Maybe a C) flow in the
 > diagram or at least some text.
 
 Here are example claims for a JWT-SVID:
@@ -536,13 +536,13 @@ from a user perspective, no credential needs to be issued, provisioned, rotated
 or revoked, as everything is handled internally by the platform.
 
 This is not true for resources outside of the platform, such as on-premise
-resources, generic web servers or other cloud provider resources. Here, the 
-workload firsts need to federate to the Secure Token Service (STS), which is 
-effectively an Identity Provider, to receive an identity of the other cloud. 
+resources, generic web servers or other cloud provider resources. Here, the
+workload firsts need to federate to the Secure Token Service (STS), which is
+effectively an Identity Provider, to receive an identity of the other cloud.
 Using this different identity the workoad can then access its resources.
 
 This pattern also applies when accessing resources in the same cloud but across
-different security boundaries (different account /tenant). The actual flows and 
+different security boundaries (different account /tenant). The actual flows and
 implementations may vary in these situations though.
 
 ~~~aasvg
@@ -606,7 +606,7 @@ a different authorization server).
 
 Continuous integration and deployment (CI-CD) systems allow their pipelines (or
 workflows) to receive an identity every time they run. Build outputs and other
-artifacts are commonly uploaded to external resources. With federation to 
+artifacts are commonly uploaded to external resources. With federation to
 external Identity Providers the pipelines and tasks can access these resources.
 
 ~~~aasvg
@@ -620,29 +620,29 @@ external Identity Providers the pipelines and tasks can access these resources.
     | |                 |             +------------+  |
     | +-----+-+---------+                             |
     +-------+-+---------------------------------------+
-            | |                                        
-            | |                     +--------------+   
-2) federate | | 3) access           |              |   
-            | +-------------------->|   Resource   |   
-            v                       |              |   
-      +-------------------+         +--------------+   
-      |                   |                            
-      | Identity Provider |                            
-      |                   |                            
-      +-------------------+                            
+            | |
+            | |                     +--------------+
+2) federate | | 3) access           |              |
+            | +-------------------->|   Resource   |
+            v                       |              |
+      +-------------------+         +--------------+
+      |                   |
+      | Identity Provider |
+      |                   |
+      +-------------------+
 ~~~
 {: #fig-cicd title="OAuth2 Assertion Flow in a continuous integration/deployment environment"}
 
 The steps shown in {{fig-cicd}} are:
 
-* 1) The CI-CD platform schedules a workload (pipeline or task). Based on 
+* 1) The CI-CD platform schedules a workload (pipeline or task). Based on
      configuration a Workload Identity is made available by the platform.
 
 * 2) The workload uses the identity to federate to a Identity Provider.
 
 * 3) The workload uses the federated identity to access resources. For instance,
-     a artifact store to upload compiled binaries, or to download libraries 
-     needed to resolve dependencies. It is also common to access other 
+     a artifact store to upload compiled binaries, or to download libraries
+     needed to resolve dependencies. It is also common to access other
      infrastructure as resources to make deployments or changes.
 
 Tokens of different providers look different, but all contain claims carrying
@@ -780,6 +780,10 @@ While {{RFC7521}} and {{RFC7523}} are the proposed standards for this pattern, s
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -latest
+
+   * Use more generic "federation" term instead of RFC 7523 specifics
 
    -02
 
