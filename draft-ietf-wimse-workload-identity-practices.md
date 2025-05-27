@@ -123,27 +123,74 @@ token. The challenge for workloads is to obtain a token.
 The common use of the OAuth 2.0 framework in this context poses challenges,
 particularly in managing credentials. To address this, the industry has shifted
 to a federation-based approach where credentials of the underlying workload
-platform are used as assertions when presented to an OAuth Authorization Server,
-leveraging the Assertion Framework for OAuth 2.0 Client Authentication
-{{RFC7521}}, specifically {{RFC7523}}.
+platform are used to authenticate to other Identity Providers, which in turn, 
+issue credentials that grant access to resources.
 
-Traditionally, workloads were provisioned with client credentials and use the
-corresponding client credential flow (Section 1.3.4 {{RFC6749}}) to retrieve an
-access token. This model presents a number of security and maintenance issues.
-Secret materials must be provisioned and rotated, which require either
-automation to be built, or periodic manual effort. Secret materials can be
-stolen and used by attackers to impersonate the workload.
+Traditionally, workloads were provisioned with client credentials and use for 
+example the corresponding client credential flow (Section 1.3.4 {{RFC6749}}) to 
+retrieve an OAuth 2.0 access token. This model presents a number of security and
+maintenance issues. Secret materials must be provisioned and rotated, which 
+require either automation to be built, or periodic manual effort. Secret 
+materials can be stolen and used by attackers to impersonate the workload.
 
 Instead of provisioning secret material to the workload, one solution to this
 problem is to attest the workload by using its underlying platform. Many
 platforms provision workloads with a credential, such as a JWT token. Signed by
 a platform authorization server, this credential attests the workload and its
-attributes. Based on {{RFC7521}} and its JWT profile {{RFC7523}}, this
-credential can then be used as a client assertion when presented to a different
-authorization server.
+attributes. 
 
-This document first describes a general flow and pattern for credential delivery
-in {{flow}}. It then dives into specific practices in {{practices}}.
+{{fig-overview}} illustrates a generic pattern that is seen across many workload
+platforms, more concrete variations are found in {{practices}}.
+
+~~~ aasvg
+     +--------------------------------------------------------+
+     |                                      Workload Platform |
+     | +-----------------+               +------------------+ |
+     | |                 |               |                  | |
+     | |    Workload     |<------------->|  Platform Issuer | |
+     | |                 |  1) push/pull |                  | |
+     | +-----+-+------+--+               +------------------+ |
+     |       | |      |                                       |
+     |       | |      |                                       |
+     |       | |      |                      +--------------+ |
+     |       | |      |    A) access         |              | |
+     |       | |      +--------------------->|   Resource   | |
+     |       | |                             |              | |
+     |       | |                             +--------------+ |
+     +-------+-+----------------------------------------------+
+             | |
+             | |                             +--------------+
+B1) federate | |  B2) access                 |              |
+             | +---------------------------->|   Resource   |
+             v                               |              |
+       +-------------------+                 +--------------+
+       |                   |
+       | Identity Provider |
+       |                   |
+       +-------------------+
+~~~
+{: #fig-overview title="Generic workload identity pattern"}
+
+The figure outlines the following steps which are applicable in any pattern.
+
+* 1) Platform issues credential to workload. The way this is achieved and
+     whether this is workload (pull) or platform (push) initiated differs based
+     on the platform.
+
+* A) The credential gives the workload direct access to resources within the
+     platform or the platform itself (e.g. to perform infrastructure operations)
+
+* B1) The workload uses the credential to federate to an Identity Provider. This
+      step is optional and only needed when accessing outside resurces.
+
+* B2) The workload accesses resources outside of the platform and uses the
+      federated identity obtained in the previous step.
+
+Accessing different outside resources may require the workload to repeat steps
+B1) and B2), federating to multiple Identity Providers. It is also possible that
+step 1) needs to be repeated, for example in situations where the
+platform-issued credential is scoped to accessing a certain resource or
+federating to a specific Identity Provider.
 
 # Terminology
 
@@ -161,103 +208,7 @@ Even though, technically, the platform credential is also issued by an
 authorization server within the workload platform, this specification only
 refers to it as "platform issuer" or just "platform".
 
-# Overall Patterns {#flow}
-
-## Overview
-
-{{fig-overview}} illustrates a generic pattern that applies across all of the
-practices described in {{practices}}:
-
-~~~ aasvg
- +----------------------------------------------------------+
- |                           External Authorization Domain  |
- |                                                          |
- | +-------------------------+     +--------------------+   |
- | |                         |     |                    |   |
- | |   Authorization Server  |     | Protected Resource |   |
- | |                         |     |                    |   |
- | +-----------------+-------+     +--------------------+   |
- +---------^---------+------------------------^-------------+
-           |         |                        |
-           |   3) access token           4) access
-           |         |                        |
-2) present assertion |                        |
-           |         |     +------------------+
-           |         |     |
- +---------+---------+-----+--------------------------------+
- |         |         |     |             Workload Platform  |
- |         |         v     |                                |
- |  +------+---------------+---+           +-------------+  |
- |  |                          |           | Credential  |  |
- |  |        Workload          |<--------->| issued by   |  |
- |  |                          | 1) pull/  | Platform    |  |
- |  +--------------------------+    push   +-------------+  |
- +----------------------------------------------------------+
-~~~
-{: #fig-overview title="Generic workload identity pattern"}
-
-The figure outlines the following steps which are applicable in any pattern.
-
-* 1) Platform issues credential to workload. The way this is achieved and
-     whether this is workload (pull) or platform (push) initiated differs based
-     on the platform.
-
-* 2) Workload presents credential to an authorization server in an external
-     authorization domain. This step uses the assertion_grant flow defined in
-     {{RFC7521}} and, in case of JWT format, {{RFC7523}}.
-
-* 3) On success, an access token is returned to the workload to access the
-     protected resource.
-
-* 4) The access token is used to access a protected resource in the external
-     authorization domain. For instance by making a HTTP call.
-
-Accessing different protected resources may require steps 2) to 4) again with
-different scope parameters. Accessing a protected resource in an entirely
-different authorization domain often requires the entire flow to be followed
-again, to retrieve a new platform-issued credential with an audience for the
-external authorization server. This, however, differs based on the platform and
-implementation.
-
-## Credential Format
-
-We focus on JSON Web Token credential formats in this document. Other formats
-such as X.509 certificates are possible but not as widely seen as JSON Web
-Tokens.
-
-The claims in the present assertion vary greatly based on use case and actual
-platform, but a minimum set of claims are seen across all of them. {{RFC7523}}
-describes them in detail and according to it, all MUST be present.
-
-~~~json
-{
-  "iss": "https://example.org",
-  "sub": "my-workload",
-  "aud": "target-audience",
-  "exp": 1729248124
-}
-~~~
-
-The claims can be described in the following way for the purpose of this
-specification, and everything in {{RFC7523}} applies.
-
-{:vspace}
-iss
-: The issuer of the workload platform. While this can have any format, it is
-important to highlight that many authorization servers leverage OpenID Connect
-Discovery {{OIDCDiscovery}} and/or OAuth 2.0 Authorization Server Metadata {{RFC8414}}
-to retrieve JSON Web Keys (JWKs) {{RFC7517}} for validation purposes. Therefore, it would
-be represented as a URL using the "https" scheme with no query or fragment components.
-
-sub
-: Subject that identifies the workload within the domain/workload platform instance.
-
-aud
-: One or many audiences the platform issued credential is eligible for. This is
-crucial when presenting the credential as an assertion towards the external
-authorization server, which MUST identify itself as an audience present in the assertion.
-
-## Credential Delivery
+# Delivery Patterns {#delivery-patterns}
 
 Credentials can be provisioned to the workload by different mechanisms, which
 each have their own advantages, challenges, and security risks. The following
@@ -265,7 +216,7 @@ section highlights the pros and cons of common solutions. Security
 recommendations for these methods are covered in
 {{security-credential-delivery}}.
 
-### Environment Variables
+## Environment Variables
 
 Injecting the credentials into the environmental variables allows for simple and
 fast deployments. Applications can directly access them through system-level
@@ -273,7 +224,7 @@ mechanism, e.g., through the `env` command in linux. Note that environmental
 variables are static in nature in that they cannot be changed after application
 initialization.
 
-### Filesystem
+## Filesystem
 
 Filesystem delivery allows both container secret injection and access control.
 Many solutions find the main benefit in the asynchronous provisioning of the
@@ -286,7 +237,7 @@ old secret is invalidated. For example, the solution can choose to update the
 secret an hour before it is invalidated. This gives applications time to update
 without downtime.
 
-### Local APIs
+## Local APIs
 
 This pattern relies on local APIs to communicate between the workload and the
 credential issuer. Some implementations rely on UNIX Domain Sockets (SPIFFE),
@@ -302,7 +253,38 @@ connections allow the issuer to push credentials.
 This pattern also requires client code, which introduces portability challenges.
 The request-response paradigm and additional operational overhead adds latency.
 
+# Usage patterns {#usage-pattern}
+
+Workloads can use the credential that was issued to them from the platform for
+many different purposes. For simplicity, we differentiate access of resources
+within and outside of the platform. A resource can also be a different workload,
+including invoking a remote procedure (HTTP POST, RPC, etc.).
+
+## Accessing other workloads within the platform
+
+Workloads often need to interact with the platform itself. For instance,
+storing or accessing data is a very common pattern and workload platform
+offer various features to facility this. Access is directly given by the
+credential issued from the platform.
+
+Also very common is the communication between workloads themselves. To secure
+access, they need to authenticate to another. The platform-issued credential often
+allows this out-of-the-box.
+
+> TODO: Talk about Bearer Tokens and audience?
+
+## Accessing resources outside of the platform
+
+Resources that don't reside within the platform can likely not accessed by the
+credential that was issued from the platform. This requires the workload to
+federate to an Identity Provider outside of the platform to receive access.
+This can for example be an OAuth 2.0 Authorization Server that issues Access Tokens
+but also other Identity systems that grant access.
+
 # Practices {#practices}
+
+The following practices outline more concrete examples of platforms, including their
+delivery and usage patterns.
 
 ## Kubernetes {#kubernetes}
 
@@ -319,11 +301,13 @@ relevant for the purposes of this document.
 
 To programatically use service accounts, workloads can:
 
-* Use the Token Request API {{TokenReviewV1}} of the control plane
-
 * Have the token "projected" into the file system of the workload. This is
   similar to volume mounting in non-Kubernetes environments, and is commonly
   referred to as "projected service account token".
+  
+* Use the Token Request API {{TokenReviewV1}} of the control plane. This option,
+  however, requires an initial projected service account token as a mean of 
+  authentication.
 
 Both options allow workloads to:
 
@@ -352,61 +336,59 @@ To validate service account tokens, Kubernetes allows workloads to:
   access to the actual Kubernetes Control Plane API.
 
 ~~~aasvg
-+-------------------------------------------------------+
-|                         External Authorization Domain |
-|                                                       |
-| +--------------------------+ +--------------------+   |
-| |                          | |                    |   |
-| |   Authorization Server   | | Protected Resource |   |
-| |                          | |                    |   |
-| +------^-------------+-----+ +----------^---------+   |
-|        |             |                  |             |
-+--------+-------------+------------------+-------------+
-         |             |                  |
-3) present assertion   |              5) access
-         |             |                  |
-         |       4) access token          |
-         |             |                  |
-+--------+-------------+------------------+-------------+
-|        |             |     +------------+  Kubernetes |
-|        |             |     |                  Cluster |
-|    +---+-------------v-----+----+                     |
-|    |                            |                     |
-|    |    Workload                |                     |
-|    |                            |                     |
-|    +----^----------------^------+                     |
-|         |                |                            |
-|         |                |                            |
-|    1) schedule     2) projected service               |
-|         |             account token                   |
-|         |                |                            |
-|   +-----+----------------+-------------------+        |
-|   |                                          |        |
-|   |     Kubernetes Control Plane / kubelet   |        |
-|   |                                          |        |
-|   +------------------------------------------+        |
-|                                                       |
-+-------------------------------------------------------+
+         +-------------------------------------------------+
+         |                                     Kubernetes  |
+         |                      +--------------+           |
+         |        A1) access    |              |           |
+         |      +-------------->|  API Server  |           |
+         |      |               |              |           |
+         |      |               +--------------+           |
+         | +----+----+                  ^ 1) request token |
+         | |         | 2) schedule +----+----+             |
+         | |   Pod   |<------------+ Kubelet |             |
+         | |         |             +---------+             |
+         | +-+-+---+-+                                     |
+         |   | |   |                      +--------------+ |
+         |   | |   |   B1) access         |              | |
+         |   | |   +--------------------->|   Resource   | |
+         |   | |                          |              | |
+         |   | |                          +--------------+ |
+         |   | |                                           |
+         +---+-+-------------------------------------------+
+             | |
+             | |                          +--------------+
+C1) federate | | C2) access               |              |
+             | +------------------------->|   Resource   |
+             v                            |              |
+           +---------------------+        +--------------+
+           |                     |
+           |  Identity Provider  |
+           |                     |
+           +---------------------+
 ~~~
 {: #fig-kubernetes title="Kubernetes workload identity in practice"}
 
 The steps shown in {{fig-kubernetes}} are:
 
-* 1) The Kubernetes Control Plane schedules the workload. This step is
-     simplified and actually happens asynchronously.
+* 1) The kubelet is tasked to schedule a Pod. Based on configuration it requests
+     a Service Account Token from the Kubernetes API server.
 
-* 2) The Kubernetes Control Plane projects the service account token into the
-     workload. This step is also simplified and actually happens alongside the
-     scheduling in Step 1.
+* 2) The kubelet starts the Pod and, based on the configuration of the Pod,
+     deliveres the token to the containers within the Pod.
 
-* 3) Workloads present the projected service account token to an external
-     authorization server as a client assertion as per {{RFC7523}}.
+Now, the Pod can use the token to
 
-* 4) On success, an access token is returned to the workload to access the
-     protected resource.
+* A) Access the Kubernetes Control Plane, considering it has access to it.
 
-* 5) The access token is used to access the protected resource in the external
-     authorization domain.
+* B) Access other resources within the cluster, for instance other Pods.
+
+* C) Access resources outside of the cluster.
+
+  * C1) The application within the pod uses the Service Account Token to
+        federate to an Identity Provider outside of the Kubernets Cluster.
+
+  * C2) Using the federated identity the application within the Pod accesses
+        resources outside of the cluster.
 
 As an example, the following JSON illustrates the claims contained in a Kubernetes Service
 Account token.
@@ -473,51 +455,48 @@ The following figure illustrates how a workload can use its JWT-SVID to access a
 protected resource outside of SPIFFE.
 
 ~~~aasvg
-+---------------------------------------------------------+
-|                           External Authorization Domain |
-|   +-----------------------+   +----------------------+  |
-|   |                       |   |                      |  |
-|   | Authorization Server  |   |  Protected Resource  |  |
-|   |                       |   |                      |  |
-|   +-----------------------+   +----------------------+  |
-+---------^------------+-----------------^----------------+
-          |            |                 |
- 2) present assertion  |             4) access
-          |            |                 |
-          |       3) access token        |
-          |            |                 |
-+---------+------------v-----------------+----------------+
-|  +------+------------------------------+----+  Workload |
-|  |                                          |  Platform |
-|  |                  Workload                |           |
-|  |                                          |           |
-|  +---------------------+--------------------+           |
-|                        |                                |
-|                 1) get JWT-SVID                         |
-|                        |                                |
-|                        v                                |
-|  +------------------------------------------+           |
-|  |                                          |           |
-|  |           SPIFFE Workload API            |           |
-|  |                                          |           |
-|  +------------------------------------------+           |
-+---------------------------------------------------------+
+      +--------------------------------------------------------+
+      |                                    SPIFFE Trust Domain |
+      |                                                        |
+      | +--------------+  1) Get JWT-SVID    +--------------+  |
+      | |              +-------------------->|    SPIFFE    |  |
+      | |   Workload   |                     | Workload API |  |
+      | |              |                     +--------------+  |
+      | +----+-+----+--+                                       |
+      |      | |    |                        +--------------+  |
+      |      | |    |     A) access          |              |  |
+      |      | |    +----------------------->|   Resource   |  |
+      |      | |                             |              |  |
+      |      | |                             +--------------+  |
+      +------+-+-----------------------------------------------+
+             | |
+             | |                             +--------------+
+B1) federate | | B2) access                  |              |
+             | +---------------------------->|   Resource   |
+             v                               |              |
+       +---------------------+               +--------------+
+       |                     |
+       |  Identity Provider  |
+       |                     |
+       +---------------------+
 ~~~
 {: #fig-spiffe title="Workload identity in SPIFFE"}
 
 The steps shown in {{fig-spiffe}} are:
 
-* 1) The workload requests a JWT-SVID from the SPIFFE Workload API with an
-     audience that identifies the external authorization server.
+* 1) The workload requests a JWT-SVID from the SPIFFE Workload API.
 
-* 2) The workload presents the JWT-SVID as a client assertion in the assertion
-     flow based on {{RFC7523}}.
+* A) The JWT-SVID can be used to directly access resources or other workloads 
+     within the same SPIFFE Trust Domain.
 
-* 3) On success, an access token is returned to the workload to access the
-     protected resource.
+* B1) To access resource proctected by other Identity Providers the workload
+      uses the SPIFFE JWT-SVID to federate to the Identity Provider.
 
-* 4) The access token is used to access the protected resource in the external
-     authorization domain.
+* B2) Once federated, the workload can access resources outside of its trust
+      domain.
+
+> TODO: We should talk about native SPIFFE federation. Maybe a C) flow in the 
+> diagram or at least some text.
 
 Here are example claims for a JWT-SVID:
 
@@ -557,126 +536,114 @@ from a user perspective, no credential needs to be issued, provisioned, rotated
 or revoked, as everything is handled internally by the platform.
 
 This is not true for resources outside of the platform, such as on-premise
-resources, generic web servers or other cloud provider resources. Here we see
-the pattern of using the platform issued-credential as an assertion in the
-context of {{RFC7521}}, for JWT particularly {{RFC7523}} towards the
-Authorization Server that protects the resource.
+resources, generic web servers or other cloud provider resources. Here, the 
+workload firsts need to federate to the Secure Token Service (STS), which is 
+effectively an Identity Provider, to receive an identity of the other cloud. 
+Using this different identity the workoad can then access its resources.
+
+This pattern also applies when accessing resources in the same cloud but across
+different security boundaries (different account /tenant). The actual flows and 
+implementations may vary in these situations though.
 
 ~~~aasvg
-   +-----------------------------------------------------+
-   |                       External Authorization Domain |
-   |                                                     |
-   | +------------------------+  +---------------------+ |
-   | |                        |  |                     | |
-   | | Authorization Server   |  | Protected Resource  | |
-   | |                        |  |                     | |
-   | +------^------------+----+  +----------^----------+ |
-   |        |            |                  |            |
-   +--------+------------+------------------+------------+
-            |            |                  |
-B1) present as assertion |              B3) access
-            |            |                  |
-            |       B2) access token        |
-            |            |   +--------------+
-   +--------+------------+---+------------------------------+
-   |        |            |   |                        Cloud |
-   |        |            |   |                              |
-   |   +----+------------v---+--+ 1) get       +----------+ |
-   |   |                        |    identity  |          | |
-   |   |        Workload        +--------------> Instance | |
-   |   |                        |              |          | |
-   |   +-----------+------------+              | Metadata | |
-   |               |                           |          | |
-   |           A1) access                      | Service/ | |
-   |               |                           | Endpoint | |
-   |   +-----------v------------+              |          | |
-   |   |                        |              +----------+ |
-   |   |   Protected Resource   |                           |
-   |   |                        |                           |
-   |   +------------------------+                           |
-   +--------------------------------------------------------+
+    +----------------------------------------------------------+
+    |                                                    Cloud |
+    |                                                          |
+    |                                   +-------------------+  |
+    |  +--------------+ 1) get identity |                   |  |
+    |  |              +---------------->| Instance Metadata |  |
+    |  |   Workload   |                 |  Service/Endpoint |  |
+    |  |              |                 |                   |  |
+    |  +-----+-+----+-+                 +-------------------+  |
+    |        | |    |                                          |
+    |        | |    |                        +--------------+  |
+    |        | |    |     A) access          |              |  |
+    |        | |    +----------------------->|   Resource   |  |
+    |        | |                             |              |  |
+    |        | |                             +--------------+  |
+    +--------+-+-----------------------------------------------+
+             | |
+B1) federate | | B2) access
+             | |
+    +--------+-+-----------------------------------------------+
+    |        | |                   External (e.g. other cloud) |
+    |        | |                                               |
+    |        | |                             +--------------+  |
+    |        | |                             |              |  |
+    |        | +---------------------------->|   Resource   |  |
+    |        v                               |              |  |
+    |  +-----------------------------+       +--------------+  |
+    |  |                             |                         |
+    |  |  Secure Token Service (STS) |                         |
+    |  |                             |                         |
+    |  +-----------------------------+                         |
+    +----------------------------------------------------------+
 ~~~
 {: #fig-cloud title="Workload identity in a cloud provider"}
 
 The steps shown in {{fig-cloud}} are:
 
-* 1) The workload retrieves identity from the Instance Metadata Endpoint.
+* 1) The workload retrieves an identity from the Instance Metadata Service or
+     Endpoint. This endpoint exposes an well-known API and is available at well-
+     known, but local, location.
 
 When the workload needs to access a resource within the cloud (protected by
 the same authorization server that issued the workload identity):
 
-* A1) The workload directly access the protected resource with the credential
+* A) The workload directly access the protected resource with the credential
   issued in Step 1.
 
 When the workload needs to access a resource outside of the cloud (protected by
-a different authorization server). This can also be the same cloud but different
-context (tenant, account):
+a different authorization server).
 
-* B1) The workload presents cloud-issued credential as an assertion towards the
-  external authorization server using {{RFC7523}}.
+* B1) The workload uses cloud-issued credential to federate to the Secure Token
+      Service of the other cloud/account.
 
-* B2) On success, an access token is returned to the workload to access the
-  protected resource.
-
-* B3) Using the access token, the workload is able to access the protected
-  resource in the external authorization domain.
+* B2) Using the federated identity the workload can access the resource outside,
+      assuming the federated identity has the necessary permissions.
 
 ## Continuous Integration and Deployment Systems {#cicd}
 
 Continuous integration and deployment (CI-CD) systems allow their pipelines (or
 workflows) to receive an identity every time they run. Build outputs and other
-artifacts are commonly uploaded to external resources. In this case {{RFC7523}}
-is used to federate the pipeline/workflow identity to an identity of the other
-Authorization Server.
+artifacts are commonly uploaded to external resources. With federation to 
+external Identity Providers the pipelines and tasks can access these resources.
 
 ~~~aasvg
-+----------------------------------------------------------+
-|                            External Authorization Domain |
-| +--------------------------+     +---------------------+ |
-| |                          |     |                     | |
-| |   Authorization Server   |     |  Protected Resource | |
-| |                          |     |                     | |
-| +-------^-------------+----+     +------------^--------+ |
-|         |             |                       |          |
-+---------+-------------+-----------------------+----------+
-          |             |                       |
-3) present assertion    |                  4) access
-          |             |                       |
-          |      4) access token                |
-          |             |                       |
-+---------+-------------v-----------------------+----------+
-|                                                          |
-|                    Task (Workload)                       |
-|                                                          |
-+--------^---------------------------^---------------------+
-         |                           |
-   1) schedules              2) retrieve identity
-         |                           |
-+--------+---------------------------v---------------------+
-|                                                          |
-|       Continuous Integration / Deployment Platform       |
-|                                                          |
-+----------------------------------------------------------+
+    +-------------------------------------------------+
+    |    Continuous Integration / Deployment Platform |
+    |                                                 |
+    | +-----------------+             +------------+  |
+    | |                 | 1) schedule |            |  |
+    | |  Pipeline/Task  |<------------+  Platform  |  |
+    | |   (Workload)    |             |            |  |
+    | |                 |             +------------+  |
+    | +-----+-+---------+                             |
+    +-------+-+---------------------------------------+
+            | |                                        
+            | |                     +--------------+   
+2) federate | | 3) access           |              |   
+            | +-------------------->|   Resource   |   
+            v                       |              |   
+      +-------------------+         +--------------+   
+      |                   |                            
+      | Identity Provider |                            
+      |                   |                            
+      +-------------------+                            
 ~~~
 {: #fig-cicd title="OAuth2 Assertion Flow in a continuous integration/deployment environment"}
 
 The steps shown in {{fig-cicd}} are:
 
-* 1) The CI-CD platform schedules a task (a workload for our purposes).
+* 1) The CI-CD platform schedules a workload (pipeline or task). Based on 
+     configuration a Workload Identity is made available by the platform.
 
-* 2) The workload is able to receive identity from the CI-CD platform. This can
-     vary based on the platform and potentially is already supplied during
-     scheduling phase in Step 1.
+* 2) The workload uses the identity to federate to a Identity Provider.
 
-* 3) The workload presents the CI-CD issued credential as an assertion towards
-     the authorization server in the external authorization domain based on
-     {{RFC7521}}. In case of JWT, {{RFC7523}} also applies.
-
-* 4) On success, an access token is returned to the workload to access the
-     protected resource.
-
-* 5) Using the access token, the workload is able to access the protected
-     resource in the external authorization domain.
+* 3) The workload uses the federated identity to access resources. For instance,
+     a artifact store to upload compiled binaries, or to download libraries 
+     needed to resolve dependencies. It is also common to access other 
+     infrastructure as resources to make deployments or changes.
 
 Tokens of different providers look different, but all contain claims carrying
 the basic context of the executed tasks, such as source code management data
@@ -685,7 +652,6 @@ the basic context of the executed tasks, such as source code management data
 # Security Recommendations {#security}
 
 All security considerations in section 8 of {{RFC7521}} apply.
-
 
 ## Credential Delivery {#security-credential-delivery}
 
@@ -798,8 +764,6 @@ This document does not require actions by IANA.
 Add your name here.
 
 --- back
-
-
 
 # Variations {#variations}
 
