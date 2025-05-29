@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-20T01:03:01.819880+00:00",
+  "timestamp": "2025-05-29T01:02:59.867409+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -2429,6 +2429,126 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 36,
+      "id": "PR_kwDOL34A-M6XxQ6Y",
+      "title": "Introduce generic \"federation\" term instead of RFC 7523 specifics",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/36",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft currently focuses heavily on RFC7523 (the JWT assertion framework). I don't think that's good because:\r\n\r\n* RFC 7523 has 2 flows (client authentication and JWT authorization grants) leaving the reader guessing which one to use\r\n* Limits this draft to only implementations of RFC 7523 (aka no AWS, no GCP)\r\n\r\nInstead, this PR proposes to move towards the more generic term of \"federation\". This will include AWS, GCP and more and also will sound more familiar with readers that aren't as involved into specifics of OAuth such as the assertion framework. \r\n\r\nA new section called \"usage patterns\" aims to highlight various patterns workloads use their identity with, starting at accessing resources within the platform (no federation required) to federating to external Identity Providers and using a federated identity to access resources.",
+      "createdAt": "2025-05-27T12:03:21Z",
+      "updatedAt": "2025-05-27T20:45:36Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "main",
+      "baseRefOid": "336d050d51c7c617ae83020e0a2880132e09523f",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "headRefName": "arndt/rephrase-assertion-to-federation",
+      "headRefOid": "3cefab1b4245ad7bab595d2129c8950cd29ab704",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M6rHQ-q",
+          "commit": {
+            "abbreviatedOid": "528372a"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "\n\nCopilot reviewed 1 out of 1 changed files in this pull request and generated no comments.\n\n\n\n",
+          "createdAt": "2025-05-27T12:09:04Z",
+          "updatedAt": "2025-05-27T12:09:04Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOL34A-M6rLtfZ",
+          "commit": {
+            "abbreviatedOid": "3cefab1"
+          },
+          "author": "heymarcel",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-27T17:35:22Z",
+          "updatedAt": "2025-05-27T17:35:23Z",
+          "comments": [
+            {
+              "originalPosition": 258,
+              "body": "I would leave inter-platform workload communication and authentication out of the document. It varies too much by platform, and distracts from the overall discussion of workload identity federation.",
+              "createdAt": "2025-05-27T17:35:23Z",
+              "updatedAt": "2025-05-27T17:35:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6rLt8t",
+          "commit": {
+            "abbreviatedOid": "3cefab1"
+          },
+          "author": "heymarcel",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-27T17:36:12Z",
+          "updatedAt": "2025-05-27T17:36:13Z",
+          "comments": [
+            {
+              "originalPosition": 266,
+              "body": "What is this saying that hasn't already been said earlier?",
+              "createdAt": "2025-05-27T17:36:13Z",
+              "updatedAt": "2025-05-27T17:36:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6rN5Sb",
+          "commit": {
+            "abbreviatedOid": "3cefab1"
+          },
+          "author": "heymarcel",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-27T20:31:49Z",
+          "updatedAt": "2025-05-27T20:31:49Z",
+          "comments": [
+            {
+              "originalPosition": 287,
+              "body": "\"means of\"",
+              "createdAt": "2025-05-27T20:31:49Z",
+              "updatedAt": "2025-05-27T20:31:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6rOEAK",
+          "commit": {
+            "abbreviatedOid": "3cefab1"
+          },
+          "author": "heymarcel",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-27T20:45:36Z",
+          "updatedAt": "2025-05-27T20:45:36Z",
+          "comments": [
+            {
+              "originalPosition": 499,
+              "body": "Are you thinking of referring to the definition of \"tenant\" in the headless JWT document, or defining it here as well?",
+              "createdAt": "2025-05-27T20:45:36Z",
+              "updatedAt": "2025-05-27T20:45:36Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
