@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-29T01:02:59.867409+00:00",
+  "timestamp": "2025-06-03T01:04:05.447904+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -691,7 +691,7 @@
       "labels": [],
       "body": "Split from #32 where @dagdagdag83 suggested:\n\n> A suggestion: consider adding an Istio section. Istio actually uses an interesting mechanism with Envoy to establish mTLS between workloads and these x.509 certificates actually have SPIFFE IDs. So these certificates can be considered Workload Identity Credentials. This even work multi-cluster if you have a control plane configured for shared CA root.\n\n",
       "createdAt": "2025-05-13T09:04:01Z",
-      "updatedAt": "2025-05-13T20:29:28Z",
+      "updatedAt": "2025-06-02T10:26:48Z",
       "closedAt": null,
       "comments": [
         {
@@ -721,6 +721,13 @@
           "body": "Thanks for the update, that sounds reasonable. I'm looking forward to hearing yours (and co-authors) thoughts.",
           "createdAt": "2025-05-13T20:29:27Z",
           "updatedAt": "2025-05-13T20:29:27Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@dagdagdag83 what part of service meshes do you see relevant here? \nIs it the provisioning part (e.g. Envoy SDS) or the usage part (sidecar establishing mutual TLS). Do you feel like we should cover service meshes only in the context of K8S or also wider (incl. VM, etc.). \n\nIf it's the provisioning part, we believe we have that already covered with \"Local API\" pattern.",
+          "createdAt": "2025-06-02T10:26:47Z",
+          "updatedAt": "2025-06-02T10:26:47Z"
         }
       ]
     }
@@ -2442,13 +2449,13 @@
       "labels": [],
       "body": "The draft currently focuses heavily on RFC7523 (the JWT assertion framework). I don't think that's good because:\r\n\r\n* RFC 7523 has 2 flows (client authentication and JWT authorization grants) leaving the reader guessing which one to use\r\n* Limits this draft to only implementations of RFC 7523 (aka no AWS, no GCP)\r\n\r\nInstead, this PR proposes to move towards the more generic term of \"federation\". This will include AWS, GCP and more and also will sound more familiar with readers that aren't as involved into specifics of OAuth such as the assertion framework. \r\n\r\nA new section called \"usage patterns\" aims to highlight various patterns workloads use their identity with, starting at accessing resources within the platform (no federation required) to federating to external Identity Providers and using a federated identity to access resources.",
       "createdAt": "2025-05-27T12:03:21Z",
-      "updatedAt": "2025-05-27T20:45:36Z",
+      "updatedAt": "2025-06-02T10:12:06Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "336d050d51c7c617ae83020e0a2880132e09523f",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "headRefName": "arndt/rephrase-assertion-to-federation",
-      "headRefOid": "3cefab1b4245ad7bab595d2129c8950cd29ab704",
+      "headRefOid": "354b092328b4eb90da516885661ab96218ba81b2",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
