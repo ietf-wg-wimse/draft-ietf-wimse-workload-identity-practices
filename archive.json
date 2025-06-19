@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-03T01:04:05.447904+00:00",
+  "timestamp": "2025-06-19T01:04:03.268393+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -691,7 +691,7 @@
       "labels": [],
       "body": "Split from #32 where @dagdagdag83 suggested:\n\n> A suggestion: consider adding an Istio section. Istio actually uses an interesting mechanism with Envoy to establish mTLS between workloads and these x.509 certificates actually have SPIFFE IDs. So these certificates can be considered Workload Identity Credentials. This even work multi-cluster if you have a control plane configured for shared CA root.\n\n",
       "createdAt": "2025-05-13T09:04:01Z",
-      "updatedAt": "2025-06-02T10:26:48Z",
+      "updatedAt": "2025-06-18T21:03:31Z",
       "closedAt": null,
       "comments": [
         {
@@ -728,6 +728,13 @@
           "body": "@dagdagdag83 what part of service meshes do you see relevant here? \nIs it the provisioning part (e.g. Envoy SDS) or the usage part (sidecar establishing mutual TLS). Do you feel like we should cover service meshes only in the context of K8S or also wider (incl. VM, etc.). \n\nIf it's the provisioning part, we believe we have that already covered with \"Local API\" pattern.",
           "createdAt": "2025-06-02T10:26:47Z",
           "updatedAt": "2025-06-02T10:26:47Z"
+        },
+        {
+          "author": "dagdagdag83",
+          "authorAssociation": "NONE",
+          "body": "Sorry for the late reply @arndt-s. I was thinking mainly the usage part, I think that is the not-so-obvious part that isn't currently covered.\nAs for widening into other service mesh implementation I'd say yes as long as the scope of the document doesn't suffer too much. Istio with K8S is arguably the most important enterprise use case right now. ",
+          "createdAt": "2025-06-18T21:03:31Z",
+          "updatedAt": "2025-06-18T21:03:31Z"
         }
       ]
     }
