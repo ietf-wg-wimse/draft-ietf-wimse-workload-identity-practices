@@ -253,38 +253,10 @@ connections allow the issuer to push credentials.
 This pattern also requires client code, which introduces portability challenges.
 The request-response paradigm and additional operational overhead adds latency.
 
-# Usage patterns {#usage-pattern}
-
-Workloads can use the credential that was issued to them from the platform for
-many different purposes. For simplicity, we differentiate access of resources
-within and outside of the platform. A resource can also be a different workload,
-including invoking a remote procedure (HTTP POST, RPC, etc.).
-
-## Accessing other workloads within the platform
-
-Workloads often need to interact with the platform itself. For instance,
-storing or accessing data is a very common pattern and workload platform
-offer various features to facility this. Access is directly given by the
-credential issued from the platform.
-
-Also very common is the communication between workloads themselves. To secure
-access, they need to authenticate to another. The platform-issued credential often
-allows this out-of-the-box.
-
-> TODO: Talk about Bearer Tokens and audience?
-
-## Accessing resources outside of the platform
-
-Resources that don't reside within the platform can likely not accessed by the
-credential that was issued from the platform. This requires the workload to
-federate to an Identity Provider outside of the platform to receive access.
-This can for example be an OAuth 2.0 Authorization Server that issues Access Tokens
-but also other Identity systems that grant access.
-
 # Practices {#practices}
 
 The following practices outline more concrete examples of platforms, including their
-delivery and usage patterns.
+delivery patterns.
 
 ## Kubernetes {#kubernetes}
 
@@ -306,7 +278,7 @@ To programatically use service accounts, workloads can:
   referred to as "projected service account token".
 
 * Use the Token Request API {{TokenReviewV1}} of the control plane. This option,
-  however, requires an initial projected service account token as a mean of
+  however, requires an initial projected service account token as a means of
   authentication.
 
 Both options allow workloads to:
@@ -542,7 +514,7 @@ effectively an Identity Provider, to receive an identity of the other cloud.
 Using this different identity the workoad can then access its resources.
 
 This pattern also applies when accessing resources in the same cloud but across
-different security boundaries (different account /tenant). The actual flows and
+different security boundaries (e.g. different account or tenant). The actual flows and
 implementations may vary in these situations though.
 
 ~~~aasvg
