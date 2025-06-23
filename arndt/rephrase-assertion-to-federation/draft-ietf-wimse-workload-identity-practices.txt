@@ -5,13 +5,13 @@
 Workload Identity in Multi System Environments   A. Schwenkschuster, Ed.
 Internet-Draft                                                     SPIRL
 Intended status: Informational                                B. Hofmann
-Expires: 4 December 2025                                   H. Tschofenig
+Expires: 25 December 2025                                  H. Tschofenig
                                                                  Siemens
                                                              E. Giordano
                                                                    Nokia
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                             2 June 2025
+                                                            23 June 2025
 
 
                       Workload Identity Practices
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 December 2025.
+   This Internet-Draft will expire on 25 December 2025.
 
 Copyright Notice
 
@@ -68,32 +68,29 @@ Table of Contents
      3.1.  Environment Variables
      3.2.  Filesystem
      3.3.  Local APIs
-   4.  Usage patterns
-     4.1.  Accessing other workloads within the platform
-     4.2.  Accessing resources outside of the platform
-   5.  Practices
-     5.1.  Kubernetes
-     5.2.  Secure Production Identity Framework For Everyone (SPIFFE)
-     5.3.  Cloud Providers
-     5.4.  Continuous Integration and Deployment Systems
-   6.  Security Recommendations
-     6.1.  Credential Delivery
-       6.1.1.  Environment Variables
-       6.1.2.  Filesystem
-       6.1.3.  Local APIs
-     6.2.  Token typing
-     6.3.  Custom claims are important for context
-     6.4.  Token lifetime
-     6.5.  Workload lifecycle and invalidation
-     6.6.  Proof of possession
-     6.7.  Audience
-   7.  Other considerations
-     7.1.  Relation to OpenID Connect and its ID Token
-   8.  IANA Considerations
-   9.  Acknowledgements
-   10. References
-     10.1.  Normative References
-     10.2.  Informative References
+   4.  Practices
+     4.1.  Kubernetes
+     4.2.  Secure Production Identity Framework For Everyone (SPIFFE)
+     4.3.  Cloud Providers
+     4.4.  Continuous Integration and Deployment Systems
+   5.  Security Recommendations
+     5.1.  Credential Delivery
+       5.1.1.  Environment Variables
+       5.1.2.  Filesystem
+       5.1.3.  Local APIs
+     5.2.  Token typing
+     5.3.  Custom claims are important for context
+     5.4.  Token lifetime
+     5.5.  Workload lifecycle and invalidation
+     5.6.  Proof of possession
+     5.7.  Audience
+   6.  Other considerations
+     6.1.  Relation to OpenID Connect and its ID Token
+   7.  IANA Considerations
+   8.  Acknowledgements
+   9.  References
+     9.1.  Normative References
+     9.2.  Informative References
    Appendix A.  Variations
      A.1.  Direct access to protected resources
      A.2.  Custom assertion flows
@@ -133,7 +130,7 @@ Table of Contents
    and its attributes.
 
    Figure 1 illustrates a generic pattern that is seen across many
-   workload platforms, more concrete variations are found in Section 5.
+   workload platforms, more concrete variations are found in Section 4.
 
         +--------------------------------------------------------+
         |                                      Workload Platform |
@@ -211,7 +208,7 @@ Table of Contents
    mechanisms, which each have their own advantages, challenges, and
    security risks.  The following section highlights the pros and cons
    of common solutions.  Security recommendations for these methods are
-   covered in Section 6.1.
+   covered in Section 5.1.
 
 3.1.  Environment Variables
 
@@ -254,42 +251,12 @@ Table of Contents
    challenges.  The request-response paradigm and additional operational
    overhead adds latency.
 
-4.  Usage patterns
-
-   Workloads can use the credential that was issued to them from the
-   platform for many different purposes.  For simplicity, we
-   differentiate access of resources within and outside of the platform.
-   A resource can also be a different workload, including invoking a
-   remote procedure (HTTP POST, RPC, etc.).
-
-4.1.  Accessing other workloads within the platform
-
-   Workloads often need to interact with the platform itself.  For
-   instance, storing or accessing data is a very common pattern and
-   workload platform offer various features to facility this.  Access is
-   directly given by the credential issued from the platform.
-
-   Also very common is the communication between workloads themselves.
-   To secure access, they need to authenticate to another.  The
-   platform-issued credential often allows this out-of-the-box.
-
-      TODO: Talk about Bearer Tokens and audience?
-
-4.2.  Accessing resources outside of the platform
-
-   Resources that don't reside within the platform can likely not
-   accessed by the credential that was issued from the platform.  This
-   requires the workload to federate to an Identity Provider outside of
-   the platform to receive access.  This can for example be an OAuth 2.0
-   Authorization Server that issues Access Tokens but also other
-   Identity systems that grant access.
-
-5.  Practices
+4.  Practices
 
    The following practices outline more concrete examples of platforms,
-   including their delivery and usage patterns.
+   including their delivery patterns.
 
-5.1.  Kubernetes
+4.1.  Kubernetes
 
    In Kubernetes, machine identity is implemented through "service
    accounts" [KubernetesServiceAccount].  Service accounts can be
@@ -312,7 +279,7 @@ Table of Contents
 
    *  Use the Token Request API [TokenReviewV1] of the control plane.
       This option, however, requires an initial projected service
-      account token as a mean of authentication.
+      account token as a means of authentication.
 
    Both options allow workloads to:
 
@@ -435,7 +402,7 @@ Table of Contents
 
          Figure 3: Example Kubernetes Service Account Token claims
 
-5.2.  Secure Production Identity Framework For Everyone (SPIFFE)
+4.2.  Secure Production Identity Framework For Everyone (SPIFFE)
 
    The Secure Production Identity Framework For Everyone, also known as
    SPIFFE [SPIFFE], is a Cloud Native Computing Foundation (CNCF)
@@ -524,7 +491,7 @@ Table of Contents
 
    TODO: write about "iss" in JWT-SVID.
 
-5.3.  Cloud Providers
+4.3.  Cloud Providers
 
    Workload in cloud platforms can have any shape or form.
    Historically, virtual machines were the most common.  The
@@ -558,9 +525,9 @@ Table of Contents
    identity the workoad can then access its resources.
 
    This pattern also applies when accessing resources in the same cloud
-   but across different security boundaries (different account /tenant).
-   The actual flows and implementations may vary in these situations
-   though.
+   but across different security boundaries (e.g. different account or
+   tenant).  The actual flows and implementations may vary in these
+   situations though.
 
        +----------------------------------------------------------+
        |                                                    Cloud |
@@ -620,7 +587,7 @@ Table of Contents
       resource outside, assuming the federated identity has the
       necessary permissions.
 
-5.4.  Continuous Integration and Deployment Systems
+4.4.  Continuous Integration and Deployment Systems
 
    Continuous integration and deployment (CI-CD) systems allow their
    pipelines (or workflows) to receive an identity every time they run.
@@ -671,13 +638,13 @@ Table of Contents
    carrying the basic context of the executed tasks, such as source code
    management data (e.g. git branch), initiation and more.
 
-6.  Security Recommendations
+5.  Security Recommendations
 
    All security considerations in section 8 of [RFC7521] apply.
 
-6.1.  Credential Delivery
+5.1.  Credential Delivery
 
-6.1.1.  Environment Variables
+5.1.1.  Environment Variables
 
    Leveraging environmental variables to provide credentials presents
    many security limitations.  Environment variables have a wide set of
@@ -692,7 +659,7 @@ Table of Contents
    secrets are limited in validity or utility.  For example, an initial
    secret might be used during the setup of the application.
 
-6.1.2.  Filesystem
+5.1.2.  Filesystem
 
    *  1) Access control to the mounted file should be configured to
       limit reads to authorized applications.  Linux supports solutions
@@ -702,11 +669,11 @@ Table of Contents
       paths and processes.  For example, on Linux this can be achieved
       by using namespaces.
 
-6.1.3.  Local APIs
+5.1.3.  Local APIs
 
    TODO Reference to attestation might be handy here
 
-6.2.  Token typing
+5.2.  Token typing
 
    Issuers SHOULD strongly type the issued tokens to workload via the
    JOSE typ header and authorization servers SHOULD validate the value
@@ -719,7 +686,7 @@ Table of Contents
    important to highlight that a wide range of tokens, meant for all
    sorts of purposes, use these values and would be accepted.
 
-6.3.  Custom claims are important for context
+5.3.  Custom claims are important for context
 
    Some platform-issued credentials have custom claims that are vital
    for context and are required to be validated.  For example, in a
@@ -733,7 +700,7 @@ Table of Contents
    these claims.  Platform issuers SHOULD allow differentiation based on
    the subject claim alone.
 
-6.4.  Token lifetime
+5.4.  Token lifetime
 
    Tokens SHOULD NOT exceed the lifetime of the workloads they
    represent.  For example, a workload that has an expected lifetime of
@@ -744,14 +711,14 @@ Table of Contents
    external authorization domain, a short-lived credential is
    recommended.
 
-6.5.  Workload lifecycle and invalidation
+5.5.  Workload lifecycle and invalidation
 
    Platform issuers SHOULD invalidate tokens when the workload stops,
    pauses or ceases to exist.  How these credentials are invalidated
    depends on platform authentication mechanisms and is not in scope of
    this specification.
 
-6.6.  Proof of possession
+5.6.  Proof of possession
 
    Credentials SHOULD be bound to workloads and proof of possession
    SHOULD be performed when these credentials are used.  This mitigates
@@ -759,7 +726,7 @@ Table of Contents
    credential and the access token of the external authorization
    domains.
 
-6.7.  Audience
+5.7.  Audience
 
    For issued credentials in the form of JWTs, they MUST be audienced
    using the aud claim.  Each JWT SHOULD only carry a single audience.
@@ -772,9 +739,9 @@ Table of Contents
    used for anything else than the Kubernetes API itself MUST NOT carry
    the Kubernetes server in the aud claim.
 
-7.  Other considerations
+6.  Other considerations
 
-7.1.  Relation to OpenID Connect and its ID Token
+6.1.  Relation to OpenID Connect and its ID Token
 
    The outlined pattern has been referred to as "OIDC" and respectively,
    the Workload Identity Token as "OIDC ID Token" defined in [OIDC].
@@ -787,17 +754,17 @@ Table of Contents
    token validation.  The use of [RFC8414] or any other key distribution
    remain valid.
 
-8.  IANA Considerations
+7.  IANA Considerations
 
    This document does not require actions by IANA.
 
-9.  Acknowledgements
+8.  Acknowledgements
 
    Add your name here.
 
-10.  References
+9.  References
 
-10.1.  Normative References
+9.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -849,7 +816,7 @@ Table of Contents
               DOI 10.17487/RFC8725, February 2020,
               <https://www.rfc-editor.org/rfc/rfc8725>.
 
-10.2.  Informative References
+9.2.  Informative References
 
    [I-D.ietf-oauth-rfc7523bis]
               Jones, M. B., Campbell, B., and C. Mortimore, "Updates to
@@ -870,9 +837,9 @@ Table of Contents
               Campbell, B., Salowey, J., Schwenkschuster, A., and Y.
               Sheffer, "WIMSE Workload to Workload Authentication", Work
               in Progress, Internet-Draft, draft-ietf-wimse-s2s-
-              protocol-04, 19 May 2025,
+              protocol-05, 19 June 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              s2s-protocol-04>.
+              s2s-protocol-05>.
 
    [KubernetesServiceAccount]
               "Kubernetes Service Account", May 2024,
