@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-19T01:04:03.268393+00:00",
+  "timestamp": "2025-06-24T01:04:28.611329+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -2449,24 +2449,26 @@
       "id": "PR_kwDOL34A-M6XxQ6Y",
       "title": "Introduce generic \"federation\" term instead of RFC 7523 specifics",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/36",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "The draft currently focuses heavily on RFC7523 (the JWT assertion framework). I don't think that's good because:\r\n\r\n* RFC 7523 has 2 flows (client authentication and JWT authorization grants) leaving the reader guessing which one to use\r\n* Limits this draft to only implementations of RFC 7523 (aka no AWS, no GCP)\r\n\r\nInstead, this PR proposes to move towards the more generic term of \"federation\". This will include AWS, GCP and more and also will sound more familiar with readers that aren't as involved into specifics of OAuth such as the assertion framework. \r\n\r\nA new section called \"usage patterns\" aims to highlight various patterns workloads use their identity with, starting at accessing resources within the platform (no federation required) to federating to external Identity Providers and using a federated identity to access resources.",
       "createdAt": "2025-05-27T12:03:21Z",
-      "updatedAt": "2025-06-02T10:12:06Z",
+      "updatedAt": "2025-06-23T09:39:26Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "336d050d51c7c617ae83020e0a2880132e09523f",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "headRefName": "arndt/rephrase-assertion-to-federation",
-      "headRefOid": "354b092328b4eb90da516885661ab96218ba81b2",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "a1063c034fa2acccd3cc09b26cbdc1ea83cafb55",
+      "closedAt": "2025-06-23T09:39:25Z",
+      "mergedAt": "2025-06-23T09:39:25Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "e81a781caf7c27e1ade462c7ce6bc60ae7d7c080"
+      },
       "comments": [],
       "reviews": [
         {
@@ -2559,6 +2561,66 @@
               "body": "Are you thinking of referring to the definition of \"tenant\" in the headless JWT document, or defining it here as well?",
               "createdAt": "2025-05-27T20:45:36Z",
               "updatedAt": "2025-05-27T20:45:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6vy8uJ",
+          "commit": {
+            "abbreviatedOid": "354b092"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-23T09:34:50Z",
+          "updatedAt": "2025-06-23T09:34:50Z",
+          "comments": [
+            {
+              "originalPosition": 499,
+              "body": "Neither, it's much more examples as account or tenant are very common terms used as security boundaries. Rephrased it a bit to make it more clear it's an example and not a term.",
+              "createdAt": "2025-06-23T09:34:50Z",
+              "updatedAt": "2025-06-23T09:34:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6vy-h-",
+          "commit": {
+            "abbreviatedOid": "354b092"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-23T09:37:15Z",
+          "updatedAt": "2025-06-23T09:37:17Z",
+          "comments": [
+            {
+              "originalPosition": 258,
+              "body": "I cut usage patterns for now to keep this PR scoped.",
+              "createdAt": "2025-06-23T09:37:16Z",
+              "updatedAt": "2025-06-23T09:37:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M6vy-ma",
+          "commit": {
+            "abbreviatedOid": "354b092"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-23T09:37:21Z",
+          "updatedAt": "2025-06-23T09:37:23Z",
+          "comments": [
+            {
+              "originalPosition": 266,
+              "body": "I cut usage patterns for now to keep this PR scoped.",
+              "createdAt": "2025-06-23T09:37:22Z",
+              "updatedAt": "2025-06-23T09:37:23Z"
             }
           ]
         }
