@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-24T01:04:28.611329+00:00",
+  "timestamp": "2025-07-01T01:11:58.587248+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -301,7 +301,7 @@
       "id": "I_kwDOL34A-M6vY9I0",
       "title": "Clarify Document Intent",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/22",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -310,8 +310,8 @@
       ],
       "body": "There's confusion about whether this document is informational or a specification. While the headers indicate it's informational, the abstract and terminology sections use specification-style language. We should revise the document to ensure consistent presentation as an informational document that captures the current state of workload identity practices.",
       "createdAt": "2025-03-24T09:17:05Z",
-      "updatedAt": "2025-03-24T14:38:11Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-30T09:53:56Z",
+      "closedAt": "2025-06-30T09:53:56Z",
       "comments": [
         {
           "author": "jricher",
@@ -374,7 +374,7 @@
       "id": "I_kwDOL34A-M6vY_dN",
       "title": "Reconsider section 3.3",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/24",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -385,8 +385,8 @@
       ],
       "body": "Section 3.3 describes JWT claims based on RFC7523 but doesn't cover other token formats. \n\nWe should either\n* Remove this section (doesn't really add value)\n* Add complementary sections covering other formats (x.509 certificates, etc.) and include a comparison of different token formats' strengths and weaknesses",
       "createdAt": "2025-03-24T09:19:11Z",
-      "updatedAt": "2025-05-19T15:22:40Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-30T09:54:21Z",
+      "closedAt": "2025-06-30T09:54:21Z",
       "comments": [
         {
           "author": "heymarcel",
@@ -401,6 +401,13 @@
           "body": "I feel more and more towards removing that section.Without it we would actually cover more than just JWT, wouldn't we?",
           "createdAt": "2025-05-19T15:22:39Z",
           "updatedAt": "2025-05-19T15:22:39Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This section has been removed.",
+          "createdAt": "2025-06-30T09:54:21Z",
+          "updatedAt": "2025-06-30T09:54:21Z"
         }
       ]
     },
