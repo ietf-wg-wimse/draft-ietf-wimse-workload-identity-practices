@@ -24,35 +24,35 @@ pi:
 
 author:
  -
-      ins: A. Schwenkschuster
-      name: Arndt Schwenkschuster
-      email: arndts.ietf@gmail.com
-      org: SPIRL
-      role: editor
+    ins: A. Schwenkschuster
+    name: Arndt Schwenkschuster
+    email: arndts.ietf@gmail.com
+    org: SPIRL
 
  -
-      ins: B. Hofmann
-      name: Benedikt Hofmann
-      email: hofmann.benedikt@siemens.com
-      org: Siemens
+    ins: Y. Rosomakho
+    name: Yaroslav Rosomakho
+    email: yrosomakho@zscaler.com
+    org: Zscaler
+
+contributor:
+ -
+    ins: B. Hofmann
+    name: Benedikt Hofmann
+    email: hofmann.benedikt@siemens.com
+    org: Siemens
 
  -
-      ins: H. Tschofenig
-      name: Hannes Tschofenig
-      email: hannes.tschofenig@gmx.net
-      org: Siemens
+    ins: H. Tschofenig
+    name: Hannes Tschofenig
+    email: hannes.tschofenig@gmx.net
+    org: Siemens
 
  -
-      ins: E. Giordano
-      name: Edoardo Giordano
-      email: edoardo.giordano@nokia.com
-      org: Nokia
-
- -
-      ins: Y. Rosomakho
-      name: Yaroslav Rosomakho
-      email: yrosomakho@zscaler.com
-      org: Zscaler
+    ins: E. Giordano
+    name: Edoardo Giordano
+    email: edoardo.giordano@nokia.com
+    org: Nokia
 
 normative:
   RFC2119:
@@ -733,7 +733,7 @@ This document does not require actions by IANA.
 
 # Acknowledgements
 
-Add your name here.
+The authors and contributors would like to thank the following people for their feedback and contributions to this document (in no particular order): Dag Sneeggen, Ned Smith, Dean H. Saxe, Yaron Sheffer, Andrii Deinega, Marcel Levy, Justin Richer, Pieter Kasselmann, Simon Canning, Evan Gilman and Joseph Salowey.
 
 --- back
 
