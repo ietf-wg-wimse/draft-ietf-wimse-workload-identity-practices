@@ -115,8 +115,8 @@ architecture {{I-D.ietf-wimse-arch}} and other protocols, such as
 # Introduction
 
 Just like people, the workloads inside container orchestration systems (e.g.
-Kubernetes) need identities to authenticate with other systems, such as 
-databases, web servers, or other workloads. The challenge for workloads is to 
+Kubernetes) need identities to authenticate with other systems, such as
+databases, web servers, or other workloads. The challenge for workloads is to
 obtain a credential that can be used to authenticate with these resources
 without managing secrets directly, for instance, an OAuth 2.0 access token.
 
@@ -175,7 +175,7 @@ B1) federate | |  B2) access                 |              |
 
 The figure outlines the following steps which are applicable in any pattern.
 
-* 1) Platform issues credential to workload. The way this is achieved differs 
+* 1) Platform issues credential to workload. The way this is achieved differs
      from the platform, for instance, it can be pushed to the workload or
      pulled by the workload.
 
@@ -235,11 +235,11 @@ without downtime.
 
 This pattern relies on local APIs to communicate between the workload and the
 credential issuer. Some implementations rely on UNIX Domain Sockets (e.g.
-SPIFFE), loopback interfaces or link-local "magic addresses" (e.g. Instance 
-Metadata Service of cloud providers) to provision credentials. Local APIs offer 
-the capability to re-provision updated credentials. Communication between 
-workload and API allows the workload to refresh a credential or request a 
-different one. This group of solutions relies on network isolation for their 
+SPIFFE), loopback interfaces or link-local "magic addresses" (e.g. Instance
+Metadata Service of cloud providers) to provision credentials. Local APIs offer
+the capability to re-provision updated credentials. Communication between
+workload and API allows the workload to refresh a credential or request a
+different one. This group of solutions relies on network isolation for their
 security.
 
 Local APIs allow for short-lived, narrowly-scoped credentials. Persistent
@@ -250,7 +250,7 @@ The request-response paradigm and additional operational overhead adds latency.
 
 # Practices {#practices}
 
-The following practices outline more concrete examples of platforms, including 
+The following practices outline more concrete examples of platforms, including
 their delivery patterns.
 
 ## Kubernetes {#kubernetes}
@@ -509,7 +509,7 @@ effectively an Identity Provider, to receive an identity of the other cloud.
 Using this different identity the workoad can then access its resources.
 
 This pattern also applies when accessing resources in the same cloud but across
-different security boundaries (e.g. different account or tenant). The actual 
+different security boundaries (e.g. different account or tenant). The actual
 flows and implementations may vary in these situations though.
 
 ~~~aasvg
@@ -555,13 +555,13 @@ The steps shown in {{fig-cloud}} are:
      known, but local, location.
 
 When the workload needs to access a resource within the cloud (e.g. located in
-the same security boundary; protected by the same issuer as the workload 
+the same security boundary; protected by the same issuer as the workload
 identity):
 
 * A) The workload directly access the protected resource with the credential
   issued in Step 1.
 
-When the workload needs to access a resource outside of the cloud (e.g. 
+When the workload needs to access a resource outside of the cloud (e.g.
 different cloud; same cloud, but different security boundary):
 
 * B1) The workload uses cloud-issued credential to federate to the Secure Token
@@ -653,8 +653,8 @@ TODO Reference to attestation might be handy here
 ## Token typing
 
 Issuers SHOULD strongly type the issued tokens to workload via the JOSE `typ`
-header and Identity Providers accepting these tokens  SHOULD validate the 
-value of it according to policy. See Section 3.1 of {{RFC8725}} for details 
+header and Identity Providers accepting these tokens  SHOULD validate the
+value of it according to policy. See Section 3.1 of {{RFC8725}} for details
 on explicit typing.
 
 Issuers SHOULD use `authorization-grant+jwt` as a `typ` value according to
