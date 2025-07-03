@@ -79,13 +79,11 @@ Table of Contents
      5.5.  Workload lifecycle and invalidation
      5.6.  Proof of possession
      5.7.  Audience
-   6.  Other considerations
-     6.1.  Relation to OpenID Connect and its ID Token
-   7.  IANA Considerations
-   8.  Acknowledgements
-   9.  References
-     9.1.  Normative References
-     9.2.  Informative References
+   6.  IANA Considerations
+   7.  Acknowledgements
+   8.  References
+     8.1.  Normative References
+     8.2.  Informative References
    Appendix A.  Variations
      A.1.  Direct access to protected resources
      A.2.  Custom assertion flows
@@ -732,26 +730,11 @@ Table of Contents
    used for anything else than the Kubernetes API itself MUST NOT carry
    the Kubernetes server in the aud claim.
 
-6.  Other considerations
-
-6.1.  Relation to OpenID Connect and its ID Token
-
-   The outlined pattern has been referred to as "OIDC" and respectively,
-   the Workload Identity Token as "OIDC ID Token" defined in [OIDC].
-   The authors of this document want to highlight that this pattern is
-   not related to OpenID Connect [OIDC] and the issued Workload Identity
-   Tokens by the platforms are not "ID Tokens" in the sense of OIDC.
-
-   However, it is common practice for the authorization server to
-   leverage [OIDCDiscovery] to retrieve the signing keys needed for
-   token validation.  The use of [RFC8414] or any other key distribution
-   remain valid.
-
-7.  IANA Considerations
+6.  IANA Considerations
 
    This document does not require actions by IANA.
 
-8.  Acknowledgements
+7.  Acknowledgements
 
    The authors and contributors would like to thank the following people
    for their feedback and contributions to this document (in no
@@ -759,9 +742,9 @@ Table of Contents
    Sheffer, Andrii Deinega, Marcel Levy, Justin Richer, Pieter
    Kasselmann, Simon Canning, Evan Gilman and Joseph Salowey.
 
-9.  References
+8.  References
 
-9.1.  Normative References
+8.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -813,7 +796,7 @@ Table of Contents
               DOI 10.17487/RFC8725, February 2020,
               <https://www.rfc-editor.org/rfc/rfc8725>.
 
-9.2.  Informative References
+8.2.  Informative References
 
    [I-D.ietf-oauth-rfc7523bis]
               Jones, M. B., Campbell, B., and C. Mortimore, "Updates to
