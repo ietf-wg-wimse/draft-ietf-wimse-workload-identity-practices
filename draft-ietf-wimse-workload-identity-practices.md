@@ -277,7 +277,7 @@ To programatically use service accounts, workloads can:
   similar to volume mounting in non-Kubernetes environments, and is commonly
   referred to as "projected service account token".
 
-* Use the Token Request API {{TokenReviewV1}} of the control plane. This option,
+* Use the Token Request API {{TokenRequestV1}} of the control plane. This option,
   however, requires an initial projected service account token as a means of
   authentication.
 
