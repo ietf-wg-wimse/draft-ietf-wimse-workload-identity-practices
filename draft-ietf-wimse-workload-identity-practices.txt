@@ -5,13 +5,13 @@
 Workload Identity in Multi System Environments   A. Schwenkschuster, Ed.
 Internet-Draft                                                     SPIRL
 Intended status: Informational                                B. Hofmann
-Expires: 25 December 2025                                  H. Tschofenig
+Expires: 4 January 2026                                    H. Tschofenig
                                                                  Siemens
                                                              E. Giordano
                                                                    Nokia
                                                             Y. Rosomakho
                                                                  Zscaler
-                                                            23 June 2025
+                                                             3 July 2025
 
 
                       Workload Identity Practices
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 December 2025.
+   This Internet-Draft will expire on 4 January 2026.
 
 Copyright Notice
 
@@ -277,7 +277,7 @@ Table of Contents
       This is similar to volume mounting in non-Kubernetes environments,
       and is commonly referred to as "projected service account token".
 
-   *  Use the Token Request API [TokenReviewV1] of the control plane.
+   *  Use the Token Request API [TokenRequestV1] of the control plane.
       This option, however, requires an initial projected service
       account token as a means of authentication.
 
