@@ -2,16 +2,11 @@
 
 
 
-Workload Identity in Multi System Environments   A. Schwenkschuster, Ed.
+Workload Identity in Multi System Environments        A. Schwenkschuster
 Internet-Draft                                                     SPIRL
-Intended status: Informational                                B. Hofmann
-Expires: 3 January 2026                                    H. Tschofenig
-                                                                 Siemens
-                                                             E. Giordano
-                                                                   Nokia
-                                                            Y. Rosomakho
-                                                                 Zscaler
-                                                             2 July 2025
+Intended status: Informational                              Y. Rosomakho
+Expires: 4 January 2026                                          Zscaler
+                                                             3 July 2025
 
 
                       Workload Identity Practices
@@ -19,14 +14,13 @@ Expires: 3 January 2026                                    H. Tschofenig
 
 Abstract
 
-   This specification describes current industry practices by which
-   workloads in container orchestration systems can obtain identity
-   tokens for authentication with external resources without managing
-   secrets directly.  It presents a general credential delivery flow,
-   specific delivery patterns, and concrete practice examples.  These
-   practices are mainly built on top of OAuth 2.0.  Therefore, it does
-   not take into account the standards work in progress for the WIMSE
-   architecture [I-D.ietf-wimse-arch] and other protocols, such as
+   This document describes industry practices for providing secure
+   identities to workloads in container orchestration, cloud platforms,
+   and other workload platforms.  It explains how workloads obtain
+   credentials for external authentication purposes, without managing
+   long-lived secrets directly.  It does not take into account the
+   standards work in progress for the WIMSE architecture
+   [I-D.ietf-wimse-arch] and other protocols, such as
    [I-D.ietf-wimse-s2s-protocol].
 
 Status of This Memo
@@ -44,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 January 2026.
+   This Internet-Draft will expire on 4 January 2026.
 
 Copyright Notice
 
@@ -84,17 +78,16 @@ Table of Contents
      5.5.  Workload lifecycle and invalidation
      5.6.  Proof of possession
      5.7.  Audience
-   6.  Other considerations
-     6.1.  Relation to OpenID Connect and its ID Token
-   7.  IANA Considerations
-   8.  Acknowledgements
-   9.  References
-     9.1.  Normative References
-     9.2.  Informative References
+   6.  IANA Considerations
+   7.  Acknowledgements
+   8.  References
+     8.1.  Normative References
+     8.2.  Informative References
    Appendix A.  Variations
      A.1.  Direct access to protected resources
      A.2.  Custom assertion flows
    Appendix B.  Document History
+   Contributors
    Authors' Addresses
 
 1.  Introduction
@@ -270,7 +263,7 @@ Table of Contents
       This is similar to volume mounting in non-Kubernetes environments,
       and is commonly referred to as "projected service account token".
 
-   *  Use the Token Request API [TokenReviewV1] of the control plane.
+   *  Use the Token Request API [TokenRequestV1] of the control plane.
       This option, however, requires an initial projected service
       account token as a means of authentication.
 
@@ -401,13 +394,12 @@ Table of Contents
    SPIFFE [SPIFFE], is a Cloud Native Computing Foundation (CNCF)
    project that defines a "Workload API" to deliver machine identity to
    workloads.  Workloads can retrieve either X.509 certificates or JWTs.
-   How workloads authenticate on the API is not part of the
-   specification.  It is common to use platform metadata from the
-   operating system and the workload platform for authentication to the
-   Workload API.
+   How workloads authenticate on the API is not part of the document.
+   It is common to use platform metadata from the operating system and
+   the workload platform for authentication to the Workload API.
 
-   SPIFFE referres to the JWT-formmatted credential as a "JWT-SVID" (JWT
-   - SPIFFE Verifiable Identity Document).
+   SPIFFE refers to the JWT-formatted credential as a "JWT-SVID" (JWT -
+   SPIFFE Verifiable Identity Document).
 
    Workloads are required to specify at least one audience when
    requesting a JWT-SVID from the Workload API.
@@ -699,17 +691,16 @@ Table of Contents
    represent.  For example, a workload that has an expected lifetime of
    an hour should not receive a token valid for 2 hours or more.
 
-   For the scope of this specification, where a platform-issued
-   credential is used to authenticate to retrieve an access token for an
-   external authorization domain, a short-lived credential is
-   recommended.
+   For the scope of this document, where a platform-issued credential is
+   used to authenticate to retrieve an access token for an external
+   authorization domain, a short-lived credential is recommended.
 
 5.5.  Workload lifecycle and invalidation
 
    Platform issuers SHOULD invalidate tokens when the workload stops,
    pauses or ceases to exist.  How these credentials are invalidated
    depends on platform authentication mechanisms and is not in scope of
-   this specification.
+   this document.
 
 5.6.  Proof of possession
 
@@ -732,32 +723,21 @@ Table of Contents
    used for anything else than the Kubernetes API itself MUST NOT carry
    the Kubernetes server in the aud claim.
 
-6.  Other considerations
-
-6.1.  Relation to OpenID Connect and its ID Token
-
-   The outlined pattern has been referred to as "OIDC" and respectively,
-   the Workload Identity Token as "OIDC ID Token" defined in [OIDC].
-   The authors of this document want to highlight that this pattern is
-   not related to OpenID Connect [OIDC] and the issued Workload Identity
-   Tokens by the platforms are not "ID Tokens" in the sense of OIDC.
-
-   However, it is common practice for the authorization server to
-   leverage [OIDCDiscovery] to retrieve the signing keys needed for
-   token validation.  The use of [RFC8414] or any other key distribution
-   remain valid.
-
-7.  IANA Considerations
+6.  IANA Considerations
 
    This document does not require actions by IANA.
 
-8.  Acknowledgements
+7.  Acknowledgements
 
-   Add your name here.
+   The authors and contributors would like to thank the following people
+   for their feedback and contributions to this document (in no
+   particular order): Dag Sneeggen, Ned Smith, Dean H.  Saxe, Yaron
+   Sheffer, Andrii Deinega, Marcel Levy, Justin Richer, Pieter
+   Kasselmann, Simon Canning, Evan Gilman and Joseph Salowey.
 
-9.  References
+8.  References
 
-9.1.  Normative References
+8.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -809,7 +789,7 @@ Table of Contents
               DOI 10.17487/RFC8725, February 2020,
               <https://www.rfc-editor.org/rfc/rfc8725>.
 
-9.2.  Informative References
+8.2.  Informative References
 
    [I-D.ietf-oauth-rfc7523bis]
               Jones, M. B., Campbell, B., and C. Mortimore, "Updates to
@@ -944,12 +924,7 @@ Appendix B.  Document History
 
    *  Adopted by the WIMSE WG
 
-Authors' Addresses
-
-   Arndt Schwenkschuster (editor)
-   SPIRL
-   Email: arndts.ietf@gmail.com
-
+Contributors
 
    Benedikt Hofmann
    Siemens
@@ -964,6 +939,13 @@ Authors' Addresses
    Edoardo Giordano
    Nokia
    Email: edoardo.giordano@nokia.com
+
+
+Authors' Addresses
+
+   Arndt Schwenkschuster
+   SPIRL
+   Email: arndts.ietf@gmail.com
 
 
    Yaroslav Rosomakho
