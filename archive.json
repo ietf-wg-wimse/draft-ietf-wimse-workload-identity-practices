@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-01T01:11:58.587248+00:00",
+  "timestamp": "2025-07-03T01:04:32.827834+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -47,6 +47,11 @@
       "name": "feedback-dean",
       "description": "",
       "color": "d4c5f9"
+    },
+    {
+      "name": "feedback-yaron",
+      "description": null,
+      "color": "aaaaaa"
     }
   ],
   "issues": [
@@ -280,11 +285,13 @@
       "state": "OPEN",
       "author": "nedmsmith",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaroslavros"
+      ],
       "labels": [],
       "body": "I reviewed this draft and have the following comments:\n\nNed Smith review of current repo build of draft-ietf-wimse-workload-identity-practices.\n\nSection 3:\n\t- The title of section 3 is specific to OAuth, but \u00a73.2 seems to consider other credential types besides OAuth (but doesn\u2019t include JWT as one of the possible types).\n\nSection 3.2.1:\n\t- S/environmental/environment/ - It is uncommon in Linux to describe environment variables as environmental variables.\n\t\nSection 3.2.2:\n\t- First sentence: \u201cFiles allow to inject\u2026\u201d seems to be missing a word that identifies who or what is doing the injection. Awkward reader flow.\n\t\nSection 3.2.3:\n\t- Last paragraph: S/un-legitimate/illegitimate/ or /unauthorized/\n\nSection 3.3:\n\t- This section indicates \u201cJSON Web Token\u201d is a credential format, but section 3.2 omits it as a possible credential in terms of credential issuance / provisioning techniques. The reader is unclear what the relationship is between the provisioning technique and the format of the provisioned credential. For example, a file could contain a JWT, but also describes OS DAC access mechanisms which typically are not JWT structures. Possibly, JWT should be added to the list in Section 3.2?\n\n\t- For completeness the formatting of all of the credential types listed in \u00a73.2 should be explained in this section? Alternatively, the formatting considerations could be subsections for each credential type listed in \u00a73.2?\n\n\t- Certificates are mentioned as a credential format, but not listed as a credential type in \u00a73.2.\n\nSection 4: \n\t- RFC3552 requires all RFCs to have a Security Considerations section. Possibly, this section should be renamed as that. Or the security considerations should say that the entire RFC is about security?\n\t- The first sentence seems to suggest this is a security considerations section.\n\nSection 4.1:\n\t- Although \u00a73.3 mentions JWT, it is unclear if the other credential provisioning types are presumed to be types of \u201ctokens\u201d and therefore omitted from section 4.1. Or is this section intended to focus only on JWT tokens and OAuth2 provisioning flows?\n\t- It seems unexpected for an informational RFC to contain upper case normative.\n\nSection 5:\n\t- Inconsistent use of capitalization in header text. S/considerations/Considerations/\n\nSection 5.1:\n\t- \u201cThe outlined pattern\u2026\u201d is ambiguous as it refers to some other part of the document, but it is unclear which part.\n\t- Last paragraph: \u201cThe use of [RFC8414] or any other key distribution remains valid.\u201d It is unclear what part of RFC8414 is the subject of the sentence. It is also unclear for what purpose a \u201ckey distribution\u201d remain valid. Section 3.2 didn\u2019t identify \u201ckey distribution\u201d as a possible credential type or format yet it seems to be related to credential issuance / provisioning.\n\nIf this document chooses to have a separate security considerations section (Section 7?) it might include content that describes:\n\t- Expectations for integrity protection of the credential (or security techniques that ensure integrity of the access policy).\n\t\t- In transit.\n\t\t- At rest.\n\t- Credential lifecycle expectations - can it be updated and if so, what security capabilities are assumed to be at play to ensure update integrity?\n\t- What authority / privileges does the workload have in terms of the credential lifecycle - if any?\n\t- How does the workload itself get provisioned?\n\t- How is a workload confidentiality protected? Note: the WIMSE arch talks about TLS/SPIFFE, but it is unclear if TLS/SPIFFE is a \u201ccurrent practice\u201d.\n\nMy intention in reviewing the current practices draft was to highlight gaps in security based on current practice to motivate the need for better practices and security mechanisms. I\u2019m finding it difficult to approach the document because it seems to both describe current practice, but also specific new practice; and it doesn\u2019t give equal attention to the various types of credentials both in terms of describing current practice and in specifying new practice.\n\nI'm happy to help improve this draft.\n",
       "createdAt": "2025-03-20T23:39:19Z",
-      "updatedAt": "2025-05-09T21:33:29Z",
+      "updatedAt": "2025-07-02T16:40:20Z",
       "closedAt": null,
       "comments": [
         {
@@ -293,6 +300,20 @@
           "body": "@nedmsmith, we've just restructured the document (see #33 for context). It addresses quite a few, but not all, of the points you've raised. Feel free to re-review when you have a chance.",
           "createdAt": "2025-05-09T21:33:28Z",
           "updatedAt": "2025-05-09T21:33:28Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@yaroslavros tagging you here as I can't assign you.",
+          "createdAt": "2025-07-02T10:44:03Z",
+          "updatedAt": "2025-07-02T10:44:03Z"
+        },
+        {
+          "author": "nedmsmith",
+          "authorAssociation": "NONE",
+          "body": "I'll look at it next week. Currently on vacation.",
+          "createdAt": "2025-07-02T16:40:20Z",
+          "updatedAt": "2025-07-02T16:40:20Z"
         }
       ]
     },
@@ -419,13 +440,15 @@
       "state": "OPEN",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "yaroslavros"
+      ],
       "labels": [
         "feedback-dean"
       ],
       "body": "Our security considerations are limited to JWT only. We should also cover other credential formats.",
       "createdAt": "2025-03-24T09:20:35Z",
-      "updatedAt": "2025-05-19T15:22:07Z",
+      "updatedAt": "2025-07-02T16:26:01Z",
       "closedAt": null,
       "comments": [
         {
@@ -441,6 +464,13 @@
           "body": "I feel like we should remove the credential format section - we don't really introduce anything here and basically repeat RFC 7523. Without it we would actually cover more than just JWT, wouldn't we?\n\n---\n\nUpdate: this comment is much more relevant in #24. Sorry for the noise.\n",
           "createdAt": "2025-05-19T15:21:01Z",
           "updatedAt": "2025-05-19T15:22:06Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@yaroslavros tagging you here as I can't assign you.",
+          "createdAt": "2025-07-02T10:44:17Z",
+          "updatedAt": "2025-07-02T10:44:17Z"
         }
       ]
     },
@@ -452,13 +482,15 @@
       "state": "OPEN",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "yaroslavros"
+      ],
       "labels": [
         "feedback-dean"
       ],
       "body": "An informational document that describes current practices should typically avoid BCP14 imperative language (MUST, SHOULD, etc.) unless making normative recommendations. Review sections 4.4 and 4.5 to determine if imperative language is appropriate or should be replaced with descriptive language about current practices.",
       "createdAt": "2025-03-24T09:21:10Z",
-      "updatedAt": "2025-05-09T21:25:09Z",
+      "updatedAt": "2025-07-02T16:25:54Z",
       "closedAt": null,
       "comments": [
         {
@@ -467,6 +499,13 @@
           "body": "This refers to the Security Recommendations, now section 5. Is this still actionable given #22?",
           "createdAt": "2025-05-09T21:14:25Z",
           "updatedAt": "2025-05-09T21:25:09Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@yaroslavros tagging you here as I can't assign you.",
+          "createdAt": "2025-07-02T10:44:28Z",
+          "updatedAt": "2025-07-02T10:44:28Z"
         }
       ]
     },
@@ -478,13 +517,15 @@
       "state": "OPEN",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "feedback-dean"
       ],
       "body": "Section 5 begins with \"The outlined pattern has been referred to as 'OIDC' [...]\" without clearly identifying which pattern is being referenced. Add a description of this pattern to help readers understand why it's not considered a proper implementation of OIDC.",
       "createdAt": "2025-03-24T09:21:43Z",
-      "updatedAt": "2025-05-09T21:13:05Z",
+      "updatedAt": "2025-07-02T12:48:51Z",
       "closedAt": null,
       "comments": [
         {
@@ -504,13 +545,15 @@
       "state": "OPEN",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "feedback-dean"
       ],
       "body": "The term \"Workload Identity Token\" in Section 5 may be confused with the same term defined in wimse-s2s. We should find other wording.",
       "createdAt": "2025-03-24T09:22:23Z",
-      "updatedAt": "2025-05-09T21:12:36Z",
+      "updatedAt": "2025-07-02T12:48:29Z",
       "closedAt": null,
       "comments": [
         {
@@ -639,7 +682,7 @@
       "labels": [],
       "body": "Reading the document I don't understand the purpose of this document. What is it trying to say?\n\nThe title \"Workload Identity Practices\" feels imprecise - it leads me to think that the document either will list (best) practices or different patterns related to Workload Identity\". Which is not what it does.\n\nThe abstract is also quite confusing, it starts by addressing secret sprawl, then states \"the industry has shifted towards a federation-based approach where credentials of the underlying workload platform are used as assertions towards an OAuth authorization server, leveraging the Assertion Framework for OAuth 2.0 Client Authentication [RFC7521], specifically [RFC7523].\". In my opinion the document states this very bluntly but it hasn't given me any context besides a brief reference to secret sprawl.\nThe second paragraph of the abstract refers to three sections of the document but this is not terribly helpful because the reader has not yet read the document.\nIn general I feel that this abstract doesn't fulfill the requirements specified in https://www.rfc-editor.org/rfc/rfc7322.html#section-4.3. It doesn't summarize and give a clear understanding of the document.\n\nReading the document itself it seems to me that it's actually describing a (proposed) WIMSE pattern of using tokens (eg, google/aws workload identity token, kubernetes service account token) as an assertion towards an AS in a different trust domain using an assertion_grant flow. I'm not clear if the document also proposes this pattern within the same trust domain.\n\nI feel that the abstract needs to be rewritten, inline with RFC7322 \"provides a concise and comprehensive overview of the purpose and contents of the entire document\".\n\nI also find that a lot of the most practical actionable information is \"buried\" in Appendix A. This appendix is the part that gives me most context and practical information on what the document is trying to achieve.",
       "createdAt": "2025-05-05T19:56:14Z",
-      "updatedAt": "2025-05-13T09:58:36Z",
+      "updatedAt": "2025-07-02T12:44:57Z",
       "closedAt": null,
       "comments": [
         {
@@ -683,6 +726,13 @@
           "body": "1. I see, some interesting history there. What about \"Workload Identity Industry Practices\" then?\n2. I suppose these sections are fine, they have compiled useful information which is difficult to find elsewhere. SPIFFES/SPIRE is well-documented but perhaps it's not so easy to find practical information on how SPIFFE is used for workload authentication. \n3. Yes I believe it was temporary, but the default configuration on the latest kubernetes still have the \"temporary workaround\" enabled. To disabled it you need to specifically do that in configuration, which very few people do. At the end of the day this is an issue for the kubernetes maintainers I suppose. \n\nThanks for creating the other issue for istio, let's continue discussing it there?",
           "createdAt": "2025-05-13T09:58:35Z",
           "updatedAt": "2025-05-13T09:58:35Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Hi @dagdagdag83,\nplease take a look at PR #38 where I rewrote the abstract. I hope this gives a better overview of the document.",
+          "createdAt": "2025-07-02T12:44:57Z",
+          "updatedAt": "2025-07-02T12:44:57Z"
         }
       ]
     },
@@ -744,6 +794,78 @@
           "updatedAt": "2025-06-18T21:03:31Z"
         }
       ]
+    },
+    {
+      "number": 42,
+      "id": "I_kwDOL34A-M6-gSBy",
+      "title": "Short term environment credentials",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/42",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "feedback-yaron"
+      ],
+      "body": "> 3.2.1: I assume the credentials discussed in this section are the long-term creds discussed in Sec. 3.1. If so, this text doesn't make sense to me: \"and the provided secrets should have a short-term validity, i.e., an initial secret during the set-up of the application.\"\n\n3.2.1 used to be the \"Environment variable\" section of delivery. We should take at that \"short-term validity\" wording. As env variables cannot be changed we should rephrase.",
+      "createdAt": "2025-07-02T14:32:01Z",
+      "updatedAt": "2025-07-02T14:32:01Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 43,
+      "id": "I_kwDOL34A-M6-gihb",
+      "title": "Atomic file provisioning rotation",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/43",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "feedback-yaron"
+      ],
+      "body": "> please mention that in addition to pre-provisioning of rotated credentials (which you mention), solutions must also ensure that rotation happens atomically, such that the client can never read part of the old credential and part of the new one.\n\nrefers to the file provisioning section",
+      "createdAt": "2025-07-02T14:52:29Z",
+      "updatedAt": "2025-07-02T14:52:29Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 44,
+      "id": "I_kwDOL34A-M6-gjgx",
+      "title": "Access control of API provisioning",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/44",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "feedback-yaron"
+      ],
+      "body": "Yaron is giving the following feedback:\n\n> \"Local APIs offer the highest level of access control\", while I agree that in practice this is the most secure option, this sentence is imprecise: when using files, OS-level access control mechanisms can be used which is not the case for APIs. I think the real answer is more subtle and has to do specifically with container architectures.\n\nAgreed here - this needs rewording.",
+      "createdAt": "2025-07-02T14:53:39Z",
+      "updatedAt": "2025-07-02T14:53:39Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 45,
+      "id": "I_kwDOL34A-M6-gl19",
+      "title": "Extrospection of credential validity",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/45",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "feedback-yaron"
+      ],
+      "body": "Yaron is giving the following feedback\n\n> \"How these credentials are invalidated is not in scope of this specification.\" Given that many of the workloads are very short lived, I think this is a discussion we need to have. It is less about how the platform invalidates the creds and more about validators being able to query the current status with fine granularity. Kubernetes proposes a solution, maybe we should be standardizing it.\n\nI find it a very interesting idea and haven't thought about this before. ",
+      "createdAt": "2025-07-02T14:55:58Z",
+      "updatedAt": "2025-07-02T14:55:58Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -2632,6 +2754,188 @@
           ]
         }
       ]
+    },
+    {
+      "number": 37,
+      "id": "PR_kwDOL34A-M6dEyXx",
+      "title": "Rephrasing and textual improvements",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/37",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Some rephrasing and textual improvements. For instance I'm removing some OAuth terminology to align more with the general approach to talk about \"federation\" in a generic term and not go too much into details of OAuth.",
+      "createdAt": "2025-07-02T12:17:52Z",
+      "updatedAt": "2025-07-02T16:25:46Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "main",
+      "baseRefOid": "e81a781caf7c27e1ade462c7ce6bc60ae7d7c080",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "headRefName": "arndt/better-readability",
+      "headRefOid": "e206576fe1c5fb1caaeb535bbb73e61778c93b3e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@yaroslavros ",
+          "createdAt": "2025-07-02T12:18:02Z",
+          "updatedAt": "2025-07-02T12:18:02Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 38,
+      "id": "PR_kwDOL34A-M6dFChz",
+      "title": "Rewrite abstract",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/38",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Addresses & resolves #32",
+      "createdAt": "2025-07-02T12:44:20Z",
+      "updatedAt": "2025-07-02T12:44:21Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "main",
+      "baseRefOid": "e81a781caf7c27e1ade462c7ce6bc60ae7d7c080",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "headRefName": "arndt/rephrase-abstract",
+      "headRefOid": "a42a19884a080cc88201fd1d78aa6489748750fb",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 39,
+      "id": "PR_kwDOL34A-M6dFFVI",
+      "title": "Remove relation to OIDC section",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/39",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This section was mostly hinting at Github OIDC ID Token terminology - but I don't think that's enough to include it into this document. What do others think?\r\n\r\nResolves #27 & #28 ",
+      "createdAt": "2025-07-02T12:48:34Z",
+      "updatedAt": "2025-07-02T12:49:04Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "main",
+      "baseRefOid": "e81a781caf7c27e1ade462c7ce6bc60ae7d7c080",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "headRefName": "arndt/remove-workload-identity-token-term",
+      "headRefOid": "9458b04aa82f5f119b1541002f8410cb0aeb1b5e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 40,
+      "id": "PR_kwDOL34A-M6dFnpt",
+      "title": "Update contributors & acknowledgements",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/40",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-07-02T13:38:27Z",
+      "updatedAt": "2025-07-02T13:38:28Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "main",
+      "baseRefOid": "e81a781caf7c27e1ade462c7ce6bc60ae7d7c080",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "headRefName": "arndt/add_contributors_and_acknowledgements",
+      "headRefOid": "3178a284368585a64f590a4a8429787fe0750d51",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 41,
+      "id": "PR_kwDOL34A-M6dGDzu",
+      "title": "use \"document\" over \"specification\" as this is an informational document",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/41",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "feedback-yaron"
+      ],
+      "body": "",
+      "createdAt": "2025-07-02T14:18:49Z",
+      "updatedAt": "2025-07-02T14:32:23Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "main",
+      "baseRefOid": "e81a781caf7c27e1ade462c7ce6bc60ae7d7c080",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "headRefName": "arndt/document-instead-of-specification",
+      "headRefOid": "f180f36806b663a4fbbfdd022b9ac0f19ac2f7cb",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M6xlW_v",
+          "commit": {
+            "abbreviatedOid": "f180f36"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull Request Overview\n\nThis PR updates the draft to use \u201cdocument\u201d instead of \u201cspecification\u201d for clarity and fixes minor typos.\n\n- Replaces \"specification\" with \"document\" across sections\n- Corrects typos in the SPIFFE description\n- Ensures consistent terminology for an informational document\n\n\n\n",
+          "createdAt": "2025-07-02T14:19:03Z",
+          "updatedAt": "2025-07-02T14:19:04Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 46,
+      "id": "PR_kwDOL34A-M6dGp3_",
+      "title": "Fix ref to TokenRequestAPI",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/46",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "feedback-yaron"
+      ],
+      "body": "Wrong references to TokenRequestAPI",
+      "createdAt": "2025-07-02T15:13:05Z",
+      "updatedAt": "2025-07-02T16:25:10Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "main",
+      "baseRefOid": "e81a781caf7c27e1ade462c7ce6bc60ae7d7c080",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "headRefName": "arndt/fix-token-request-api-ref",
+      "headRefOid": "87e3d2d8271a7197d5ac39b19a16f04e78223536",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
