@@ -8,13 +8,12 @@
 <meta content="Arndt Schwenkschuster" name="author">
 <meta content="Yaroslav Rosomakho" name="author">
 <meta content="
-       This document describes current industry practices by which workloads in
-container orchestration systems can obtain identity tokens for authentication
-with external resources without managing secrets directly. It presents a general
-credential delivery flow, specific delivery patterns, and concrete practice
-examples. These practices are mainly built on top of OAuth 2.0. Therefore, it
-does not take into account the standards work in progress for the WIMSE
-architecture   and other protocols, such as
+       This document describes industry practices for providing secure identities
+to workloads in container orchestration, cloud platforms, and other workload
+platforms. It explains how workloads obtain credentials for external
+authentication purposes, without managing long-lived secrets directly. It does
+not take into account the standards work in progress for the WIMSE architecture
+  and other protocols, such as
  . 
     " name="description">
 <meta content="xml2rfc 3.29.0" name="generator">
@@ -1091,13 +1090,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Workload Identity Practices</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document describes current industry practices by which workloads in
-container orchestration systems can obtain identity tokens for authentication
-with external resources without managing secrets directly. It presents a general
-credential delivery flow, specific delivery patterns, and concrete practice
-examples. These practices are mainly built on top of OAuth 2.0. Therefore, it
-does not take into account the standards work in progress for the WIMSE
-architecture <span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> and other protocols, such as
+<p id="section-abstract-1">This document describes industry practices for providing secure identities
+to workloads in container orchestration, cloud platforms, and other workload
+platforms. It explains how workloads obtain credentials for external
+authentication purposes, without managing long-lived secrets directly. It does
+not take into account the standards work in progress for the WIMSE architecture
+<span>[<a href="#I-D.ietf-wimse-arch" class="cite xref">I-D.ietf-wimse-arch</a>]</span> and other protocols, such as
 <span>[<a href="#I-D.ietf-wimse-s2s-protocol" class="cite xref">I-D.ietf-wimse-s2s-protocol</a>]</span>.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
