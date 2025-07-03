@@ -94,10 +94,10 @@ Table of Contents
 
    Just like people, the workloads inside container orchestration
    systems (e.g. Kubernetes) need identities to authenticate with other
-   systems.  These resources include databases, web servers, or other
-   workloads.  These resources are protected by an authorization server
-   and require authentication via access token.  The challenge for
-   workloads is to obtain a token.
+   systems, such as databases, web servers, or other workloads.  The
+   challenge for workloads is to obtain a credential that can be used to
+   authenticate with these resources without managing secrets directly,
+   for instance, an OAuth 2.0 access token.
 
    The common use of the OAuth 2.0 framework [RFC6749] in this context
    poses challenges, particularly in managing credentials.  To address
@@ -113,14 +113,15 @@ Table of Contents
    Secret materials must be provisioned and rotated, which require
    either automation to be built, or periodic manual effort.  Secret
    materials can be stolen and used by attackers to impersonate the
-   workload.
+   workload.  Other, non OAuth 2.0 flows, such as direct API keys or
+   other secrets, suffer from the same issues.
 
    Instead of provisioning secret material to the workload, one solution
    to this problem is to attest the workload by using its underlying
    platform.  Many platforms provision workloads with a credential, such
    as a JWT token ([RFC7519]).  Cryptographically signed by the
-   platform's authorization server, this credential attests the workload
-   and its attributes.
+   platform's issuer, this credential attests the workload and its
+   attributes.
 
    Figure 1 illustrates a generic pattern that is seen across many
    workload platforms, more concrete variations are found in Section 4.
@@ -157,16 +158,16 @@ Table of Contents
    pattern.
 
    *  1) Platform issues credential to workload.  The way this is
-      achieved and whether this is workload (pull) or platform (push)
-      initiated differs based on the platform.
+      achieved differs from the platform, for instance, it can be pushed
+      to the workload or pulled by the workload.
 
-   *  A) The credential gives the workload direct access to resources
+   *  A) The credential can give the workload direct access to resources
       within the platform or the platform itself (e.g. to perform
       infrastructure operations)
 
    *  B1) The workload uses the credential to federate to an Identity
       Provider.  This step is optional and only needed when accessing
-      outside resurces.
+      outside resources.
 
    *  B2) The workload accesses resources outside of the platform and
       uses the federated identity obtained in the previous step.
@@ -185,14 +186,6 @@ Table of Contents
    "OPTIONAL" in this document are to be interpreted as described in BCP
    14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
-
-   For the scope of this document, the term authorization server is only
-   used for the authorization server of the external authorization
-   domain as highlighted in Figure 1.
-
-   Even though, technically, the platform credential is also issued by
-   an authorization server within the workload platform, this document
-   only refers to it as "platform issuer" or just "platform".
 
 3.  Delivery Patterns
 
@@ -229,12 +222,13 @@ Table of Contents
 
    This pattern relies on local APIs to communicate between the workload
    and the credential issuer.  Some implementations rely on UNIX Domain
-   Sockets (SPIFFE), loopback interfaces or link-local "magic addresses"
-   (e.g. AWS's IMDS) to provision credentials.  Local APIs offer the
-   capability to re-provision updated credentials.  Communication
-   between workload and API allows the workload to refresh a credential
-   or request a different one.  This group of solutions relies on
-   network isolation for their security.
+   Sockets (e.g. SPIFFE), loopback interfaces or link-local "magic
+   addresses" (e.g. Instance Metadata Service of cloud providers) to
+   provision credentials.  Local APIs offer the capability to re-
+   provision updated credentials.  Communication between workload and
+   API allows the workload to refresh a credential or request a
+   different one.  This group of solutions relies on network isolation
+   for their security.
 
    Local APIs allow for short-lived, narrowly-scoped credentials.
    Persistent connections allow the issuer to push credentials.
@@ -561,15 +555,15 @@ Table of Contents
       Service or Endpoint.  This endpoint exposes an well-known API and
       is available at well- known, but local, location.
 
-   When the workload needs to access a resource within the cloud
-   (protected by the same authorization server that issued the workload
-   identity):
+   When the workload needs to access a resource within the cloud (e.g.
+   located in the same security boundary; protected by the same issuer
+   as the workload identity):
 
    *  A) The workload directly access the protected resource with the
       credential issued in Step 1.
 
    When the workload needs to access a resource outside of the cloud
-   (protected by a different authorization server).
+   (e.g. different cloud; same cloud, but different security boundary):
 
    *  B1) The workload uses cloud-issued credential to federate to the
       Secure Token Service of the other cloud/account.
@@ -667,9 +661,9 @@ Table of Contents
 5.2.  Token typing
 
    Issuers SHOULD strongly type the issued tokens to workload via the
-   JOSE typ header and authorization servers SHOULD validate the value
-   of it according to policy.  See Section 3.1 of [RFC8725] for details
-   on explicit typing.
+   JOSE typ header and Identity Providers accepting these tokens SHOULD
+   validate the value of it according to policy.  See Section 3.1 of
+   [RFC8725] for details on explicit typing.
 
    Issuers SHOULD use authorization-grant+jwt as a typ value according
    to [I-D.ietf-oauth-rfc7523bis].  For broad support JWT or JOSE MAY be
