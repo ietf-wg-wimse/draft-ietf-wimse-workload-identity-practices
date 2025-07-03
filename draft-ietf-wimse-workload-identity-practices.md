@@ -101,7 +101,7 @@ informative:
 
 --- abstract
 
-This specification describes current industry practices by which workloads in
+This document describes current industry practices by which workloads in
 container orchestration systems can obtain identity tokens for authentication
 with external resources without managing secrets directly. It presents a general
 credential delivery flow, specific delivery patterns, and concrete practice
@@ -200,12 +200,12 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 BCP 14 {{RFC2119}} {{RFC8174}} when, and only when, they appear in all
 capitals, as shown here.
 
-For the scope of this specification, the term authorization server is only used
+For the scope of this document, the term authorization server is only used
 for the authorization server of the external authorization domain as highlighted
 in {{fig-overview}}.
 
 Even though, technically, the platform credential is also issued by an
-authorization server within the workload platform, this specification only
+authorization server within the workload platform, this document only
 refers to it as "platform issuer" or just "platform".
 
 # Delivery Patterns {#delivery-patterns}
@@ -402,10 +402,10 @@ The Secure Production Identity Framework For Everyone, also known as SPIFFE [SPI
 a Cloud Native Computing Foundation (CNCF) project that defines a "Workload API"
 to deliver machine identity to workloads. Workloads can retrieve either X.509
 certificates or JWTs. How workloads authenticate on the API is not part of the
-specification. It is common to use platform metadata from the operating system
+document. It is common to use platform metadata from the operating system
 and the workload platform for authentication to the Workload API.
 
-SPIFFE referres to the JWT-formmatted credential as a "JWT-SVID" (JWT - SPIFFE
+SPIFFE refers to the JWT-formatted credential as a "JWT-SVID" (JWT - SPIFFE
 Verifiable Identity Document).
 
 Workloads are required to specify at least one audience when requesting a
@@ -684,7 +684,7 @@ Tokens SHOULD NOT exceed the lifetime of the workloads they represent. For
 example, a workload that has an expected lifetime of an hour should not receive
 a token valid for 2 hours or more.
 
-For the scope of this specification, where a platform-issued credential is used
+For the scope of this document, where a platform-issued credential is used
 to authenticate to retrieve an access token for an external authorization
 domain, a short-lived credential is recommended.
 
@@ -692,7 +692,7 @@ domain, a short-lived credential is recommended.
 
 Platform issuers SHOULD invalidate tokens when the workload stops, pauses or
 ceases to exist. How these credentials are invalidated depends on platform
-authentication mechanisms and is not in scope of this specification.
+authentication mechanisms and is not in scope of this document.
 
 ## Proof of possession
 
