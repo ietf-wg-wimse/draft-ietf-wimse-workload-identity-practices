@@ -713,20 +713,6 @@ Some workload platforms provide credentials for interacting with their own APIs
 In the example of Kubernetes: A token used for anything else than the Kubernetes
 API itself MUST NOT carry the Kubernetes server in the `aud` claim.
 
-# Other considerations
-
-## Relation to OpenID Connect and its ID Token
-
-The outlined pattern has been referred to as "OIDC" and respectively, the
-Workload Identity Token as "OIDC ID Token" defined in {{OIDC}}. The authors of
-this document want to highlight that this pattern is not related to OpenID
-Connect {{OIDC}} and the issued Workload Identity Tokens by the platforms are
-not "ID Tokens" in the sense of OIDC.
-
-However, it is common practice for the authorization server to leverage
-{{OIDCDiscovery}} to retrieve the signing keys needed for token validation. The
-use of {{RFC8414}} or any other key distribution remain valid.
-
 # IANA Considerations {#IANA}
 
 This document does not require actions by IANA.
