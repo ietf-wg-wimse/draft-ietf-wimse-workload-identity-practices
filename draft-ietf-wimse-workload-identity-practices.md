@@ -101,13 +101,12 @@ informative:
 
 --- abstract
 
-This document describes current industry practices by which workloads in
-container orchestration systems can obtain identity tokens for authentication
-with external resources without managing secrets directly. It presents a general
-credential delivery flow, specific delivery patterns, and concrete practice
-examples. These practices are mainly built on top of OAuth 2.0. Therefore, it
-does not take into account the standards work in progress for the WIMSE
-architecture {{I-D.ietf-wimse-arch}} and other protocols, such as
+This document describes industry practices for providing secure identities
+to workloads in container orchestration, cloud platforms, and other workload
+platforms. It explains how workloads obtain credentials for external
+authentication purposes, without managing long-lived secrets directly. It does
+not take into account the standards work in progress for the WIMSE architecture
+{{I-D.ietf-wimse-arch}} and other protocols, such as
 {{I-D.ietf-wimse-s2s-protocol}}.
 
 --- middle
