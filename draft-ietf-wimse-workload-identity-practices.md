@@ -211,9 +211,9 @@ recommendations for these methods are covered in
 
 ## Environment Variables
 
-Injecting the credentials into the environmental variables allows for simple and
+Injecting the credentials into the environment variables allows for simple and
 fast deployments. Applications can directly access them through system-level
-mechanism, e.g., through the `env` command in linux. Note that environmental
+mechanism, e.g., through the `env` command in linux. Note that environment
 variables are static in nature in that they cannot be changed after application
 initialization.
 
@@ -616,7 +616,7 @@ Tokens of different providers look different, but all contain claims carrying
 the basic context of the executed tasks, such as source code management data
 (e.g. git branch), initiation and more.
 
-# Security Recommendations {#security}
+# Security Considerations {#security}
 
 All security considerations in section 8 of {{RFC7521}} apply.
 
@@ -624,7 +624,7 @@ All security considerations in section 8 of {{RFC7521}} apply.
 
 ### Environment Variables
 
-Leveraging environmental variables to provide credentials presents many security
+Leveraging environment variables to provide credentials presents many security
 limitations. Environment variables have a wide set of use cases and are observed
 by many components. They are often captured for monitoring, observability,
 debugging and logging purposes and sent to components outside of the workload.
