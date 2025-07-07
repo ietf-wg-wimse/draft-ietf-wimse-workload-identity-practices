@@ -735,13 +735,16 @@ While {{RFC7521}} and {{RFC7523}} are the proposed standards for this pattern, s
 
    [[ To be removed from the final specification ]]
 
-   -latest
-
-   * Use more generic "federation" term instead of RFC 7523 specifics
-
    -02
 
-   * Rework structure as per https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/30
+   * Updated structure, bringing concrete examples back into the main text.
+   * Use more generic "federation" term instead of RFC 7523 specifics.
+   * Overall editorial improvements.
+   * Fix reference of Kubernetes Token Request API
+   * Prefer the term "document" over "specification".
+   * Update contributor and acknowledgements sections.
+   * Remove section about OIDC as it is too specific to a certain implementation.
+   * Rewrite abstract to better reflect the current content of the document.
 
    -01
 
