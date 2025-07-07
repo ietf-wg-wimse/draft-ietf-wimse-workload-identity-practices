@@ -1055,7 +1055,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Schwenkschuster &amp; Rosomakho</td>
-<td class="center">Expires 4 January 2026</td>
+<td class="center">Expires 8 January 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1068,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-workload-identity-practices-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-07-03" class="published">3 July 2025</time>
+<time datetime="2025-07-07" class="published">7 July 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-01-04">4 January 2026</time></dd>
+<dd class="expires"><time datetime="2026-01-08">8 January 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1117,7 +1117,7 @@ not take into account the standards work in progress for the WIMSE architecture
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 January 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 January 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1184,7 +1184,7 @@ not take into account the standards work in progress for the WIMSE architecture
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-security-recommendations" class="internal xref">Security Recommendations</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
                 <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-credential-delivery" class="internal xref">Credential Delivery</a></p>
@@ -1411,9 +1411,9 @@ recommendations for these methods are covered in
         <h3 id="name-environment-variables">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-environment-variables" class="section-name selfRef">Environment Variables</a>
         </h3>
-<p id="section-3.1-1">Injecting the credentials into the environmental variables allows for simple and
+<p id="section-3.1-1">Injecting the credentials into the environment variables allows for simple and
 fast deployments. Applications can directly access them through system-level
-mechanism, e.g., through the <code>env</code> command in linux. Note that environmental
+mechanism, e.g., through the <code>env</code> command in linux. Note that environment
 variables are static in nature in that they cannot be changed after application
 initialization.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 </section>
@@ -2044,8 +2044,8 @@ the basic context of the executed tasks, such as source code management data
 </div>
 <div id="security">
 <section id="section-5">
-      <h2 id="name-security-recommendations">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-recommendations" class="section-name selfRef">Security Recommendations</a>
+      <h2 id="name-security-considerations">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
 <p id="section-5-1">All security considerations in section 8 of <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span> apply.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <div id="security-credential-delivery">
@@ -2058,7 +2058,7 @@ the basic context of the executed tasks, such as source code management data
           <h4 id="name-environment-variables-2">
 <a href="#section-5.1.1" class="section-number selfRef">5.1.1. </a><a href="#name-environment-variables-2" class="section-name selfRef">Environment Variables</a>
           </h4>
-<p id="section-5.1.1-1">Leveraging environmental variables to provide credentials presents many security
+<p id="section-5.1.1-1">Leveraging environment variables to provide credentials presents many security
 limitations. Environment variables have a wide set of use cases and are observed
 by many components. They are often captured for monitoring, observability,
 debugging and logging purposes and sent to components outside of the workload.
@@ -2270,7 +2270,7 @@ API itself MUST NOT carry the Kubernetes server in the <code>aud</code> claim.<a
 <dd class="break"></dd>
 <dt id="I-D.ietf-wimse-s2s-protocol">[I-D.ietf-wimse-s2s-protocol]</dt>
         <dd>
-<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Salowey, J.</span>, <span class="refAuthor">Schwenkschuster, A.</span>, and <span class="refAuthor">Y. Sheffer</span>, <span class="refTitle">"WIMSE Workload to Workload Authentication"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-s2s-protocol-05</span>, <time datetime="2025-06-19" class="refDate">19 June 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol-05">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol-05</a>&gt;</span>. </dd>
+<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Schwenkschuster, A.</span>, and <span class="refAuthor">Y. Sheffer</span>, <span class="refTitle">"WIMSE Workload to Workload Authentication"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-s2s-protocol-06</span>, <time datetime="2025-07-04" class="refDate">4 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol-06">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-s2s-protocol-06</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="KubernetesServiceAccount">[KubernetesServiceAccount]</dt>
         <dd>

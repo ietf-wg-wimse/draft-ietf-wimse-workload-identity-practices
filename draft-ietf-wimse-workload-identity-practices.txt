@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments        A. Schwenkschuster
 Internet-Draft                                                     SPIRL
 Intended status: Informational                              Y. Rosomakho
-Expires: 4 January 2026                                          Zscaler
-                                                             3 July 2025
+Expires: 8 January 2026                                          Zscaler
+                                                             7 July 2025
 
 
                       Workload Identity Practices
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 January 2026.
+   This Internet-Draft will expire on 8 January 2026.
 
 Copyright Notice
 
@@ -67,7 +67,7 @@ Table of Contents
      4.2.  Secure Production Identity Framework For Everyone (SPIFFE)
      4.3.  Cloud Providers
      4.4.  Continuous Integration and Deployment Systems
-   5.  Security Recommendations
+   5.  Security Considerations
      5.1.  Credential Delivery
        5.1.1.  Environment Variables
        5.1.2.  Filesystem
@@ -197,11 +197,11 @@ Table of Contents
 
 3.1.  Environment Variables
 
-   Injecting the credentials into the environmental variables allows for
+   Injecting the credentials into the environment variables allows for
    simple and fast deployments.  Applications can directly access them
    through system-level mechanism, e.g., through the env command in
-   linux.  Note that environmental variables are static in nature in
-   that they cannot be changed after application initialization.
+   linux.  Note that environment variables are static in nature in that
+   they cannot be changed after application initialization.
 
 3.2.  Filesystem
 
@@ -623,7 +623,7 @@ Table of Contents
    carrying the basic context of the executed tasks, such as source code
    management data (e.g. git branch), initiation and more.
 
-5.  Security Recommendations
+5.  Security Considerations
 
    All security considerations in section 8 of [RFC7521] apply.
 
@@ -631,13 +631,13 @@ Table of Contents
 
 5.1.1.  Environment Variables
 
-   Leveraging environmental variables to provide credentials presents
-   many security limitations.  Environment variables have a wide set of
-   use cases and are observed by many components.  They are often
-   captured for monitoring, observability, debugging and logging
-   purposes and sent to components outside of the workload.  Access
-   control is not trivial and does not achieve the same security results
-   as other methods.
+   Leveraging environment variables to provide credentials presents many
+   security limitations.  Environment variables have a wide set of use
+   cases and are observed by many components.  They are often captured
+   for monitoring, observability, debugging and logging purposes and
+   sent to components outside of the workload.  Access control is not
+   trivial and does not achieve the same security results as other
+   methods.
 
    This approach should be limited to non-production cases where
    convenience outweighs security considerations, and the provided
@@ -807,12 +807,12 @@ Table of Contents
               arch-04>.
 
    [I-D.ietf-wimse-s2s-protocol]
-              Campbell, B., Salowey, J., Schwenkschuster, A., and Y.
+              Campbell, B., Salowey, J. A., Schwenkschuster, A., and Y.
               Sheffer, "WIMSE Workload to Workload Authentication", Work
               in Progress, Internet-Draft, draft-ietf-wimse-s2s-
-              protocol-05, 19 June 2025,
+              protocol-06, 4 July 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              s2s-protocol-05>.
+              s2s-protocol-06>.
 
    [KubernetesServiceAccount]
               "Kubernetes Service Account", May 2024,
