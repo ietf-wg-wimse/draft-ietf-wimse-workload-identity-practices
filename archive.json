@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-08T01:05:17.119368+00:00",
+  "timestamp": "2025-08-12T01:03:30.153369+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -282,7 +282,7 @@
       "id": "I_kwDOL34A-M6vDTiW",
       "title": "NMS Review feedback",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/21",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nedmsmith",
       "authorAssociation": "NONE",
       "assignees": [
@@ -291,8 +291,8 @@
       "labels": [],
       "body": "I reviewed this draft and have the following comments:\n\nNed Smith review of current repo build of draft-ietf-wimse-workload-identity-practices.\n\nSection 3:\n\t- The title of section 3 is specific to OAuth, but \u00a73.2 seems to consider other credential types besides OAuth (but doesn\u2019t include JWT as one of the possible types).\n\nSection 3.2.1:\n\t- S/environmental/environment/ - It is uncommon in Linux to describe environment variables as environmental variables.\n\t\nSection 3.2.2:\n\t- First sentence: \u201cFiles allow to inject\u2026\u201d seems to be missing a word that identifies who or what is doing the injection. Awkward reader flow.\n\t\nSection 3.2.3:\n\t- Last paragraph: S/un-legitimate/illegitimate/ or /unauthorized/\n\nSection 3.3:\n\t- This section indicates \u201cJSON Web Token\u201d is a credential format, but section 3.2 omits it as a possible credential in terms of credential issuance / provisioning techniques. The reader is unclear what the relationship is between the provisioning technique and the format of the provisioned credential. For example, a file could contain a JWT, but also describes OS DAC access mechanisms which typically are not JWT structures. Possibly, JWT should be added to the list in Section 3.2?\n\n\t- For completeness the formatting of all of the credential types listed in \u00a73.2 should be explained in this section? Alternatively, the formatting considerations could be subsections for each credential type listed in \u00a73.2?\n\n\t- Certificates are mentioned as a credential format, but not listed as a credential type in \u00a73.2.\n\nSection 4: \n\t- RFC3552 requires all RFCs to have a Security Considerations section. Possibly, this section should be renamed as that. Or the security considerations should say that the entire RFC is about security?\n\t- The first sentence seems to suggest this is a security considerations section.\n\nSection 4.1:\n\t- Although \u00a73.3 mentions JWT, it is unclear if the other credential provisioning types are presumed to be types of \u201ctokens\u201d and therefore omitted from section 4.1. Or is this section intended to focus only on JWT tokens and OAuth2 provisioning flows?\n\t- It seems unexpected for an informational RFC to contain upper case normative.\n\nSection 5:\n\t- Inconsistent use of capitalization in header text. S/considerations/Considerations/\n\nSection 5.1:\n\t- \u201cThe outlined pattern\u2026\u201d is ambiguous as it refers to some other part of the document, but it is unclear which part.\n\t- Last paragraph: \u201cThe use of [RFC8414] or any other key distribution remains valid.\u201d It is unclear what part of RFC8414 is the subject of the sentence. It is also unclear for what purpose a \u201ckey distribution\u201d remain valid. Section 3.2 didn\u2019t identify \u201ckey distribution\u201d as a possible credential type or format yet it seems to be related to credential issuance / provisioning.\n\nIf this document chooses to have a separate security considerations section (Section 7?) it might include content that describes:\n\t- Expectations for integrity protection of the credential (or security techniques that ensure integrity of the access policy).\n\t\t- In transit.\n\t\t- At rest.\n\t- Credential lifecycle expectations - can it be updated and if so, what security capabilities are assumed to be at play to ensure update integrity?\n\t- What authority / privileges does the workload have in terms of the credential lifecycle - if any?\n\t- How does the workload itself get provisioned?\n\t- How is a workload confidentiality protected? Note: the WIMSE arch talks about TLS/SPIFFE, but it is unclear if TLS/SPIFFE is a \u201ccurrent practice\u201d.\n\nMy intention in reviewing the current practices draft was to highlight gaps in security based on current practice to motivate the need for better practices and security mechanisms. I\u2019m finding it difficult to approach the document because it seems to both describe current practice, but also specific new practice; and it doesn\u2019t give equal attention to the various types of credentials both in terms of describing current practice and in specifying new practice.\n\nI'm happy to help improve this draft.\n",
       "createdAt": "2025-03-20T23:39:19Z",
-      "updatedAt": "2025-07-06T17:03:45Z",
-      "closedAt": null,
+      "updatedAt": "2025-08-11T10:06:58Z",
+      "closedAt": "2025-08-11T10:06:58Z",
       "comments": [
         {
           "author": "heymarcel",
@@ -321,6 +321,13 @@
           "body": "I believe with the latest changes + https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/47 all of these points are now rectified. @nedmsmith please let us know if you see otherwise.",
           "createdAt": "2025-07-06T17:03:45Z",
           "updatedAt": "2025-07-06T17:03:45Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@nedmsmith closing this. If there's anything else please re-open this or open a new issue.",
+          "createdAt": "2025-08-11T10:06:58Z",
+          "updatedAt": "2025-08-11T10:06:58Z"
         }
       ]
     },
@@ -856,9 +863,24 @@
       ],
       "body": "> please mention that in addition to pre-provisioning of rotated credentials (which you mention), solutions must also ensure that rotation happens atomically, such that the client can never read part of the old credential and part of the new one.\n\nrefers to the file provisioning section",
       "createdAt": "2025-07-02T14:52:29Z",
-      "updatedAt": "2025-07-02T14:52:29Z",
+      "updatedAt": "2025-08-11T12:31:15Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@yaronf can you elaborate this a bit please? Our understanding is that this is covered by the OS and the credential issue/user does not need to worry about this.",
+          "createdAt": "2025-08-11T10:10:30Z",
+          "updatedAt": "2025-08-11T10:10:30Z"
+        },
+        {
+          "author": "yaronf",
+          "authorAssociation": "NONE",
+          "body": "This is for the Filesystem section (currently Sec. 3.2). The section mentions the responsibility of the \"solution\", which probably includes the OS, and does not focus on the consumer of the credentials. Quoting:\n> For example, the solution can choose to update the secret an hour before it is invalidated.\n\nWhen you write anything to a filesystem you need to ensure atomicity explicitly, so in this case this is a responsibility of the \"solution\".",
+          "createdAt": "2025-08-11T12:31:15Z",
+          "updatedAt": "2025-08-11T12:31:15Z"
+        }
+      ]
     },
     {
       "number": 44,
@@ -868,47 +890,82 @@
       "state": "OPEN",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "yaroslavros"
+      ],
       "labels": [
         "feedback-yaron"
       ],
       "body": "Yaron is giving the following feedback:\n\n> \"Local APIs offer the highest level of access control\", while I agree that in practice this is the most secure option, this sentence is imprecise: when using files, OS-level access control mechanisms can be used which is not the case for APIs. I think the real answer is more subtle and has to do specifically with container architectures.\n\nAgreed here - this needs rewording.",
       "createdAt": "2025-07-02T14:53:39Z",
-      "updatedAt": "2025-07-02T14:53:39Z",
+      "updatedAt": "2025-08-11T10:11:27Z",
       "closedAt": null,
       "comments": []
     },
     {
       "number": 45,
       "id": "I_kwDOL34A-M6-gl19",
-      "title": "Extrospection of credential validity",
+      "title": "Token validation API & phrasing",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/45",
       "state": "OPEN",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [
         "feedback-yaron"
       ],
       "body": "Yaron is giving the following feedback\n\n> \"How these credentials are invalidated is not in scope of this specification.\" Given that many of the workloads are very short lived, I think this is a discussion we need to have. It is less about how the platform invalidates the creds and more about validators being able to query the current status with fine granularity. Kubernetes proposes a solution, maybe we should be standardizing it.\n\nI find it a very interesting idea and haven't thought about this before. ",
       "createdAt": "2025-07-02T14:55:58Z",
-      "updatedAt": "2025-07-02T14:55:58Z",
+      "updatedAt": "2025-08-11T10:20:33Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We need to:\n* rephrase 5.5\n* rephrase 4.1",
+          "createdAt": "2025-08-11T10:19:37Z",
+          "updatedAt": "2025-08-11T10:19:37Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Standard itself is out of scope, however, we can give specific examples.",
+          "createdAt": "2025-08-11T10:20:33Z",
+          "updatedAt": "2025-08-11T10:20:33Z"
+        }
+      ]
     },
     {
       "number": 48,
       "id": "I_kwDOL34A-M6_OWFR",
       "title": "IETF 123",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/48",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "- Where this draft started, where it is now. Praise previous feedback.\n- Cover changes\n- Outstanding issues\n- Ask & encourage more reviews",
       "createdAt": "2025-07-07T09:21:09Z",
-      "updatedAt": "2025-07-07T09:21:09Z",
+      "updatedAt": "2025-08-11T09:58:32Z",
+      "closedAt": "2025-08-11T09:58:32Z",
+      "comments": []
+    },
+    {
+      "number": 50,
+      "id": "I_kwDOL34A-M7FTROU",
+      "title": "Review Draft",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/50",
+      "state": "OPEN",
+      "author": "b3n3d17",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-08-11T13:50:57Z",
+      "updatedAt": "2025-08-11T13:50:57Z",
       "closedAt": null,
       "comments": []
     }
