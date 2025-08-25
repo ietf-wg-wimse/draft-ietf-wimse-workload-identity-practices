@@ -16,11 +16,11 @@ not take into account the standards work in progress for the WIMSE architecture
   and other protocols, such as
  . 
     " name="description">
-<meta content="xml2rfc 3.29.0" name="generator">
+<meta content="xml2rfc 3.30.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-wimse-workload-identity-practices-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.29.0
+  xml2rfc 3.30.0
     Python 3.12.11
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
@@ -1051,11 +1051,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Workload Identity</td>
-<td class="right">July 2025</td>
+<td class="right">August 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Schwenkschuster &amp; Rosomakho</td>
-<td class="center">Expires 8 January 2026</td>
+<td class="center">Expires 26 February 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1068,12 +1068,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-wimse-workload-identity-practices-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-07-07" class="published">7 July 2025</time>
+<time datetime="2025-08-25" class="published">25 August 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-01-08">8 January 2026</time></dd>
+<dd class="expires"><time datetime="2026-02-26">26 February 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1117,7 +1117,7 @@ not take into account the standards work in progress for the WIMSE architecture
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 8 January 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 26 February 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1266,7 +1266,7 @@ not take into account the standards work in progress for the WIMSE architecture
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">Just like people, the workloads inside container orchestration systems (e.g.
+<p id="section-1-1">Just like people, the workloads inside container orchestration systems (e.g.,
 Kubernetes) need identities to authenticate with other systems, such as
 databases, web servers, or other workloads. The challenge for workloads is to
 obtain a credential that can be used to authenticate with these resources
@@ -1276,17 +1276,17 @@ challenges, particularly in managing credentials. To address this, the industry
 has shifted to a federation-based approach where credentials of the underlying
 workload platform are used to authenticate to other identity providers, which in
 turn, issue credentials that grant access to resources.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">Traditionally, workloads were provisioned with client credentials and use for
+<p id="section-1-3">Traditionally, workloads were provisioned with client credentials and used for
 example the corresponding client credential flow (Section 1.3.4 <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>) to
 retrieve an OAuth 2.0 access token. This model presents a number of security and
 maintenance issues. Secret materials must be provisioned and rotated, which
-require either automation to be built, or periodic manual effort. Secret
+requires either automation to be built, or periodic manual effort. Secret
 materials can be stolen and used by attackers to impersonate the workload.
 Other, non OAuth 2.0 flows, such as direct API keys or other secrets, suffer
 from the same issues.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">Instead of provisioning secret material to the workload, one solution to this
 problem is to attest the workload by using its underlying platform. Many
-platforms provision workloads with a credential, such as a JWT token
+platforms provision workloads with a credential, such as a JWT
 (<span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>). Cryptographically signed by the platform's issuer,
 this credential attests the workload and its attributes.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5"><a href="#fig-overview" class="auto internal xref">Figure 1</a> illustrates a generic pattern that is seen across many workload
@@ -1360,13 +1360,13 @@ platforms, more concrete variations are found in <a href="#practices" class="aut
 <p id="section-1-7">The figure outlines the following steps which are applicable in any pattern.<a href="#section-1-7" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1-8.1">
-          <p id="section-1-8.1.1">1) Platform issues credential to workload. The way this is achieved differs
-   from the platform, for instance, it can be pushed to the workload or
+          <p id="section-1-8.1.1">1) Platform issues credential to workload. The way this is achieved varies
+   by platform, for instance, it can be pushed to the workload or
    pulled by the workload.<a href="#section-1-8.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-1-8.2">
           <p id="section-1-8.2.1">A) The credential can give the workload direct access to resources within the
-   platform or the platform itself (e.g. to perform infrastructure operations)<a href="#section-1-8.2.1" class="pilcrow">¶</a></p>
+   platform or the platform itself (e.g., to perform infrastructure operations)<a href="#section-1-8.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-1-8.3">
           <p id="section-1-8.3.1">B1) The workload uses the credential to federate to an Identity Provider. This
@@ -1379,7 +1379,7 @@ platforms, more concrete variations are found in <a href="#practices" class="aut
       </ul>
 <p id="section-1-9">Accessing different outside resources may require the workload to repeat steps
 B1) and B2), federating to multiple Identity Providers. It is also possible that
-step 1) needs to be repeated, for example in situations where the
+step 1) needs to be repeated, for instance in situations where the
 platform-issued credential is scoped to accessing a certain resource or
 federating to a specific Identity Provider.<a href="#section-1-9" class="pilcrow">¶</a></p>
 </section>
@@ -1401,8 +1401,8 @@ capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
       <h2 id="name-delivery-patterns">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-delivery-patterns" class="section-name selfRef">Delivery Patterns</a>
       </h2>
-<p id="section-3-1">Credentials can be provisioned to the workload by different mechanisms, which
-each have their own advantages, challenges, and security risks. The following
+<p id="section-3-1">Credentials can be provisioned to the workload by different mechanisms, each of which has
+its own advantages, challenges, and security risks. The following
 section highlights the pros and cons of common solutions. Security
 recommendations for these methods are covered in
 <a href="#security-credential-delivery" class="auto internal xref">Section 5.1</a>.<a href="#section-3-1" class="pilcrow">¶</a></p>
@@ -1413,7 +1413,7 @@ recommendations for these methods are covered in
         </h3>
 <p id="section-3.1-1">Injecting the credentials into the environment variables allows for simple and
 fast deployments. Applications can directly access them through system-level
-mechanism, e.g., through the <code>env</code> command in linux. Note that environment
+mechanisms, e.g., through the <code>env</code> command in Linux. Note that environment
 variables are static in nature in that they cannot be changed after application
 initialization.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 </section>
@@ -1440,8 +1440,8 @@ without downtime.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-local-apis" class="section-name selfRef">Local APIs</a>
         </h3>
 <p id="section-3.3-1">This pattern relies on local APIs to communicate between the workload and the
-credential issuer. Some implementations rely on UNIX Domain Sockets (e.g.
-SPIFFE), loopback interfaces or link-local "magic addresses" (e.g. Instance
+credential issuer. Some implementations rely on UNIX Domain Sockets (e.g.,
+SPIFFE), loopback interfaces or link-local "magic addresses" (e.g., Instance
 Metadata Service of cloud providers) to provision credentials. Local APIs offer
 the capability to re-provision updated credentials. Communication between
 workload and API allows the workload to refresh a credential or request a
@@ -1476,7 +1476,7 @@ acting as the signer.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 ecosystem. They are used to authenticate to Kubernetes APIs, between different
 workloads and to access external resources. This latter use case is particularly
 relevant for the purposes of this document.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
-<p id="section-4.1-3">To programatically use service accounts, workloads can:<a href="#section-4.1-3" class="pilcrow">¶</a></p>
+<p id="section-4.1-3">To programmatically use service accounts, workloads can:<a href="#section-4.1-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.1-4.1">
             <p id="section-4.1-4.1.1">Have the token "projected" into the file system of the workload. This is
@@ -1518,7 +1518,7 @@ workload. This allows workloads to validate a token's signature without
 calling the Token Review API.<a href="#section-4.1-8.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.1-8.3">
-            <p id="section-4.1-8.3.1">Optionally, a JSON Web Key Set <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> is exposed via a webserver. This
+            <p id="section-4.1-8.3.1">Optionally, a JSON Web Key Set <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> is exposed via a web server. This
 allows the Service Account Token to be validated outside of the cluster and
 access to the actual Kubernetes Control Plane API.<a href="#section-4.1-8.3.1" class="pilcrow">¶</a></p>
 </li>
@@ -1605,31 +1605,31 @@ access to the actual Kubernetes Control Plane API.<a href="#section-4.1-8.3.1" c
 <p id="section-4.1-10">The steps shown in <a href="#fig-kubernetes" class="auto internal xref">Figure 2</a> are:<a href="#section-4.1-10" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.1-11.1">
-            <p id="section-4.1-11.1.1">1) The kubelet is tasked to schedule a Pod. Based on configuration it requests
+            <p id="section-4.1-11.1.1">1) The kubelet is tasked to schedule a Pod. Based on configuration, it requests
    a Service Account Token from the Kubernetes API server.<a href="#section-4.1-11.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.1-11.2">
             <p id="section-4.1-11.2.1">2) The kubelet starts the Pod and, based on the configuration of the Pod,
-   deliveres the token to the containers within the Pod.<a href="#section-4.1-11.2.1" class="pilcrow">¶</a></p>
+   delivers the token to the containers within the Pod.<a href="#section-4.1-11.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-4.1-12">Now, the Pod can use the token to<a href="#section-4.1-12" class="pilcrow">¶</a></p>
+<p id="section-4.1-12">Now, the Pod can use the token to:<a href="#section-4.1-12" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.1-13.1">
             <p id="section-4.1-13.1.1">A) Access the Kubernetes Control Plane, considering it has access to it.<a href="#section-4.1-13.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.1-13.2">
-            <p id="section-4.1-13.2.1">B) Access other resources within the cluster, for instance other Pods.<a href="#section-4.1-13.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.1-13.2.1">B) Access other resources within the cluster, for instance, other Pods.<a href="#section-4.1-13.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.1-13.3">
-            <p id="section-4.1-13.3.1">C) Access resources outside of the cluster.<a href="#section-4.1-13.3.1" class="pilcrow">¶</a></p>
+            <p id="section-4.1-13.3.1">C) Access resources outside of the cluster:<a href="#section-4.1-13.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.1-13.3.2.1">
-                <p id="section-4.1-13.3.2.1.1">C1) The application within the pod uses the Service Account Token to
-    federate to an Identity Provider outside of the Kubernets Cluster.<a href="#section-4.1-13.3.2.1.1" class="pilcrow">¶</a></p>
+                <p id="section-4.1-13.3.2.1.1">C1) The application within the Pod uses the Service Account Token to
+    federate to an Identity Provider outside of the Kubernetes Cluster.<a href="#section-4.1-13.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-4.1-13.3.2.2">
-                <p id="section-4.1-13.3.2.2.1">C2) Using the federated identity the application within the Pod accesses
+                <p id="section-4.1-13.3.2.2.1">C2) Using the federated identity, the application within the Pod accesses
     resources outside of the cluster.<a href="#section-4.1-13.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
@@ -1684,7 +1684,7 @@ Account token.<a href="#section-4.1-14" class="pilcrow">¶</a></p>
 <p id="section-4.2-1">The Secure Production Identity Framework For Everyone, also known as SPIFFE <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>, is
 a Cloud Native Computing Foundation (CNCF) project that defines a "Workload API"
 to deliver machine identity to workloads. Workloads can retrieve either X.509
-certificates or JWTs. How workloads authenticate on the API is not part of the
+certificates or JWTs. How workloads authenticate to the API is not part of this
 document. It is common to use platform metadata from the operating system
 and the workload platform for authentication to the Workload API.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <p id="section-4.2-2">SPIFFE refers to the JWT-formatted credential as a "JWT-SVID" (JWT - SPIFFE
@@ -1703,10 +1703,10 @@ bundle".<a href="#section-4.2-5.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-4.2-6">Additionally, many SPIFFE deployments choose to separately publish the signing
-keys as a JWK Set on a web server to allow validation where the
+keys as a JWK Set on a web server to allow validation when the
 Workload API is not available.<a href="#section-4.2-6" class="pilcrow">¶</a></p>
 <p id="section-4.2-7">The following figure illustrates how a workload can use its JWT-SVID to access a
-protected resource outside of SPIFFE.<a href="#section-4.2-7" class="pilcrow">¶</a></p>
+protected resource outside of SPIFFE:<a href="#section-4.2-7" class="pilcrow">¶</a></p>
 <span id="name-workload-identity-in-spiffe"></span><div id="fig-spiffe">
 <figure id="figure-4">
           <div id="section-4.2-8.1">
@@ -1785,7 +1785,7 @@ protected resource outside of SPIFFE.<a href="#section-4.2-7" class="pilcrow">¶
    within the same SPIFFE Trust Domain.<a href="#section-4.2-10.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.2-10.3">
-            <p id="section-4.2-10.3.1">B1) To access resource proctected by other Identity Providers the workload
+            <p id="section-4.2-10.3.1">B1) To access resources protected by other Identity Providers, the workload
     uses the SPIFFE JWT-SVID to federate to the Identity Provider.<a href="#section-4.2-10.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.2-10.4">
@@ -1812,7 +1812,7 @@ diagram or at least some text.<a href="#section-4.2-11.1.1" class="pilcrow">¶</
 }
 </pre><a href="#section-4.2-13" class="pilcrow">¶</a>
 </div>
-<p id="section-4.2-14">TODO: write about "iss" in JWT-SVID.<a href="#section-4.2-14" class="pilcrow">¶</a></p>
+<p id="section-4.2-14">The <code>iss</code> (issuer) claim is optional in JWT-SVIDs per the SPIFFE specification <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>, which defines only <code>sub</code>, <code>aud</code>, and <code>exp</code> as required claims.<a href="#section-4.2-14" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="cloudproviders">
@@ -1820,30 +1820,30 @@ diagram or at least some text.<a href="#section-4.2-11.1.1" class="pilcrow">¶</
         <h3 id="name-cloud-providers">
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-cloud-providers" class="section-name selfRef">Cloud Providers</a>
         </h3>
-<p id="section-4.3-1">Workload in cloud platforms can have any shape or form. Historically, virtual
+<p id="section-4.3-1">Workloads in cloud platforms can have any shape or form. Historically, virtual
 machines were the most common. The introduction of containerization brought
-hosted container environment or Kubernetes clusters. Containers have evolved
+hosted container environments or Kubernetes clusters. Containers have evolved
 into <code>serverless</code> offerings. Regardless of the actual workload packaging,
 distribution, or runtime platform, all these workloads need identities.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <p id="section-4.3-2">The biggest cloud providers have established the pattern of an "Instance
 Metadata Endpoint". Aside from allowing workloads to retrieve metadata about
 themselves, it also allows them to receive identity. The credential types
 offered can vary. JWT, however, is the one that is common across all of them.
-The issued credential allows proof to anyone it is being presented to, that the
+The issued credential provides proof to anyone it is being presented to that the
 workload platform has attested the workload and it can be considered
 authenticated.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
-<p id="section-4.3-3">Within a cloud provider the issued credential can often directly be used to
-access resources of any kind across the platform making integration between the
+<p id="section-4.3-3">Within a cloud provider, the issued credential can often directly be used to
+access resources of any kind across the platform, making integration between the
 services easy and "credentialless". While the term is technically misleading,
 from a user perspective, no credential needs to be issued, provisioned, rotated
 or revoked, as everything is handled internally by the platform.<a href="#section-4.3-3" class="pilcrow">¶</a></p>
 <p id="section-4.3-4">This is not true for resources outside of the platform, such as on-premise
 resources, generic web servers or other cloud provider resources. Here, the
-workload firsts need to federate to the Secure Token Service (STS), which is
+workload first needs to federate to the Secure Token Service (STS), which is
 effectively an Identity Provider, to receive an identity of the other cloud.
-Using this different identity the workoad can then access its resources.<a href="#section-4.3-4" class="pilcrow">¶</a></p>
+Using this different identity, the workload can then access its resources.<a href="#section-4.3-4" class="pilcrow">¶</a></p>
 <p id="section-4.3-5">This pattern also applies when accessing resources in the same cloud but across
-different security boundaries (e.g. different account or tenant). The actual
+different security boundaries (e.g., different account or tenant). The actual
 flows and implementations may vary in these situations though.<a href="#section-4.3-5" class="pilcrow">¶</a></p>
 <span id="name-workload-identity-in-a-clou"></span><div id="fig-cloud">
 <figure id="figure-5">
@@ -1925,28 +1925,28 @@ flows and implementations may vary in these situations though.<a href="#section-
 <ul class="normal">
 <li class="normal" id="section-4.3-8.1">
             <p id="section-4.3-8.1.1">1) The workload retrieves an identity from the Instance Metadata Service or
-   Endpoint. This endpoint exposes an well-known API and is available at well-
+   Endpoint. This endpoint exposes a well-known API and is available at a well-
    known, but local, location.<a href="#section-4.3-8.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-4.3-9">When the workload needs to access a resource within the cloud (e.g. located in
+<p id="section-4.3-9">When the workload needs to access a resource within the cloud (e.g., located in
 the same security boundary; protected by the same issuer as the workload
 identity):<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.3-10.1">
-            <p id="section-4.3-10.1.1">A) The workload directly access the protected resource with the credential
+            <p id="section-4.3-10.1.1">A) The workload directly accesses the protected resource with the credential
 issued in Step 1.<a href="#section-4.3-10.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-4.3-11">When the workload needs to access a resource outside of the cloud (e.g.
+<p id="section-4.3-11">When the workload needs to access a resource outside of the cloud (e.g.,
 different cloud; same cloud, but different security boundary):<a href="#section-4.3-11" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.3-12.1">
-            <p id="section-4.3-12.1.1">B1) The workload uses cloud-issued credential to federate to the Secure Token
+            <p id="section-4.3-12.1.1">B1) The workload uses the cloud-issued credential to federate to the Secure Token
     Service of the other cloud/account.<a href="#section-4.3-12.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.3-12.2">
-            <p id="section-4.3-12.2.1">B2) Using the federated identity the workload can access the resource outside,
+            <p id="section-4.3-12.2.1">B2) Using the federated identity, the workload can access the resource outside,
     assuming the federated identity has the necessary permissions.<a href="#section-4.3-12.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
@@ -1960,7 +1960,7 @@ different cloud; same cloud, but different security boundary):<a href="#section-
 <p id="section-4.4-1">Continuous integration and deployment (CI-CD) systems allow their pipelines (or
 workflows) to receive an identity every time they run. Build outputs and other
 artifacts are commonly uploaded to external resources. With federation to
-external Identity Providers the pipelines and tasks can access these resources.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+external Identity Providers, the pipelines and tasks can access these resources.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
 <span id="name-oauth2-assertion-flow-in-a-"></span><div id="fig-cicd">
 <figure id="figure-6">
           <div id="section-4.4-2.1">
@@ -2023,21 +2023,21 @@ external Identity Providers the pipelines and tasks can access these resources.<
 <ul class="normal">
 <li class="normal" id="section-4.4-4.1">
             <p id="section-4.4-4.1.1">1) The CI-CD platform schedules a workload (pipeline or task). Based on
-   configuration a Workload Identity is made available by the platform.<a href="#section-4.4-4.1.1" class="pilcrow">¶</a></p>
+   configuration, a Workload Identity is made available by the platform.<a href="#section-4.4-4.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.4-4.2">
-            <p id="section-4.4-4.2.1">2) The workload uses the identity to federate to a Identity Provider.<a href="#section-4.4-4.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.4-4.2.1">2) The workload uses the identity to federate to an Identity Provider.<a href="#section-4.4-4.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.4-4.3">
             <p id="section-4.4-4.3.1">3) The workload uses the federated identity to access resources. For instance,
-   a artifact store to upload compiled binaries, or to download libraries
+   an artifact store to upload compiled binaries, or to download libraries
    needed to resolve dependencies. It is also common to access other
    infrastructure as resources to make deployments or changes.<a href="#section-4.4-4.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-4.4-5">Tokens of different providers look different, but all contain claims carrying
 the basic context of the executed tasks, such as source code management data
-(e.g. git branch), initiation and more.<a href="#section-4.4-5" class="pilcrow">¶</a></p>
+(e.g., git branch), initiation and more.<a href="#section-4.4-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2079,7 +2079,7 @@ setup of the application.<a href="#section-5.1.1-2" class="pilcrow">¶</a></p>
 <li class="normal" id="section-5.1.2-1.1">
               <p id="section-5.1.2-1.1.1">1) Access control to the mounted file should be configured to limit reads to
    authorized applications. Linux supports solutions such as DAC (uid and
-   guid) or MAC (e.g. SELinux, AppArmor).<a href="#section-5.1.2-1.1.1" class="pilcrow">¶</a></p>
+   gid) or MAC (e.g., SELinux, AppArmor).<a href="#section-5.1.2-1.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.1.2-1.2">
               <p id="section-5.1.2-1.2.1">2) Mounted shared memory should be isolated from other host OS paths and
@@ -2092,8 +2092,7 @@ setup of the application.<a href="#section-5.1.1-2" class="pilcrow">¶</a></p>
 <section id="section-5.1.3">
           <h4 id="name-local-apis-2">
 <a href="#section-5.1.3" class="section-number selfRef">5.1.3. </a><a href="#name-local-apis-2" class="section-name selfRef">Local APIs</a>
-          </h4>
-<p id="section-5.1.3-1">TODO Reference to attestation might be handy here<a href="#section-5.1.3-1" class="pilcrow">¶</a></p>
+        </h4>
 </section>
 </div>
 </section>
@@ -2103,12 +2102,12 @@ setup of the application.<a href="#section-5.1.1-2" class="pilcrow">¶</a></p>
         <h3 id="name-token-typing">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-token-typing" class="section-name selfRef">Token typing</a>
         </h3>
-<p id="section-5.2-1">Issuers SHOULD strongly type the issued tokens to workload via the JOSE <code>typ</code>
-header and Identity Providers accepting these tokens  SHOULD validate the
+<p id="section-5.2-1">Issuers SHOULD strongly type the issued tokens to workloads via the JOSE <code>typ</code>
+header and Identity Providers accepting these tokens SHOULD validate the
 value of it according to policy. See Section 3.1 of <span>[<a href="#RFC8725" class="cite xref">RFC8725</a>]</span> for details
 on explicit typing.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.2-2">Issuers SHOULD use <code>authorization-grant+jwt</code> as a <code>typ</code> value according to
-<span>[<a href="#I-D.ietf-oauth-rfc7523bis" class="cite xref">I-D.ietf-oauth-rfc7523bis</a>]</span>. For broad support <code>JWT</code> or <code>JOSE</code> MAY be used by
+<span>[<a href="#I-D.ietf-oauth-rfc7523bis" class="cite xref">I-D.ietf-oauth-rfc7523bis</a>]</span>. For broad support, <code>JWT</code> or <code>JOSE</code> MAY be used by
 issuers and accepted by authorization servers but it is important to highlight
 that a wide range of tokens, meant for all sorts of purposes, use these values
 and would be accepted.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
@@ -2135,11 +2134,11 @@ Platform issuers SHOULD allow differentiation based on the subject claim alone.<
 <a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-token-lifetime" class="section-name selfRef">Token lifetime</a>
         </h3>
 <p id="section-5.4-1">Tokens SHOULD NOT exceed the lifetime of the workloads they represent. For
-example, a workload that has an expected lifetime of an hour should not receive
-a token valid for 2 hours or more.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
-<p id="section-5.4-2">For the scope of this document, where a platform-issued credential is used
+example, a workload that has an expected lifetime of one hour should not receive
+a token valid for two hours or more.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-2">Within the scope of this document, where a platform-issued credential is used
 to authenticate to retrieve an access token for an external authorization
-domain, a short-lived credential is recommended.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
+domain, short-lived credentials are recommended.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="workload-lifecycle-and-invalidation">
@@ -2147,7 +2146,7 @@ domain, a short-lived credential is recommended.<a href="#section-5.4-2" class="
         <h3 id="name-workload-lifecycle-and-inva">
 <a href="#section-5.5" class="section-number selfRef">5.5. </a><a href="#name-workload-lifecycle-and-inva" class="section-name selfRef">Workload lifecycle and invalidation</a>
         </h3>
-<p id="section-5.5-1">Platform issuers SHOULD invalidate tokens when the workload stops, pauses or
+<p id="section-5.5-1">Platform issuers SHOULD invalidate tokens when the workload stops, pauses, or
 ceases to exist. How these credentials are invalidated depends on platform
 authentication mechanisms and is not in scope of this document.<a href="#section-5.5-1" class="pilcrow">¶</a></p>
 </section>
@@ -2157,9 +2156,9 @@ authentication mechanisms and is not in scope of this document.<a href="#section
         <h3 id="name-proof-of-possession">
 <a href="#section-5.6" class="section-number selfRef">5.6. </a><a href="#name-proof-of-possession" class="section-name selfRef">Proof of possession</a>
         </h3>
-<p id="section-5.6-1">Credentials SHOULD be bound to workloads and proof of possession SHOULD be
+<p id="section-5.6-1">Credentials SHOULD be bound to workloads, and proof of possession SHOULD be
 performed when these credentials are used. This mitigates token theft. This
-proof of possession applies to the platform credential and the access token of
+proof of possession applies to both the platform credential and the access token of
 the external authorization domains.<a href="#section-5.6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2170,11 +2169,11 @@ the external authorization domains.<a href="#section-5.6-1" class="pilcrow">¶</
         </h3>
 <p id="section-5.7-1">For issued credentials in the form of JWTs, they MUST be audienced using the
 <code>aud</code> claim. Each JWT SHOULD only carry a single audience. We RECOMMEND using
-URIs to specify audiences. See section 3 of <span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span> for more details and
+URIs to specify audiences. See Section 3 of <span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span> for more details and
 security implications.<a href="#section-5.7-1" class="pilcrow">¶</a></p>
 <p id="section-5.7-2">Some workload platforms provide credentials for interacting with their own APIs
 (e.g., Kubernetes). These credentials MUST NOT be used beyond the platform API.
-In the example of Kubernetes: A token used for anything else than the Kubernetes
+In the example of Kubernetes, a token used for anything other than the Kubernetes
 API itself MUST NOT carry the Kubernetes server in the <code>aud</code> claim.<a href="#section-5.7-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2262,11 +2261,11 @@ API itself MUST NOT carry the Kubernetes server in the <code>aud</code> claim.<a
 <dl class="references">
 <dt id="I-D.ietf-oauth-rfc7523bis">[I-D.ietf-oauth-rfc7523bis]</dt>
         <dd>
-<span class="refAuthor">Jones, M. B.</span>, <span class="refAuthor">Campbell, B.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"Updates to Audience Values for OAuth 2.0 Authorization Servers"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-rfc7523bis-01</span>, <time datetime="2025-04-23" class="refDate">23 April 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-01">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-01</a>&gt;</span>. </dd>
+<span class="refAuthor">Jones, M. B.</span>, <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Mortimore, C.</span>, and <span class="refAuthor">F. Skokan</span>, <span class="refTitle">"Updates to Audience Values for OAuth 2.0 Authorization Servers"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-rfc7523bis-02</span>, <time datetime="2025-07-22" class="refDate">22 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-02">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-wimse-arch">[I-D.ietf-wimse-arch]</dt>
         <dd>
-<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-04</span>, <time datetime="2025-03-02" class="refDate">2 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-04">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-04</a>&gt;</span>. </dd>
+<span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Rosomakho, Y.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Workload Identity in a Multi System Environment (WIMSE) Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-arch-05</span>, <time datetime="2025-07-07" class="refDate">7 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-05">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-05</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-wimse-s2s-protocol">[I-D.ietf-wimse-s2s-protocol]</dt>
         <dd>
@@ -2311,7 +2310,7 @@ API itself MUST NOT carry the Kubernetes server in the <code>aud</code> claim.<a
         <h3 id="name-direct-access-to-protected-">
 <a href="#appendix-A.1" class="section-number selfRef">A.1. </a><a href="#name-direct-access-to-protected-" class="section-name selfRef">Direct access to protected resources</a>
         </h3>
-<p id="appendix-A.1-1">Resource servers that protect resources may choose to trust multiple authorization servers, including the one that issues the platform identities. Instead of using the platform issued identity to receive an access token of a different authorization domain, workloads can directly use the platform issued identity to access a protected resource.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1-1">Resource servers that protect resources may choose to trust multiple authorization servers, including the one that issues the platform identities. Instead of using the platform-issued identity to receive an access token of a different authorization domain, workloads can directly use the platform-issued identity to access a protected resource.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
 <p id="appendix-A.1-2">In this case, technically, the protected resource and workload are part of the same authorization domain.<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2320,7 +2319,7 @@ API itself MUST NOT carry the Kubernetes server in the <code>aud</code> claim.<a
         <h3 id="name-custom-assertion-flows">
 <a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-custom-assertion-flows" class="section-name selfRef">Custom assertion flows</a>
         </h3>
-<p id="appendix-A.2-1">While <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span> and <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span> are the proposed standards for this pattern, some authorization servers use <span>[<a href="#RFC8693" class="cite xref">RFC8693</a>]</span> or a custom API for the issuance of an access token based on an existing platform identity credentials. These pattern are not recommended and prevent interoperability.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-1">While <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span> and <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span> are the proposed standards for this pattern, some authorization servers use <span>[<a href="#RFC8693" class="cite xref">RFC8693</a>]</span> or a custom API for the issuance of an access token based on existing platform identity credentials. These patterns are not recommended and prevent interoperability.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
