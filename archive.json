@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-17T01:09:52.097193+00:00",
+  "timestamp": "2025-08-26T01:01:41.252386+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -3126,26 +3126,42 @@
       "id": "PR_kwDOL34A-M6joRrq",
       "title": "Review Draft #50",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/51",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "b3n3d17",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-08-14T07:44:01Z",
-      "updatedAt": "2025-08-14T07:53:17Z",
+      "updatedAt": "2025-08-25T08:51:53Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "c476cb6e49064908bffc3deff9b4b819e1c4feea",
       "headRepository": "b3n3d17/draft-ietf-wimse-workload-identity-practices",
       "headRefName": "bene/review",
       "headRefOid": "566ebcf0de65fe7b8f35709699961182a59d1a88",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-08-25T08:51:53Z",
+      "mergedAt": "2025-08-25T08:51:53Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "d28659feee1833876e2bce38b067d08546e6e2a2"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M67yK-t",
+          "commit": {
+            "abbreviatedOid": "566ebcf"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "This is great, thank you!",
+          "createdAt": "2025-08-25T08:51:39Z",
+          "updatedAt": "2025-08-25T08:51:39Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
