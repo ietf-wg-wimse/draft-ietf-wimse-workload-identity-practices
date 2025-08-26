@@ -396,7 +396,7 @@ The Secure Production Identity Framework For Everyone, also known as SPIFFE [SPI
 a Cloud Native Computing Foundation (CNCF) project that defines a "Workload API"
 to deliver machine identity to workloads. Workloads can retrieve either X.509
 certificates or JWTs. The Workload API is un-authenticated to allow workloads to access
-it without the need for an additional credential. Implementations use platform metadata 
+it without the need for an additional credential. Implementations use platform metadata
 from the operating system and the workload platform to authenticate the workload instead.
 
 SPIFFE refers to the JWT-formatted credential as a "JWT-SVID" (JWT - SPIFFE
@@ -407,8 +407,8 @@ JWT-SVID from the Workload API.
 
 For validation, SPIFFE offers:
 
-* A set of public keys encoded in JWK format retrieved from the Workload API that 
-  can be used to validate JWT signatures. In SPIFFE this is referred to as the 
+* A set of public keys encoded in JWK format retrieved from the Workload API that
+  can be used to validate JWT signatures. In SPIFFE this is referred to as the
   "JWT trust bundle".
 
 * A validation method on the Workload API to validate JWT-SVIDs.
@@ -473,9 +473,9 @@ Here are example claims for a JWT-SVID:
 }
 ~~~
 
-The `iss` (issuer) claim is optional in JWT-SVIDs per the SPIFFE specification {{SPIFFE}}, 
+The `iss` (issuer) claim is optional in JWT-SVIDs per the SPIFFE specification {{SPIFFE}},
 which defines only `sub`, `aud`, and `exp` as required claims. For federation-purposes it is,
-however, very common to include it to indicate the location of the signing keys. 
+however, very common to include it to indicate the location of the signing keys.
 
 ## Cloud Providers {#cloudproviders}
 
