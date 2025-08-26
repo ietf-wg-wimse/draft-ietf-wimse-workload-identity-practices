@@ -572,8 +572,8 @@ different cloud; same cloud, but different security boundary):
 ## Continuous Integration and Deployment Systems {#cicd}
 
 Continuous integration and deployment (CI-CD) systems allow their pipelines (or
-workflows) to receive an identity at runtime. It is a common task to upload 
-build outputs and other artifacts to external resources. For this, federation 
+workflows) to receive an identity at runtime. It is a common task to upload
+build outputs and other artifacts to external resources. For this, federation
 to external Identity Providers is often necessary.
 
 ~~~aasvg
