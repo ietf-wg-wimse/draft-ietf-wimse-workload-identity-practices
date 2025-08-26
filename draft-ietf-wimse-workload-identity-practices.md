@@ -503,7 +503,7 @@ or revoked, as everything is handled internally by the platform.
 
 This is not true for resources outside of the platform, such as on-premise
 resources, generic web servers or other cloud provider resources. Here, the
-workload first needs to federate to the Secure Token Service (STS) of the 
+workload first needs to federate to the Secure Token Service (STS) of the
 respective cloud, which is effectively an Identity Provider. The STS issues
 a new credential with which the workload can then access resources.
 
