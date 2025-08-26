@@ -647,6 +647,30 @@ setup of the application.
 
 ### Local APIs
 
+Local APIs often operate in clear-text (e.g., via HTTP) and don't implement
+transport-layer encryption. Privileged component on the machine or in the
+infrastructure can be able to eyes-drop the connection and the credential
+within it.
+
+Local APIs allow for a particular variant of Server-Side Request Forgery attacks
+and mitigating measures need to be taken. E.g., requiring a specific header that
+cannot be controlled externally or preventing the use of link-local IPs,
+including through redirects.
+
+In situations where the Local API is unauthenticated adequate attestation
+needs to be performed to make sure unauthorized access is denied and credentials
+are not issued to other parties. Introspection of the platform, like in SPIFFE or
+cloud providers, can be used to identify workloads and grant access. The more
+fine-grained and strict the attestation, the smaller the attack surface. For
+instance, allowing access by IP or other machine-global identifiers permits any
+process to receive the identity, while including user ID or other process-scoped
+identifiers prevents this broader access.
+
+The potential for denial-of-service attacks against Local APIs need to be taking
+into account and protective measures should be implemented. Depending on the platform
+these attacks can affect other workloads and their ability to receive a platform
+credential.
+
 ## Token typing
 
 Issuers SHOULD strongly type the issued tokens to workloads via the JOSE `typ`
