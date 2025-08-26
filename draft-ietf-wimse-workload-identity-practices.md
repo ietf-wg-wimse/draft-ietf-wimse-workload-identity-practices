@@ -685,7 +685,8 @@ domain, short-lived credentials are recommended.
 ## Workload lifecycle and invalidation
 
 Platform issuers SHOULD invalidate tokens when the workload stops, pauses, or
-ceases to exist. How these credentials are invalidated depends on platform
+ceases to exist and SHOULD offer validators the posibility to query this status.
+How these credentials are invalidated and the status is queried depends on platform
 authentication mechanisms and is not in scope of this document.
 
 ## Proof of possession
