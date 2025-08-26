@@ -497,15 +497,15 @@ authenticated.
 
 Within a cloud provider, the issued credential can often directly be used to
 access resources of any kind across the platform, making integration between the
-services easy and "credentialless". While the term is technically misleading,
+services easy and "credential-less". While the term is technically misleading,
 from a user perspective, no credential needs to be issued, provisioned, rotated
 or revoked, as everything is handled internally by the platform.
 
 This is not true for resources outside of the platform, such as on-premise
 resources, generic web servers or other cloud provider resources. Here, the
-workload first needs to federate to the Secure Token Service (STS), which is
-effectively an Identity Provider, to receive an identity of the other cloud.
-Using this different identity, the workload can then access its resources.
+workload first needs to federate to the Secure Token Service (STS) of the 
+respective cloud, which is effectively an Identity Provider. The STS issues
+a new credential with which the workload can then access resources.
 
 This pattern also applies when accessing resources in the same cloud but across
 different security boundaries (e.g., different account or tenant). The actual
@@ -550,8 +550,8 @@ B1) federate | | B2) access
 The steps shown in {{fig-cloud}} are:
 
 * 1) The workload retrieves an identity from the Instance Metadata Service or
-     Endpoint. This endpoint exposes a well-known API and is available at a well-
-     known, but local, location.
+     Endpoint. This endpoint exposes an API and is available at a well-
+     known, but local-only, location (e.g., 169.254.169.254).
 
 When the workload needs to access a resource within the cloud (e.g., located in
 the same security boundary; protected by the same issuer as the workload
