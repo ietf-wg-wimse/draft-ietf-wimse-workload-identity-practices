@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments        A. Schwenkschuster
 Internet-Draft                                                     SPIRL
 Intended status: Informational                              Y. Rosomakho
-Expires: 26 February 2026                                        Zscaler
-                                                          25 August 2025
+Expires: 27 February 2026                                        Zscaler
+                                                          26 August 2025
 
 
                       Workload Identity Practices
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 February 2026.
+   This Internet-Draft will expire on 27 February 2026.
 
 Copyright Notice
 
@@ -697,9 +697,9 @@ Table of Contents
 5.5.  Workload lifecycle and invalidation
 
    Platform issuers SHOULD invalidate tokens when the workload stops,
-   pauses, or ceases to exist.  How these credentials are invalidated
-   depends on platform authentication mechanisms and is not in scope of
-   this document.
+   pauses, or ceases to exist and SHOULD offer validators a mechanism to
+   query this status.  How these credentials are invalidated and the
+   status is queried varies and is not in scope of this document.
 
 5.6.  Proof of possession
 
