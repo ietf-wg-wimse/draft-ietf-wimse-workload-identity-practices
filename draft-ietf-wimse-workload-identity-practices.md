@@ -232,20 +232,21 @@ without downtime.
 
 ## Local APIs
 
-This pattern relies on local APIs to communicate between the workload and the
-credential issuer. Some implementations rely on UNIX Domain Sockets (e.g.,
-SPIFFE), loopback interfaces or link-local "magic addresses" (e.g., Instance
-Metadata Service of cloud providers) to provision credentials. Local APIs offer
-the capability to re-provision updated credentials. Communication between
-workload and API allows the workload to refresh a credential or request a
-different one. This group of solutions relies on network isolation for their
-security.
+In this pattern, the workload obtains credentials by communicating with a
+local API exposed by the credential issuer. Implementations commonly use UNIX
+domain sockets (e.g., SPIFFE), loopback interfaces, or link-local "magic addresses"
+169.254.169.254 commonly used for cloud provider Instance Metadata Services as
+the transport mechanism.
 
-Local APIs allow for short-lived, narrowly-scoped credentials. Persistent
-connections allow the issuer to push credentials.
+Local APIs support re-provisioning of updated credentials, either on demand
+or through persistent connections that enable the issuer to push new credentials.
+This enables the use of short-lived, narrowly scoped credentials, improving
+security posture compared to long-lived secrets.
 
-This pattern also requires client code, which introduces portability challenges.
-The request-response paradigm and additional operational overhead adds latency.
+The security of this approach relies heavily on network isolation to prevent
+unauthorised access to the local API. In addition, the pattern requires client-side
+code, which may introduce portability challenges. The request–response paradigm
+and additional operational overhead can also increase latency.
 
 # Practices {#practices}
 
