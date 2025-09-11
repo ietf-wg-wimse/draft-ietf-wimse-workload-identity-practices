@@ -708,6 +708,19 @@ Some workload platforms provide credentials for interacting with their own APIs
 In the example of Kubernetes, a token used for anything other than the Kubernetes
 API itself MUST NOT carry the Kubernetes server in the `aud` claim.
 
+## Multi-Tenancy Considerations
+
+In multi-tenant platforms, relying parties MUST carefully evaluate which attributes
+are considered trustworthy when making authorization decisions. Access or federation
+MUST NOT be granted based solely on untrusted or easily forgeable attributes.
+In particular, the `issuer` claim in such environments may not uniquely identify
+a trusted authority, since each tenant could be configured with the same issuer
+identifier.
+
+Relying parties SHOULD ensure that attributes used for authorization are bound
+to a trust domain under their control or validated by an entity with a clearly
+defined trust boundary.
+
 # IANA Considerations {#IANA}
 
 This document does not require actions by IANA.
