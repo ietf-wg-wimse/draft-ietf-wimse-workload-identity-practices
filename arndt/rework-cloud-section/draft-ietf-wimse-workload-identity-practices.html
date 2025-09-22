@@ -1834,8 +1834,9 @@ workload platform has attested the workload and it can be considered
 authenticated.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
 <p id="section-4.3-3">Within a cloud provider, the issued credential can often directly be used to
 access resources of any kind across the platform, making integration between the
-services straightforward. From the workload perspective, no credential needs to be issued, provisioned, rotated
-or revoked, as everything is handled internally by the platform.<a href="#section-4.3-3" class="pilcrow">¶</a></p>
+services straightforward. From the workload perspective, no credential needs to be
+issued, provisioned, rotated or revoked, as everything is handled internally by
+the platform.<a href="#section-4.3-3" class="pilcrow">¶</a></p>
 <p id="section-4.3-4">This is not true for resources outside of the platform, such as on-premise
 resources, generic web servers or other cloud provider resources. Here, the
 workload first needs to federate to the Secure Token Service (STS) of the
@@ -1925,7 +1926,7 @@ flows and implementations may vary in these situations though.<a href="#section-
 <li class="normal" id="section-4.3-8.1">
             <p id="section-4.3-8.1.1">1) The workload retrieves an identity from the Instance Metadata Service or
    Endpoint. This endpoint exposes an API and is available at a well-
-   known, but local-only, location (e.g., 169.254.169.254).<a href="#section-4.3-8.1.1" class="pilcrow">¶</a></p>
+   known, but local-only location such as 169.254.169.254.<a href="#section-4.3-8.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-4.3-9">When the workload needs to access a resource within the cloud (e.g., located in

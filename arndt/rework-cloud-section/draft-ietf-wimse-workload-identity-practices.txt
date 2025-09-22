@@ -553,8 +553,8 @@ Table of Contents
 
    *  1) The workload retrieves an identity from the Instance Metadata
       Service or Endpoint.  This endpoint exposes an API and is
-      available at a well- known, but local-only, location (e.g.,
-      169.254.169.254).
+      available at a well- known, but local-only location such as
+      169.254.169.254.
 
    When the workload needs to access a resource within the cloud (e.g.,
    located in the same security boundary; protected by the same issuer
