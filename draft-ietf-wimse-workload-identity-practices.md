@@ -498,7 +498,7 @@ authenticated.
 Within a cloud provider, the issued credential can often directly be used to
 access resources of any kind across the platform, making integration between the
 services straightforward. From the workload perspective, no credential needs to be
-issued, provisioned, rotated or revoked, as everything is handled internally by 
+issued, provisioned, rotated or revoked, as everything is handled internally by
 the platform.
 
 This is not true for resources outside of the platform, such as on-premise
