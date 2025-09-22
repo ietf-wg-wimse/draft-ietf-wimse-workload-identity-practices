@@ -612,7 +612,7 @@ The steps shown in {{fig-cicd}} are:
      needed to resolve dependencies. It is also common to access actual
      infrastructure as resources to make deployments or changes to it.
 
-Tokens look different between vendors, but all contain claims carrying
+While token structure is vendor-specific, all tokens contain claims carrying
 the basic context of the executed tasks, such as source code management data
 (e.g., git branch), initiation context and more.
 
