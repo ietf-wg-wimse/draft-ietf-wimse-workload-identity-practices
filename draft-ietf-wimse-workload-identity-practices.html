@@ -1435,6 +1435,12 @@ rotation trigger. One practice is that the new secret is renewed <em>before</em>
 old secret is invalidated. For example, the solution can choose to update the
 secret an hour before it is invalidated. This gives applications time to update
 without downtime.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">Because credentials are written to a shared filesystem, the solution is responsible
+for ensuring atomicity when updating them. Writes SHOULD be performed in a way
+that prevents workloads from observing a partially written file (for example by
+writing to a temporary file and renaming it atomically). Solutions SHOULD also
+perform a flush operation immediately after the update to minimize the chance
+of race conditions and ensure durability.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="local-apis">
