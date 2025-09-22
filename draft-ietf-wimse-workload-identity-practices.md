@@ -580,9 +580,9 @@ different cloud; same cloud, but different security boundary):
 ## Continuous Integration and Deployment Systems {#cicd}
 
 Continuous integration and deployment (CI-CD) systems allow their pipelines (or
-workflows) to receive an identity every time they run. Build outputs and other
-artifacts are commonly uploaded to external resources. With federation to
-external Identity Providers, the pipelines and tasks can access these resources.
+workflows) to receive an identity at runtime. It is a common task to upload
+build outputs and other artifacts to external resources. For this, federation
+to external Identity Providers is often necessary.
 
 ~~~aasvg
     +-------------------------------------------------+
@@ -617,12 +617,12 @@ The steps shown in {{fig-cicd}} are:
 
 * 3) The workload uses the federated identity to access resources. For instance,
      an artifact store to upload compiled binaries, or to download libraries
-     needed to resolve dependencies. It is also common to access other
-     infrastructure as resources to make deployments or changes.
+     needed to resolve dependencies. It is also common to access actual
+     infrastructure as resources to make deployments or changes to it.
 
-Tokens of different providers look different, but all contain claims carrying
+While token structure is vendor-specific, all tokens contain claims carrying
 the basic context of the executed tasks, such as source code management data
-(e.g., git branch), initiation and more.
+such as git branch, initiation context and more.
 
 # Security Considerations {#security}
 
