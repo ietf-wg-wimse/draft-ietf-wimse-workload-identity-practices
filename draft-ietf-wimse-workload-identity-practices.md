@@ -230,6 +230,13 @@ old secret is invalidated. For example, the solution can choose to update the
 secret an hour before it is invalidated. This gives applications time to update
 without downtime.
 
+Because credentials are written to a shared filesystem, the solution is responsible
+for ensuring atomicity when updating them. Writes SHOULD be performed in a way
+that prevents workloads from observing a partially written file (for example by
+writing to a temporary file and renaming it atomically). Solutions SHOULD also
+perform a flush operation immediately after the update to minimize the chance
+of race conditions and ensure durability.
+
 ## Local APIs
 
 This pattern relies on local APIs to communicate between the workload and the
