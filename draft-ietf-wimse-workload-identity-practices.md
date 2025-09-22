@@ -614,7 +614,7 @@ The steps shown in {{fig-cicd}} are:
 
 While token structure is vendor-specific, all tokens contain claims carrying
 the basic context of the executed tasks, such as source code management data
-(e.g., git branch), initiation context and more.
+such as git branch, initiation context and more.
 
 # Security Considerations {#security}
 
