@@ -497,8 +497,9 @@ authenticated.
 
 Within a cloud provider, the issued credential can often directly be used to
 access resources of any kind across the platform, making integration between the
-services straightforward. From the workload perspective, no credential needs to be issued, provisioned, rotated
-or revoked, as everything is handled internally by the platform.
+services straightforward. From the workload perspective, no credential needs to be
+issued, provisioned, rotated or revoked, as everything is handled internally by 
+the platform.
 
 This is not true for resources outside of the platform, such as on-premise
 resources, generic web servers or other cloud provider resources. Here, the
@@ -550,7 +551,7 @@ The steps shown in {{fig-cloud}} are:
 
 * 1) The workload retrieves an identity from the Instance Metadata Service or
      Endpoint. This endpoint exposes an API and is available at a well-
-     known, but local-only, location (e.g., 169.254.169.254).
+     known, but local-only location such as 169.254.169.254.
 
 When the workload needs to access a resource within the cloud (e.g., located in
 the same security boundary; protected by the same issuer as the workload
