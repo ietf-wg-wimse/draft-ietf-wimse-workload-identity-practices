@@ -246,7 +246,7 @@ security posture compared to long-lived secrets.
 The security of this approach relies heavily on network isolation to prevent
 unauthorised access to the local API. In addition, the pattern requires client-side
 code, which may introduce portability challenges. The request–response paradigm
-and additional operational overhead can also increase latency.
+can also increase latency, particularly when communication goes over the network.
 
 # Practices {#practices}
 
