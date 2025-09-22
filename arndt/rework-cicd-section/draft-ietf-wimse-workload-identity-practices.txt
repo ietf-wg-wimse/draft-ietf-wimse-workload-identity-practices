@@ -622,7 +622,7 @@ Table of Contents
 
    While token structure is vendor-specific, all tokens contain claims
    carrying the basic context of the executed tasks, such as source code
-   management data (e.g., git branch), initiation context and more.
+   management data such as git branch, initiation context and more.
 
 5.  Security Considerations
 
