@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-14T01:01:38.771943+00:00",
+  "timestamp": "2025-09-23T00:57:00.578452+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -3271,7 +3271,7 @@
       "labels": [],
       "body": "Some improvements to the SPIFFE section",
       "createdAt": "2025-08-26T09:36:57Z",
-      "updatedAt": "2025-08-26T11:06:03Z",
+      "updatedAt": "2025-09-22T10:19:21Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "d28659feee1833876e2bce38b067d08546e6e2a2",
@@ -3283,59 +3283,232 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M7B0FvV",
+          "commit": {
+            "abbreviatedOid": "662164f"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-22T10:16:26Z",
+          "updatedAt": "2025-09-22T10:16:27Z",
+          "comments": [
+            {
+              "originalPosition": 55,
+              "body": "@arndt-s rework this",
+              "createdAt": "2025-09-22T10:16:26Z",
+              "updatedAt": "2025-09-22T10:16:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M7B0Gx5",
+          "commit": {
+            "abbreviatedOid": "662164f"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-22T10:17:09Z",
+          "updatedAt": "2025-09-22T10:17:09Z",
+          "comments": [
+            {
+              "originalPosition": 71,
+              "body": "Refer to RFC7517",
+              "createdAt": "2025-09-22T10:17:09Z",
+              "updatedAt": "2025-09-22T10:17:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M7B0Kgm",
+          "commit": {
+            "abbreviatedOid": "662164f"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-22T10:19:21Z",
+          "updatedAt": "2025-09-22T10:19:21Z",
+          "comments": [
+            {
+              "originalPosition": 99,
+              "body": "@arndt-s rephrase this",
+              "createdAt": "2025-09-22T10:19:21Z",
+              "updatedAt": "2025-09-22T10:19:21Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 55,
       "id": "PR_kwDOL34A-M6lX76Q",
       "title": "improve cloud section",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/55",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Small improvements to the cloud section",
       "createdAt": "2025-08-26T09:42:11Z",
-      "updatedAt": "2025-08-26T11:06:41Z",
+      "updatedAt": "2025-09-22T10:28:05Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "d28659feee1833876e2bce38b067d08546e6e2a2",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "headRefName": "arndt/rework-cloud-section",
-      "headRefOid": "bd6aa9e9748a43a370a70b52a2855cd11034c4ac",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "a63f10e7f3846ba41230fb0d9f75a4c9f4a42cda",
+      "closedAt": "2025-09-22T10:28:05Z",
+      "mergedAt": "2025-09-22T10:28:05Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "8d44ec4ebf97d106563ea3ac994ac204cb0be00b"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M7B0SdC",
+          "commit": {
+            "abbreviatedOid": "bd6aa9e"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-22T10:23:37Z",
+          "updatedAt": "2025-09-22T10:23:38Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\nservices straightforward. From the workload perspective, no credential needs to be issued, provisioned, rotated\r\n```",
+              "createdAt": "2025-09-22T10:23:37Z",
+              "updatedAt": "2025-09-22T10:23:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M7B0VUm",
+          "commit": {
+            "abbreviatedOid": "bd6aa9e"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-22T10:25:12Z",
+          "updatedAt": "2025-09-22T10:25:12Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "```suggestion\r\n     Endpoint. This endpoint exposes an API and is available at a well-\r\n     known, local-only location such as 169.254.169.254.\r\n```",
+              "createdAt": "2025-09-22T10:25:12Z",
+              "updatedAt": "2025-09-22T10:26:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M7B0YKK",
+          "commit": {
+            "abbreviatedOid": "328ab7f"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-22T10:27:24Z",
+          "updatedAt": "2025-09-22T10:27:24Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 56,
       "id": "PR_kwDOL34A-M6lYE0c",
       "title": "Improve CI/CD section",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/56",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-08-26T09:54:29Z",
-      "updatedAt": "2025-08-26T11:06:23Z",
+      "updatedAt": "2025-09-22T10:32:16Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "d28659feee1833876e2bce38b067d08546e6e2a2",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "headRefName": "arndt/rework-cicd-section",
-      "headRefOid": "262e05f52c5bcef4e2809c8d650df164a8604e87",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "b8a715db567936b776910b247ed781d5ead7d76f",
+      "closedAt": "2025-09-22T10:32:16Z",
+      "mergedAt": "2025-09-22T10:32:16Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "9e2523049c96632e54e03c60635009b6a6c63522"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M7B0cRO",
+          "commit": {
+            "abbreviatedOid": "262e05f"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-22T10:29:54Z",
+          "updatedAt": "2025-09-22T10:29:55Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "```suggestion\r\nWhile token structure is vendor-specific, all tokens contain claims carrying\r\n```",
+              "createdAt": "2025-09-22T10:29:55Z",
+              "updatedAt": "2025-09-22T10:29:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M7B0de3",
+          "commit": {
+            "abbreviatedOid": "262e05f"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-22T10:30:28Z",
+          "updatedAt": "2025-09-22T10:30:29Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "```suggestion\r\nsuch as git branch, initiation context and more.\r\n```",
+              "createdAt": "2025-09-22T10:30:28Z",
+              "updatedAt": "2025-09-22T10:30:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M7B0d8g",
+          "commit": {
+            "abbreviatedOid": "262e05f"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-22T10:30:45Z",
+          "updatedAt": "2025-09-22T10:30:45Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 59,
@@ -3349,7 +3522,7 @@
       "labels": [],
       "body": "Resolves #57",
       "createdAt": "2025-08-26T11:05:24Z",
-      "updatedAt": "2025-08-26T11:05:24Z",
+      "updatedAt": "2025-09-22T10:32:50Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "0c9c281ffc0aeecd61a26a597484e9ed9e89f914",
@@ -3361,85 +3534,174 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M7B0hcQ",
+          "commit": {
+            "abbreviatedOid": "8fecef3"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-22T10:32:49Z",
+          "updatedAt": "2025-09-22T10:32:50Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nLocal APIs often operate in clear text such as unencrypted HTTP without any confidentiality or integrity protection. Privileged component on the machine or in the\r\n```",
+              "createdAt": "2025-09-22T10:32:49Z",
+              "updatedAt": "2025-09-22T10:32:50Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 60,
       "id": "PR_kwDOL34A-M6oIakP",
       "title": "Added multi-tenancy considerations",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/60",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "To address https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/58",
       "createdAt": "2025-09-11T23:24:49Z",
-      "updatedAt": "2025-09-11T23:24:49Z",
+      "updatedAt": "2025-09-22T10:05:59Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "0c9c281ffc0aeecd61a26a597484e9ed9e89f914",
       "headRepository": "yaroslavros/draft-ietf-wimse-workload-identity-bcp",
       "headRefName": "main",
       "headRefOid": "6b1e4ba196f5ab9f98b1b90b246ba29289a46db9",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-09-22T10:05:59Z",
+      "mergedAt": "2025-09-22T10:05:59Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "35d50173dbb087009ef317f56281bed31dc3def2"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M7Bz2LJ",
+          "commit": {
+            "abbreviatedOid": "6b1e4ba"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-22T10:05:54Z",
+          "updatedAt": "2025-09-22T10:05:54Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 61,
       "id": "PR_kwDOL34A-M6oIcrv",
       "title": "Reworked Local APIs section",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/61",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "To address https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/53",
       "createdAt": "2025-09-11T23:30:48Z",
-      "updatedAt": "2025-09-11T23:31:11Z",
+      "updatedAt": "2025-09-22T10:31:29Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "0c9c281ffc0aeecd61a26a597484e9ed9e89f914",
       "headRepository": "yaroslavros/draft-ietf-wimse-workload-identity-bcp",
       "headRefName": "local-apis",
-      "headRefOid": "c4d70f7811b4b2ff726e43c01cd571f7143148ab",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "b3096907d660e02f913290de2ec90c22fdc3f382",
+      "closedAt": "2025-09-22T10:31:29Z",
+      "mergedAt": "2025-09-22T10:31:29Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "a69137737807e1cd0187b6d802d75dbfa978fc3b"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M7Bz9DE",
+          "commit": {
+            "abbreviatedOid": "c4d70f7"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-09-22T10:10:52Z",
+          "updatedAt": "2025-09-22T10:10:52Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "```suggestion\ncode, which may introduce portability challenges. The request\u2013response paradigm\ncan also increase latency, particularly when communication goes over the network.\n```",
+              "createdAt": "2025-09-22T10:10:52Z",
+              "updatedAt": "2025-09-22T10:10:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M7Bz9ib",
+          "commit": {
+            "abbreviatedOid": "b309690"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-22T10:11:12Z",
+          "updatedAt": "2025-09-22T10:11:12Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 62,
       "id": "PR_kwDOL34A-M6oIefd",
       "title": "Added atomicity and flushing requirements to filesystem section",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/62",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "yaroslavros",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "To address https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/43",
       "createdAt": "2025-09-11T23:36:35Z",
-      "updatedAt": "2025-09-11T23:36:35Z",
+      "updatedAt": "2025-09-22T10:12:12Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "0c9c281ffc0aeecd61a26a597484e9ed9e89f914",
       "headRepository": "yaroslavros/draft-ietf-wimse-workload-identity-bcp",
       "headRefName": "fs-flush",
       "headRefOid": "fb6a59e63fb97322b542836e246298e3f5ccb7a7",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-09-22T10:12:12Z",
+      "mergedAt": "2025-09-22T10:12:12Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "ed4e97fd5a3e8483e224202e07bdc0ec66b6091d"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M7Bz-j2",
+          "commit": {
+            "abbreviatedOid": "fb6a59e"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-22T10:11:59Z",
+          "updatedAt": "2025-09-22T10:11:59Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
