@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-23T00:57:00.578452+00:00",
+  "timestamp": "2025-10-12T01:00:45.777233+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -854,7 +854,7 @@
       "id": "I_kwDOL34A-M6-gihb",
       "title": "Atomic file provisioning rotation",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/43",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -863,8 +863,8 @@
       ],
       "body": "> please mention that in addition to pre-provisioning of rotated credentials (which you mention), solutions must also ensure that rotation happens atomically, such that the client can never read part of the old credential and part of the new one.\n\nrefers to the file provisioning section",
       "createdAt": "2025-07-02T14:52:29Z",
-      "updatedAt": "2025-08-11T12:31:15Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-10T09:19:42Z",
+      "closedAt": "2025-10-10T09:19:42Z",
       "comments": [
         {
           "author": "arndt-s",
@@ -966,15 +966,15 @@
       "id": "I_kwDOL34A-M7FTROU",
       "title": "Review Draft",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/50",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "b3n3d17",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-08-11T13:50:57Z",
-      "updatedAt": "2025-08-11T13:50:57Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-10T09:18:39Z",
+      "closedAt": "2025-10-10T09:18:39Z",
       "comments": []
     },
     {
@@ -982,15 +982,15 @@
       "id": "I_kwDOL34A-M7H935V",
       "title": "Local API provisioning section needs rewording",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/53",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Now it reads a bit strange, we repeat ourselves and in general some parts could benefit from some details.",
       "createdAt": "2025-08-26T09:30:16Z",
-      "updatedAt": "2025-08-26T09:30:16Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-10T09:19:26Z",
+      "closedAt": "2025-10-10T09:19:26Z",
       "comments": []
     },
     {
@@ -1016,7 +1016,7 @@
       "id": "I_kwDOL34A-M7H-t_F",
       "title": "Security considerations for multi-tenancy platform",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/58",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -1025,8 +1025,8 @@
       "labels": [],
       "body": "Access (federation) should not be granted on untrusted attributes. For multi-tenant platform this includes the issuer (because every tenant has that issuer)",
       "createdAt": "2025-08-26T10:40:44Z",
-      "updatedAt": "2025-08-26T10:40:44Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-10T09:18:58Z",
+      "closedAt": "2025-10-10T09:18:58Z",
       "comments": []
     }
   ],
