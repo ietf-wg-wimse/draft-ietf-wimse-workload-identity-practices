@@ -647,9 +647,9 @@ setup of the application.
 
 ### Local APIs
 
-Local APIs often operate in clear-text (e.g., via HTTP) and don't implement
-transport-layer encryption. Privileged component on the machine or in the
-infrastructure can be able to eyes-drop the connection and the credential
+Local APIs often operate in clear-text such as unencrypted HTTP without any
+confidentiality or integrity protection. Privileged component on the machine or
+in the infrastructure can be able to eyes-drop the connection and the credential
 within it.
 
 Local APIs allow for a particular variant of Server-Side Request Forgery attacks
