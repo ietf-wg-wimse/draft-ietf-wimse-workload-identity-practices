@@ -395,9 +395,9 @@ Account token.
 The Secure Production Identity Framework For Everyone, also known as SPIFFE [SPIFFE], is
 a Cloud Native Computing Foundation (CNCF) project that defines a "Workload API"
 to deliver machine identity to workloads. Workloads can retrieve either X.509
-certificates or JWTs. The Workload API is un-authenticated to allow workloads to access
-it without the need for an additional credential. Implementations use platform metadata
-from the operating system and the workload platform to authenticate the workload instead.
+certificates or JWTs. The Workload API does not require clients to authenticate themselves.
+Instead, implementation collect identifying information of the workload from the
+environment, such as the workload platform or the operating system.
 
 SPIFFE refers to the JWT-formatted credential as a "JWT-SVID" (JWT - SPIFFE
 Verifiable Identity Document) and the X509-formatted credential as "X509-SVID".
@@ -407,14 +407,11 @@ JWT-SVID from the Workload API.
 
 For validation, SPIFFE offers:
 
-* A set of public keys encoded in JWK format retrieved from the Workload API that
-  can be used to validate JWT signatures. In SPIFFE this is referred to as the
-  "JWT trust bundle".
+* A set of public keys encoded in JWK format {{RFC7517}} retrieved from the Workload
+  API that can be used to validate signatures. In SPIFFE this is referred to as
+  the "trust bundle".
 
-* A validation method on the Workload API to validate JWT-SVIDs.
-
-Additionally, many SPIFFE deployments choose to separately publish the signing
-keys as a JWK Set on a web server to allow validation without the Workload API.
+* A endpoint where the public keys used for signing are published in JWK format {{RFC7517}}. See SPIFFE Bundle Endpoint at {{SPIFFE}}.
 
 The following figure illustrates how a workload can use its JWT-SVID to access a
 protected resource outside of SPIFFE:
@@ -472,10 +469,6 @@ Here are example claims for a JWT-SVID:
   "sub": "spiffe://example.org/myservice"
 }
 ~~~
-
-The `iss` (issuer) claim is optional in JWT-SVIDs per the SPIFFE specification {{SPIFFE}},
-which defines only `sub`, `aud`, and `exp` as required claims. For federation-purposes it is,
-however, very common to include it to indicate the location of the signing keys.
 
 ## Cloud Providers {#cloudproviders}
 
