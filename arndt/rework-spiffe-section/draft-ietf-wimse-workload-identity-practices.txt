@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments        A. Schwenkschuster
 Internet-Draft                                                     SPIRL
 Intended status: Informational                              Y. Rosomakho
-Expires: 27 February 2026                                        Zscaler
-                                                          26 August 2025
+Expires: 16 April 2026                                           Zscaler
+                                                         13 October 2025
 
 
                       Workload Identity Practices
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 February 2026.
+   This Internet-Draft will expire on 16 April 2026.
 
 Copyright Notice
 
@@ -393,10 +393,10 @@ Table of Contents
    SPIFFE [SPIFFE], is a Cloud Native Computing Foundation (CNCF)
    project that defines a "Workload API" to deliver machine identity to
    workloads.  Workloads can retrieve either X.509 certificates or JWTs.
-   The Workload API is un-authenticated to allow workloads to access it
-   without the need for an additional credential.  Implementations use
-   platform metadata from the operating system and the workload platform
-   to authenticate the workload instead.
+   The Workload API does not require clients to authenticate themselves.
+   Instead, implementation collect identifying information of the
+   workload from the environment, such as the workload platform or the
+   operating system.
 
    SPIFFE refers to the JWT-formatted credential as a "JWT-SVID" (JWT -
    SPIFFE Verifiable Identity Document) and the X509-formatted
@@ -407,15 +407,12 @@ Table of Contents
 
    For validation, SPIFFE offers:
 
-   *  A set of public keys encoded in JWK format retrieved from the
-      Workload API that can be used to validate JWT signatures.  In
-      SPIFFE this is referred to as the "JWT trust bundle".
+   *  A set of public keys encoded in JWK format [RFC7517] retrieved
+      from the Workload API that can be used to validate signatures.  In
+      SPIFFE this is referred to as the "trust bundle".
 
-   *  A validation method on the Workload API to validate JWT-SVIDs.
-
-   Additionally, many SPIFFE deployments choose to separately publish
-   the signing keys as a JWK Set on a web server to allow validation
-   without the Workload API.
+   *  A endpoint where the public keys used for signing are published in
+      JWK format [RFC7517].  See SPIFFE Bundle Endpoint at [SPIFFE].
 
    The following figure illustrates how a workload can use its JWT-SVID
    to access a protected resource outside of SPIFFE:
@@ -471,11 +468,6 @@ Table of Contents
      "iat": 1729086875,
      "sub": "spiffe://example.org/myservice"
    }
-
-   The iss (issuer) claim is optional in JWT-SVIDs per the SPIFFE
-   specification [SPIFFE], which defines only sub, aud, and exp as
-   required claims.  For federation-purposes it is, however, very common
-   to include it to indicate the location of the signing keys.
 
 4.3.  Cloud Providers
 
@@ -792,19 +784,20 @@ Table of Contents
 
    [I-D.ietf-oauth-rfc7523bis]
               Jones, M. B., Campbell, B., Mortimore, C., and F. Skokan,
-              "Updates to Audience Values for OAuth 2.0 Authorization
-              Servers", Work in Progress, Internet-Draft, draft-ietf-
-              oauth-rfc7523bis-02, 22 July 2025,
+              "Updates to OAuth 2.0 JSON Web Token (JWT) Client
+              Authentication and Assertion-Based Authorization Grants",
+              Work in Progress, Internet-Draft, draft-ietf-oauth-
+              rfc7523bis-03, 7 October 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              rfc7523bis-02>.
+              rfc7523bis-03>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-05, 7 July 2025,
+              ietf-wimse-arch-06, 30 September 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-05>.
+              arch-06>.
 
    [I-D.ietf-wimse-s2s-protocol]
               Campbell, B., Salowey, J. A., Schwenkschuster, A., and Y.
