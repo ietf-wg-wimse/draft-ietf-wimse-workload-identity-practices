@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments        A. Schwenkschuster
 Internet-Draft                                                     SPIRL
 Intended status: Informational                              Y. Rosomakho
-Expires: 27 February 2026                                        Zscaler
-                                                          26 August 2025
+Expires: 16 April 2026                                           Zscaler
+                                                         13 October 2025
 
 
                       Workload Identity Practices
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 February 2026.
+   This Internet-Draft will expire on 16 April 2026.
 
 Copyright Notice
 
@@ -657,10 +657,10 @@ Table of Contents
 
 5.1.3.  Local APIs
 
-   Local APIs often operate in clear-text (e.g., via HTTP) and don't
-   implement transport-layer encryption.  Privileged component on the
-   machine or in the infrastructure can be able to eyes-drop the
-   connection and the credential within it.
+   Local APIs often operate in clear-text such as unencrypted HTTP
+   without any confidentiality or integrity protection.  Privileged
+   component on the machine or in the infrastructure can be able to
+   eyes-drop the connection and the credential within it.
 
    Local APIs allow for a particular variant of Server-Side Request
    Forgery attacks and mitigating measures need to be taken.  E.g.,
@@ -818,19 +818,20 @@ Table of Contents
 
    [I-D.ietf-oauth-rfc7523bis]
               Jones, M. B., Campbell, B., Mortimore, C., and F. Skokan,
-              "Updates to Audience Values for OAuth 2.0 Authorization
-              Servers", Work in Progress, Internet-Draft, draft-ietf-
-              oauth-rfc7523bis-02, 22 July 2025,
+              "Updates to OAuth 2.0 JSON Web Token (JWT) Client
+              Authentication and Assertion-Based Authorization Grants",
+              Work in Progress, Internet-Draft, draft-ietf-oauth-
+              rfc7523bis-03, 7 October 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              rfc7523bis-02>.
+              rfc7523bis-03>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
               "Workload Identity in a Multi System Environment (WIMSE)
               Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-05, 7 July 2025,
+              ietf-wimse-arch-06, 30 September 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-05>.
+              arch-06>.
 
    [I-D.ietf-wimse-s2s-protocol]
               Campbell, B., Salowey, J. A., Schwenkschuster, A., and Y.
