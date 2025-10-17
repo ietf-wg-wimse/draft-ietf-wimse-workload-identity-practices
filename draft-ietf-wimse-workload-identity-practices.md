@@ -652,8 +652,8 @@ confidentiality or integrity protection. Privileged component on the machine or
 in the infrastructure can be able to eyes-drop the connection and the credential
 within it.
 
-Local APIs allow for a particular variant of Server-Side Request Forgery attacks
-and mitigating measures need to be taken. E.g., requiring a specific header that
+Mitigating measures are required to mitigate a particular variant of Server-Side Request Forgery attacks
+against local APIs. For example, requiring a specific header that
 cannot be controlled externally or preventing the use of link-local IPs,
 including through redirects.
 
