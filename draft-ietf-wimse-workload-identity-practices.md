@@ -657,9 +657,8 @@ against local APIs. For example, requiring a specific header that
 cannot be controlled externally or preventing the use of link-local IPs,
 including through redirects.
 
-In situations where the Local API is unauthenticated adequate attestation
-needs to be performed to make sure unauthorized access is denied and credentials
-are not issued to other parties. Introspection of the platform, like in SPIFFE or
+Adequate attestation is required to make sure unauthorized access is denied and credentials
+are not issued to other parties when the Local API is unauthenticated. Introspection of the platform, like in SPIFFE or
 cloud providers, can be used to identify workloads and grant access. The more
 fine-grained and strict the attestation, the smaller the attack surface. For
 instance, allowing access by IP or other machine-global identifiers permits any
