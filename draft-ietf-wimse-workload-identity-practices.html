@@ -2093,7 +2093,26 @@ setup of the application.<a href="#section-5.1.1-2" class="pilcrow">¶</a></p>
 <section id="section-5.1.3">
           <h4 id="name-local-apis-2">
 <a href="#section-5.1.3" class="section-number selfRef">5.1.3. </a><a href="#name-local-apis-2" class="section-name selfRef">Local APIs</a>
-        </h4>
+          </h4>
+<p id="section-5.1.3-1">Local APIs often operate in clear-text such as unencrypted HTTP without any
+confidentiality or integrity protection. Privileged component on the machine or
+in the infrastructure can be able to eyes-drop the connection and the credential
+within it.<a href="#section-5.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.3-2">Mitigating measures are required to mitigate a particular variant of Server-Side Request Forgery attacks
+against local APIs. For example, requiring a specific header that
+cannot be controlled externally or preventing the use of link-local IPs,
+including through redirects.<a href="#section-5.1.3-2" class="pilcrow">¶</a></p>
+<p id="section-5.1.3-3">Adequate attestation is required to make sure unauthorized access is denied and credentials
+are not issued to other parties when the Local API is unauthenticated. Introspection of the platform, like in SPIFFE or
+cloud providers, can be used to identify workloads and grant access. The more
+fine-grained and strict the attestation, the smaller the attack surface. For
+instance, allowing access by IP or other machine-global identifiers permits any
+process to receive the identity, while including user ID or other process-scoped
+identifiers prevents this broader access.<a href="#section-5.1.3-3" class="pilcrow">¶</a></p>
+<p id="section-5.1.3-4">The potential for denial-of-service attacks against Local APIs need to be taken
+into account and protective measures should be implemented. Depending on the platform
+these attacks can affect other workloads and their ability to receive a platform
+credential.<a href="#section-5.1.3-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
