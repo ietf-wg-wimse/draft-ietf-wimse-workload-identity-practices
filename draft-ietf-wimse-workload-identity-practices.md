@@ -665,7 +665,7 @@ instance, allowing access by IP or other machine-global identifiers permits any
 process to receive the identity, while including user ID or other process-scoped
 identifiers prevents this broader access.
 
-The potential for denial-of-service attacks against Local APIs need to be taking
+The potential for denial-of-service attacks against Local APIs need to be taken
 into account and protective measures should be implemented. Depending on the platform
 these attacks can affect other workloads and their ability to receive a platform
 credential.
