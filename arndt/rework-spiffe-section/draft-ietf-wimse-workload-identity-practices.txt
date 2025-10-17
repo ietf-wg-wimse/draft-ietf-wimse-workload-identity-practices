@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments        A. Schwenkschuster
 Internet-Draft                                                     SPIRL
 Intended status: Informational                              Y. Rosomakho
-Expires: 16 April 2026                                           Zscaler
-                                                         13 October 2025
+Expires: 20 April 2026                                           Zscaler
+                                                         17 October 2025
 
 
                       Workload Identity Practices
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 April 2026.
+   This Internet-Draft will expire on 20 April 2026.
 
 Copyright Notice
 
@@ -411,8 +411,8 @@ Table of Contents
       from the Workload API that can be used to validate signatures.  In
       SPIFFE this is referred to as the "trust bundle".
 
-   *  A endpoint where the public keys used for signing are published in
-      JWK format [RFC7517].  See SPIFFE Bundle Endpoint at [SPIFFE].
+   *  An endpoint where the public keys used for signing are published
+      in JWK format [RFC7517].  See SPIFFE Bundle Endpoint at [SPIFFE].
 
    The following figure illustrates how a workload can use its JWT-SVID
    to access a protected resource outside of SPIFFE:
@@ -801,11 +801,11 @@ Table of Contents
 
    [I-D.ietf-wimse-s2s-protocol]
               Campbell, B., Salowey, J. A., Schwenkschuster, A., and Y.
-              Sheffer, "WIMSE Workload to Workload Authentication", Work
+              Sheffer, "WIMSE Workload-to-Workload Authentication", Work
               in Progress, Internet-Draft, draft-ietf-wimse-s2s-
-              protocol-06, 4 July 2025,
+              protocol-07, 16 October 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              s2s-protocol-06>.
+              s2s-protocol-07>.
 
    [KubernetesServiceAccount]
               "Kubernetes Service Account", May 2024,
