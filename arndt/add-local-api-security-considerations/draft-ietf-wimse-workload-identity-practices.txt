@@ -678,7 +678,7 @@ Table of Contents
    prevents this broader access.
 
    The potential for denial-of-service attacks against Local APIs need
-   to be taking into account and protective measures should be
+   to be taken into account and protective measures should be
    implemented.  Depending on the platform these attacks can affect
    other workloads and their ability to receive a platform credential.
 
