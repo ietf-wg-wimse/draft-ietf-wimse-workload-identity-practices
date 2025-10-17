@@ -816,6 +816,16 @@ While {{RFC7521}} and {{RFC7523}} are the proposed standards for this pattern, s
 
    [[ To be removed from the final specification ]]
 
+   -03
+
+   * Add service-mesh section
+   * Add multi-tenancy considerations
+   * Add atomicity and flushing requirements to filesystem section
+   * Make it clear that invalidation is a matter of querying the status
+   * Rework local api section & security considerations
+   * Refer to RFC7517 in SPIFFE and add clarity on key distribution
+   * Editorial changes
+
    -02
 
    * Updated structure, bringing concrete examples back into the main text.
