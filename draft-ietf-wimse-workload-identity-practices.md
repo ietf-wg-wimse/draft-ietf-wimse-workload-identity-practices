@@ -615,6 +615,53 @@ While token structure is vendor-specific, all tokens contain claims carrying
 the basic context of the executed tasks, such as source code management data
 such as git branch, initiation context and more.
 
+## Service Meshes
+
+Service meshes provide infrastructure-level workload identity and secure communication
+for applications through sidecar proxies deployed alongside each workload.
+In a service mesh, workload identity is typically implemented using X.509 certificates
+issued by the service mesh. Service meshes handle identity credential provisioning
+to sidecar proxies rather than directly to application workloads. The sidecar intercepts
+network traffic and handles authentication transparently to the application code.
+
+~~~aasvg
+                    +--------------+
+                    |              |
+            +-------+ Service Mesh +--------+
+1) issue    |       |              |        | 1) issue
+   identity |       +--------------+        |    identity
+            |                               |
+            v       3) communicate          v
+      +-----------+    on behalf of   +-----------+
+      |           |    workloads      |           |
+      |   Proxy   |<=================>|   Proxy   |
+      |           |                   |           |
+      +-----------+                   +-----------+
+            ^                               ^
+            | 2) delegate                   | 2) delegate
+            |                               |
+      +-----+-----+                   +-----+-----+
+      |           |                   |           |
+      | Workload  |                   | Workload  |
+      |           |                   |           |
+      +-----------+                   +-----------+
+~~~
+{: #fig-servicemesh title="Simple service mesh communication between 2 workload"}
+
+The steps shown in {{fig-servicemesh}} are:
+
+* 1) The Service Mesh issues identities in the form of credentials
+     to proxies.
+
+* 2) The proxies act on behalf of workloads that delegate their
+     communication to them. In above figure each workload has its
+     own proxy that solely represents it and no other workload.
+
+* 3) The proxies communicate with each other on behalf of the workloads
+     they represent. This communication includes authentication spects, for instance in the form of X.509 certificates.
+
+In above pattern each workload has a specific sidecar. An alternative deployment is to share proxies between workloads. This often results in a single proxy on each node acting on behalf of all workloads on the node.
+
 # Security Considerations {#security}
 
 All security considerations in section 8 of {{RFC7521}} apply.
