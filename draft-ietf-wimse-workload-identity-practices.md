@@ -411,7 +411,7 @@ For validation, SPIFFE offers:
   API that can be used to validate signatures. In SPIFFE this is referred to as
   the "trust bundle".
 
-* A endpoint where the public keys used for signing are published in JWK format {{RFC7517}}. See SPIFFE Bundle Endpoint at {{SPIFFE}}.
+* An endpoint where the public keys used for signing are published in JWK format {{RFC7517}}. See SPIFFE Bundle Endpoint at {{SPIFFE}}.
 
 The following figure illustrates how a workload can use its JWT-SVID to access a
 protected resource outside of SPIFFE:
