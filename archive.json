@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-14T00:58:08.281941+00:00",
+  "timestamp": "2025-10-19T01:06:06.313756+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -769,15 +769,15 @@
       "id": "I_kwDOL34A-M62WURK",
       "title": "Cover Service Meshes",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/35",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Split from #32 where @dagdagdag83 suggested:\n\n> A suggestion: consider adding an Istio section. Istio actually uses an interesting mechanism with Envoy to establish mTLS between workloads and these x.509 certificates actually have SPIFFE IDs. So these certificates can be considered Workload Identity Credentials. This even work multi-cluster if you have a control plane configured for shared CA root.\n\n",
       "createdAt": "2025-05-13T09:04:01Z",
-      "updatedAt": "2025-06-18T21:03:31Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-17T16:26:43Z",
+      "closedAt": "2025-10-17T12:20:46Z",
       "comments": [
         {
           "author": "dagdagdag83",
@@ -820,6 +820,20 @@
           "body": "Sorry for the late reply @arndt-s. I was thinking mainly the usage part, I think that is the not-so-obvious part that isn't currently covered.\nAs for widening into other service mesh implementation I'd say yes as long as the scope of the document doesn't suffer too much. Istio with K8S is arguably the most important enterprise use case right now. ",
           "createdAt": "2025-06-18T21:03:31Z",
           "updatedAt": "2025-06-18T21:03:31Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Adressed in #63 ",
+          "createdAt": "2025-10-17T12:20:46Z",
+          "updatedAt": "2025-10-17T12:20:46Z"
+        },
+        {
+          "author": "dagdagdag83",
+          "authorAssociation": "NONE",
+          "body": "Really nice work on #63 \ud83d\udc4d",
+          "createdAt": "2025-10-17T16:26:43Z",
+          "updatedAt": "2025-10-17T16:26:43Z"
         }
       ]
     },
@@ -998,7 +1012,7 @@
       "id": "I_kwDOL34A-M7H-r49",
       "title": "Security consideration for Local APIs",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/issues/57",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -1007,8 +1021,8 @@
       "labels": [],
       "body": "Collection of security considerations for Local APIs we need to add:\n \n- Cleartext (HTTP)\n- Authentication\n- Server-side request forgery\n- DoS",
       "createdAt": "2025-08-26T10:37:38Z",
-      "updatedAt": "2025-08-26T10:37:38Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-17T12:12:12Z",
+      "closedAt": "2025-10-17T12:12:12Z",
       "comments": []
     },
     {
@@ -3264,24 +3278,26 @@
       "id": "PR_kwDOL34A-M6lX4P4",
       "title": "Improve SPIFFE section",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/54",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Some improvements to the SPIFFE section",
       "createdAt": "2025-08-26T09:36:57Z",
-      "updatedAt": "2025-10-13T09:41:42Z",
+      "updatedAt": "2025-10-17T12:07:04Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "d28659feee1833876e2bce38b067d08546e6e2a2",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "headRefName": "arndt/rework-spiffe-section",
-      "headRefOid": "7d20b9cefaf5a0a748a907455dc500975058922c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "fbec89d7534fcfb33db29e22915d134b4bedd5e7",
+      "closedAt": "2025-10-17T12:07:04Z",
+      "mergedAt": "2025-10-17T12:07:04Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "6e843fd8d613ac17066c7e2a331cd4196c5dc84a"
+      },
       "comments": [
         {
           "author": "arndt-s",
@@ -3349,6 +3365,26 @@
               "body": "@arndt-s rephrase this",
               "createdAt": "2025-09-22T10:19:21Z",
               "updatedAt": "2025-09-22T10:19:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M7Hq8hY",
+          "commit": {
+            "abbreviatedOid": "7d20b9c"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-17T12:06:40Z",
+          "updatedAt": "2025-10-17T12:06:40Z",
+          "comments": [
+            {
+              "originalPosition": 80,
+              "body": "```suggestion\r\n* An endpoint where the public keys used for signing are published in JWK format {{RFC7517}}. See SPIFFE Bundle Endpoint at {{SPIFFE}}.\r\n```",
+              "createdAt": "2025-10-17T12:06:40Z",
+              "updatedAt": "2025-10-17T12:06:40Z"
             }
           ]
         }
@@ -3523,24 +3559,26 @@
       "id": "PR_kwDOL34A-M6lYz6K",
       "title": "Add local api security considerations",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/59",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Resolves #57",
       "createdAt": "2025-08-26T11:05:24Z",
-      "updatedAt": "2025-10-13T09:44:50Z",
+      "updatedAt": "2025-10-17T12:12:11Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "0c9c281ffc0aeecd61a26a597484e9ed9e89f914",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "headRefName": "arndt/add-local-api-security-considerations",
-      "headRefOid": "31ce0b7764b74566a8ad3ad40b56582b2279e129",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "9835999a7442517bcc4057a79ca308c31f57b4c9",
+      "closedAt": "2025-10-17T12:12:11Z",
+      "mergedAt": "2025-10-17T12:12:11Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "113a96b340203ad15403689e17f63341be4134b8"
+      },
       "comments": [
         {
           "author": "arndt-s",
@@ -3568,6 +3606,66 @@
               "body": "```suggestion\r\nLocal APIs often operate in clear text such as unencrypted HTTP without any confidentiality or integrity protection. Privileged component on the machine or in the\r\n```",
               "createdAt": "2025-09-22T10:32:49Z",
               "updatedAt": "2025-09-22T10:32:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M7Hq_1F",
+          "commit": {
+            "abbreviatedOid": "31ce0b7"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-17T12:09:06Z",
+          "updatedAt": "2025-10-17T12:09:07Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\r\nMitigating measures are required to mitigate a particular variant of Server-Side Request Forgery attacks\r\nagainst local APIs. For example, requiring a specific header that\r\n```",
+              "createdAt": "2025-10-17T12:09:06Z",
+              "updatedAt": "2025-10-17T12:09:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M7HrBfJ",
+          "commit": {
+            "abbreviatedOid": "31ce0b7"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-17T12:10:06Z",
+          "updatedAt": "2025-10-17T12:10:07Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "```suggestion\r\nAdequate attestation is required to make sure unauthorized access is denied and credentials\r\nare not issued to other parties when the Local API is unauthenticated. Introspection of the platform, like in SPIFFE or\r\n```",
+              "createdAt": "2025-10-17T12:10:07Z",
+              "updatedAt": "2025-10-17T12:10:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOL34A-M7HrCeF",
+          "commit": {
+            "abbreviatedOid": "31ce0b7"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-17T12:10:49Z",
+          "updatedAt": "2025-10-17T12:10:49Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "```suggestion\r\nThe potential for denial-of-service attacks against Local APIs need to be taken\r\n```",
+              "createdAt": "2025-10-17T12:10:49Z",
+              "updatedAt": "2025-10-17T12:10:50Z"
             }
           ]
         }
@@ -3724,24 +3822,54 @@
       "id": "PR_kwDOL34A-M6tcVuP",
       "title": "Try out how service mesh section feels",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/63",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Bike shedding how a service mesh section feels. We need to discuss whether this is within scope or not.",
       "createdAt": "2025-10-13T11:28:34Z",
-      "updatedAt": "2025-10-13T11:28:34Z",
+      "updatedAt": "2025-10-17T12:13:12Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "9e2523049c96632e54e03c60635009b6a6c63522",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "headRefName": "arndt/add_service_mesh_section",
       "headRefOid": "9d11ca154bd5ce9ddfffddd5bf8f57f22801e7ae",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-10-17T12:13:11Z",
+      "mergedAt": "2025-10-17T12:13:11Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "5523b690e5364b0f72ba89e7dd6f1d07fd635a39"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 64,
+      "id": "PR_kwDOL34A-M6uTYL-",
+      "title": "add -03 changelog",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/64",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-10-17T12:34:31Z",
+      "updatedAt": "2025-10-17T12:35:05Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "main",
+      "baseRefOid": "5523b690e5364b0f72ba89e7dd6f1d07fd635a39",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "headRefName": "arndt/03-change-log",
+      "headRefOid": "93043deeffc4d99ad40087e217a096231cd162f3",
+      "closedAt": "2025-10-17T12:35:05Z",
+      "mergedAt": "2025-10-17T12:35:05Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "414f4f51e48f9b42bc95f7c46fbef8217c93d225"
+      },
       "comments": [],
       "reviews": []
     }
