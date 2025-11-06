@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-19T01:06:06.313756+00:00",
+  "timestamp": "2025-11-06T01:02:06.996876+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -3870,6 +3870,58 @@
       "mergeCommit": {
         "oid": "414f4f51e48f9b42bc95f7c46fbef8217c93d225"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 65,
+      "id": "PR_kwDOL34A-M6xTmoK",
+      "title": "Fix typos and enhance clarity in markdown document",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/65",
+      "state": "OPEN",
+      "author": "fandreas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Corrected typos and improved clarity in the document.",
+      "createdAt": "2025-11-04T01:27:51Z",
+      "updatedAt": "2025-11-04T01:27:52Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "main",
+      "baseRefOid": "414f4f51e48f9b42bc95f7c46fbef8217c93d225",
+      "headRepository": "fandreas/draft-ietf-wimse-workload-identity-practices",
+      "headRefName": "patch-1",
+      "headRefOid": "a51621de5f6559ccd404759f7ab80c9d0f4db551",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 66,
+      "id": "PR_kwDOL34A-M6xgObQ",
+      "title": "Update acknowledgements",
+      "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/66",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-11-04T21:12:05Z",
+      "updatedAt": "2025-11-04T21:12:06Z",
+      "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "baseRefName": "main",
+      "baseRefOid": "414f4f51e48f9b42bc95f7c46fbef8217c93d225",
+      "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
+      "headRefName": "arndt/update-acknowledgements",
+      "headRefOid": "f01687ad554acd3c2baec256a0acfa80485de71d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
