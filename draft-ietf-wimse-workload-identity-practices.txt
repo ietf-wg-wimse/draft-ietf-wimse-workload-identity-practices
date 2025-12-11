@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments        A. Schwenkschuster
 Internet-Draft                                                     SPIRL
 Intended status: Informational                              Y. Rosomakho
-Expires: 20 April 2026                                           Zscaler
-                                                         17 October 2025
+Expires: 14 June 2026                                            Zscaler
+                                                        11 December 2025
 
 
                       Workload Identity Practices
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 April 2026.
+   This Internet-Draft will expire on 14 June 2026.
 
 Copyright Notice
 
@@ -244,7 +244,7 @@ Table of Contents
    The security of this approach relies heavily on network isolation to
    prevent unauthorised access to the local API.  In addition, the
    pattern requires client-side code, which may introduce portability
-   challenges.  The request–response paradigm can also increase latency,
+   challenges.  The request-response paradigm can also increase latency,
    particularly when communication goes over the network.
 
 4.  Practices
@@ -310,7 +310,7 @@ Table of Contents
             +-------------------------------------------------+
             |                                     Kubernetes  |
             |                      +--------------+           |
-            |        A1) access    |              |           |
+            |         A) access    |              |           |
             |      +-------------->|  API Server  |           |
             |      |               |              |           |
             |      |               +--------------+           |
@@ -320,7 +320,7 @@ Table of Contents
             | |         |             +---------+             |
             | +-+-+---+-+                                     |
             |   | |   |                      +--------------+ |
-            |   | |   |   B1) access         |              | |
+            |   | |   |    B) access         |              | |
             |   | |   +--------------------->|   Resource   | |
             |   | |                          |              | |
             |   | |                          +--------------+ |
@@ -405,7 +405,7 @@ Table of Contents
    project that defines a "Workload API" to deliver machine identity to
    workloads.  Workloads can retrieve either X.509 certificates or JWTs.
    The Workload API does not require clients to authenticate themselves.
-   Instead, implementation collect identifying information of the
+   Instead, implementations collect identifying information of the
    workload from the environment, such as the workload platform or the
    operating system.
 
@@ -659,7 +659,7 @@ Table of Contents
          |           |                   |           |
          +-----------+                   +-----------+
 
-       Figure 7: Simple service mesh communication between 2 workload
+      Figure 7: Simple service mesh communication between 2 workloads
 
    The steps shown in Figure 7 are:
 
@@ -672,7 +672,7 @@ Table of Contents
 
    *  3) The proxies communicate with each other on behalf of the
       workloads they represent.  This communication includes
-      authentication spects, for instance in the form of X.509
+      authentication aspects, for instance in the form of X.509
       certificates.
 
    In above pattern each workload has a specific sidecar.  An
