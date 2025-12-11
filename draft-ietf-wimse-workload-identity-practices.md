@@ -252,7 +252,7 @@ security posture compared to long-lived secrets.
 
 The security of this approach relies heavily on network isolation to prevent
 unauthorised access to the local API. In addition, the pattern requires client-side
-code, which may introduce portability challenges. The request–response paradigm
+code, which may introduce portability challenges. The request-response paradigm
 can also increase latency, particularly when communication goes over the network.
 
 # Practices {#practices}
@@ -313,7 +313,7 @@ To validate service account tokens, Kubernetes allows workloads to:
          +-------------------------------------------------+
          |                                     Kubernetes  |
          |                      +--------------+           |
-         |        A1) access    |              |           |
+         |         A) access    |              |           |
          |      +-------------->|  API Server  |           |
          |      |               |              |           |
          |      |               +--------------+           |
@@ -323,7 +323,7 @@ To validate service account tokens, Kubernetes allows workloads to:
          | |         |             +---------+             |
          | +-+-+---+-+                                     |
          |   | |   |                      +--------------+ |
-         |   | |   |   B1) access         |              | |
+         |   | |   |    B) access         |              | |
          |   | |   +--------------------->|   Resource   | |
          |   | |                          |              | |
          |   | |                          +--------------+ |
@@ -404,7 +404,7 @@ The Secure Production Identity Framework For Everyone, also known as SPIFFE [SPI
 a Cloud Native Computing Foundation (CNCF) project that defines a "Workload API"
 to deliver machine identity to workloads. Workloads can retrieve either X.509
 certificates or JWTs. The Workload API does not require clients to authenticate themselves.
-Instead, implementation collect identifying information of the workload from the
+Instead, implementations collect identifying information of the workload from the
 environment, such as the workload platform or the operating system.
 
 SPIFFE refers to the JWT-formatted credential as a "JWT-SVID" (JWT - SPIFFE
@@ -646,7 +646,7 @@ network traffic and handles authentication transparently to the application code
       |           |                   |           |
       +-----------+                   +-----------+
 ~~~
-{: #fig-servicemesh title="Simple service mesh communication between 2 workload"}
+{: #fig-servicemesh title="Simple service mesh communication between 2 workloads"}
 
 The steps shown in {{fig-servicemesh}} are:
 
@@ -658,7 +658,7 @@ The steps shown in {{fig-servicemesh}} are:
      own proxy that solely represents it and no other workload.
 
 * 3) The proxies communicate with each other on behalf of the workloads
-     they represent. This communication includes authentication spects, for instance in the form of X.509 certificates.
+     they represent. This communication includes authentication aspects, for instance in the form of X.509 certificates.
 
 In above pattern each workload has a specific sidecar. An alternative deployment is to share proxies between workloads. This often results in a single proxy on each node acting on behalf of all workloads on the node.
 
