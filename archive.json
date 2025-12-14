@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-25T01:01:49.831015+00:00",
+  "timestamp": "2025-12-14T01:10:47.707968+00:00",
   "repo": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
   "labels": [
     {
@@ -1051,13 +1051,23 @@
       "state": "OPEN",
       "author": "jsalowey",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [],
       "body": "Most of the discussion focuses around a single token.  While there is some allusion to being able to obtain multiple tokens this is not explicitly discussed. \n\nPerhaps adding a bullet to the  \"both options allow workloads to\" section like:\n\"multiple tokens may be obtained through either mechanism, each with its own customized audience and lifetime\" \n\nI think it would also be good to point the reader to best practices with audiences \"It is best practice to use tokens with a minimal set (ideally one) of audiences, sec {security considerations for more detail). \"",
       "createdAt": "2025-11-24T05:23:57Z",
-      "updatedAt": "2025-11-24T05:23:57Z",
+      "updatedAt": "2025-12-11T11:11:37Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I believe this applies to all patterns, not just Kubernetes. SPIFFE, CI/CD and cloud providers.",
+          "createdAt": "2025-12-11T11:04:58Z",
+          "updatedAt": "2025-12-11T11:04:58Z"
+        }
+      ]
     },
     {
       "number": 68,
@@ -1067,11 +1077,13 @@
       "state": "OPEN",
       "author": "jsalowey",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [],
       "body": "(issue) Section 4.2 - In this section there is also ambiguous text which may imply recommending tokens be used with multiple audiences or services configured with a different audience. This is most apparent in the \"steps shown for figure 4\" where it appears the same token is being used for an internal resource and an external authorization server.  This could be resolved by either having the workload retrieve two tokens, one for each purpose or having a step between A and B which has the workload asking for a new token with the correct audience.",
       "createdAt": "2025-11-24T05:24:45Z",
-      "updatedAt": "2025-11-24T05:24:45Z",
+      "updatedAt": "2025-12-11T11:11:32Z",
       "closedAt": null,
       "comments": []
     },
@@ -1083,11 +1095,13 @@
       "state": "OPEN",
       "author": "jsalowey",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [],
       "body": "Section 4.3 -  it might be useful to differentiate this credential from a \"workload identity document\" which is commonly used in an attestation process. \n\nI'm not very familiar with what all cloud providers do, but with some providers I believe there is a proof of possession used with the identity token (HTTP signatures).  I am a little concerned with the same issue as the previous section where it seems on the surface that the same bearer token is used both externally and internally. ",
       "createdAt": "2025-11-24T05:25:47Z",
-      "updatedAt": "2025-11-24T05:25:47Z",
+      "updatedAt": "2025-12-11T11:07:57Z",
       "closedAt": null,
       "comments": []
     },
@@ -1099,11 +1113,13 @@
       "state": "OPEN",
       "author": "jsalowey",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaroslavros"
+      ],
       "labels": [],
       "body": "Section 5.1  Implementations need to be careful not to let bearer tokens or the secret key material associated with proof of possession tokens be accessible to an attacker.  This would include protecting against file path traversal for file system tokens and against server-side request forgery (SSRF) for APIs (also possibly command injection). ",
       "createdAt": "2025-11-24T05:27:04Z",
-      "updatedAt": "2025-11-24T05:27:04Z",
+      "updatedAt": "2025-12-11T11:09:27Z",
       "closedAt": null,
       "comments": []
     },
@@ -1115,11 +1131,13 @@
       "state": "OPEN",
       "author": "jsalowey",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [],
       "body": "Section 5 SHOULDs - there are a lot of SHOULDs and SHOULD NOTs in this section.  It would be good to make sure we describe the implications of the RECOMMENDATION is not followed.  (or qualify when it's OK to go against the recommendation. ",
       "createdAt": "2025-11-24T05:27:33Z",
-      "updatedAt": "2025-11-24T05:27:33Z",
+      "updatedAt": "2025-12-11T11:10:16Z",
       "closedAt": null,
       "comments": []
     },
@@ -1131,11 +1149,13 @@
       "state": "OPEN",
       "author": "jsalowey",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "yaroslavros"
+      ],
       "labels": [],
       "body": "Section 3.3 - states that the local API solution \"the pattern requires client-sidecode, which may introduce portability challenges.\"\u00a0 I think technically\u00a0all the solutions\u00a0require clients side code, the problem here is that it is custom client side code.\u00a0 something line \"the pattern requires client-sidecode customized for a particular API, which may introduce portability challenges.\u00a0 It would also be good to point the reader to the security considerations\u00a0section on local API for more a more complete discussion of security.\u00a0\u00a0",
       "createdAt": "2025-11-24T05:28:24Z",
-      "updatedAt": "2025-11-24T05:28:24Z",
+      "updatedAt": "2025-12-11T11:11:03Z",
       "closedAt": null,
       "comments": []
     }
@@ -3974,52 +3994,84 @@
       "id": "PR_kwDOL34A-M6xTmoK",
       "title": "Fix typos and enhance clarity in markdown document",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/65",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "fandreas",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Corrected typos and improved clarity in the document.",
       "createdAt": "2025-11-04T01:27:51Z",
-      "updatedAt": "2025-11-04T01:27:52Z",
+      "updatedAt": "2025-12-11T11:13:09Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "414f4f51e48f9b42bc95f7c46fbef8217c93d225",
       "headRepository": "fandreas/draft-ietf-wimse-workload-identity-practices",
       "headRefName": "patch-1",
       "headRefOid": "a51621de5f6559ccd404759f7ab80c9d0f4db551",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-12-11T11:13:09Z",
+      "mergedAt": "2025-12-11T11:13:09Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "bf448f642f6fca5b83ad59bc5cba4062f3709138"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M7UmuIQ",
+          "commit": {
+            "abbreviatedOid": "a51621d"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-12-11T11:13:02Z",
+          "updatedAt": "2025-12-11T11:13:02Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 66,
       "id": "PR_kwDOL34A-M6xgObQ",
       "title": "Update acknowledgements",
       "url": "https://github.com/ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices/pull/66",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-11-04T21:12:05Z",
-      "updatedAt": "2025-11-04T21:12:06Z",
+      "updatedAt": "2025-12-11T11:14:18Z",
       "baseRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "baseRefName": "main",
       "baseRefOid": "414f4f51e48f9b42bc95f7c46fbef8217c93d225",
       "headRepository": "ietf-wg-wimse/draft-ietf-wimse-workload-identity-practices",
       "headRefName": "arndt/update-acknowledgements",
-      "headRefOid": "f01687ad554acd3c2baec256a0acfa80485de71d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "38e12aa1fab70c8401787b828df1d8b5223a02d9",
+      "closedAt": "2025-12-11T11:14:18Z",
+      "mergedAt": "2025-12-11T11:14:18Z",
+      "mergedBy": "yaroslavros",
+      "mergeCommit": {
+        "oid": "b4ed1c9daf59a37f21fa788185929c81da438adb"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOL34A-M7UmtHT",
+          "commit": {
+            "abbreviatedOid": "f01687a"
+          },
+          "author": "yaroslavros",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-12-11T11:11:46Z",
+          "updatedAt": "2025-12-11T11:11:46Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
