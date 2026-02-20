@@ -252,8 +252,9 @@ security posture compared to long-lived secrets.
 
 The security of this approach relies heavily on network isolation to prevent
 unauthorised access to the local API. In addition, the pattern requires client-side
-code, which may introduce portability challenges. The request-response paradigm
-can also increase latency, particularly when communication goes over the network.
+code that is specific to the exposed API, which may introduce portability challenges
+across platforms and providers. Further security considerations for local APIs are
+discussed in {{local-api-security}}.
 
 # Practices {#practices}
 
@@ -691,7 +692,7 @@ setup of the application.
 * 2) Mounted shared memory should be isolated from other host OS paths and
      processes. For example, on Linux this can be achieved by using namespaces.
 
-### Local APIs
+### Local APIs {#local-api-security}
 
 Local APIs often operate in clear-text such as unencrypted HTTP without any
 confidentiality or integrity protection. Privileged component on the machine or
