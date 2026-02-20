@@ -716,6 +716,26 @@ into account and protective measures should be implemented. Depending on the pla
 these attacks can affect other workloads and their ability to receive a platform
 credential.
 
+### Application Interaction with Credential Sources
+
+Implementations MUST assume that application vulnerabilities can expose workload credentials
+even when platform isolation is correctly configured. Attackers commonly exploit the workload
+itself to retrieve credentials rather than accessing the credential service directly.
+
+For example, untrusted input may be used to manipulate file paths when credentials are mounted
+on a filesystem, or to trigger requests to local credential endpoints such as metadata or
+workload APIs (for example via server-side request forgery). Similarly, command execution or
+unintended outbound requests may result in bearer tokens or proof-of-possession key material
+being disclosed.
+
+Workloads therefore MUST treat credential locations as sensitive security boundaries.
+Untrusted input MUST NOT influence how credential files are accessed or how local credential
+APIs are contacted. Implementations SHOULD minimise which components can access credentials
+and prefer proof-of-possession credentials over bearer tokens where supported.
+
+These risks exist even when credential services are reachable only locally, since compromise
+often occurs through application behaviour rather than network access to the credential provider.
+
 ## Token typing
 
 Issuers SHOULD strongly type the issued tokens to workloads via the JOSE `typ`
