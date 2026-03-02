@@ -701,7 +701,7 @@ within it.
 Mitigating measures are required to mitigate a particular variant of Server-Side Request Forgery attacks
 against local APIs. For example, requiring a specific header that
 cannot be controlled externally or preventing the use of link-local IPs,
-including through redirects.
+including through redirects. See {{application-interaction-with-credential-sources}} for details.
 
 Adequate attestation is required to make sure unauthorized access is denied and credentials
 are not issued to other parties when the Local API is unauthenticated. Introspection of the platform, like in SPIFFE or
@@ -715,6 +715,26 @@ The potential for denial-of-service attacks against Local APIs need to be taken
 into account and protective measures should be implemented. Depending on the platform
 these attacks can affect other workloads and their ability to receive a platform
 credential.
+
+### Application Interaction with Credential Sources {#application-interaction-with-credential-sources}
+
+Implementations MUST assume that application vulnerabilities can expose workload credentials
+even when platform isolation is correctly configured. Attackers commonly exploit the workload
+itself to retrieve credentials rather than accessing the credential service directly.
+
+For example, untrusted input may be used to manipulate file paths when credentials are mounted
+on a filesystem, or to trigger requests to local credential endpoints such as metadata or
+workload APIs (for example via server-side request forgery). Similarly, command execution or
+unintended outbound requests may result in bearer tokens or proof-of-possession key material
+being disclosed.
+
+Workloads therefore MUST treat credential locations as sensitive security boundaries.
+Untrusted input MUST NOT influence how credential files are accessed or how local credential
+APIs are contacted. Implementations SHOULD minimise which components can access credentials
+and prefer proof-of-possession credentials over bearer tokens where supported.
+
+These risks exist even when credential services are reachable only locally, since compromise
+often occurs through application behaviour rather than network access to the credential provider.
 
 ## Token typing
 
