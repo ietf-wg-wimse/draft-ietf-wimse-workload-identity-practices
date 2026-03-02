@@ -701,7 +701,7 @@ within it.
 Mitigating measures are required to mitigate a particular variant of Server-Side Request Forgery attacks
 against local APIs. For example, requiring a specific header that
 cannot be controlled externally or preventing the use of link-local IPs,
-including through redirects.
+including through redirects. See {{application-interaction-with-credential-sources}} for details.
 
 Adequate attestation is required to make sure unauthorized access is denied and credentials
 are not issued to other parties when the Local API is unauthenticated. Introspection of the platform, like in SPIFFE or
@@ -716,7 +716,7 @@ into account and protective measures should be implemented. Depending on the pla
 these attacks can affect other workloads and their ability to receive a platform
 credential.
 
-### Application Interaction with Credential Sources
+### Application Interaction with Credential Sources {#application-interaction-with-credential-sources}
 
 Implementations MUST assume that application vulnerabilities can expose workload credentials
 even when platform isolation is correctly configured. Attackers commonly exploit the workload
