@@ -244,9 +244,10 @@ Table of Contents
 
    The security of this approach relies heavily on network isolation to
    prevent unauthorised access to the local API.  In addition, the
-   pattern requires client-side code, which may introduce portability
-   challenges.  The request-response paradigm can also increase latency,
-   particularly when communication goes over the network.
+   pattern requires client-side code that is specific to the exposed
+   API, which may introduce portability challenges across platforms and
+   providers.  Further security considerations for local APIs are
+   discussed in Section 5.1.3.
 
 4.  Practices
 
