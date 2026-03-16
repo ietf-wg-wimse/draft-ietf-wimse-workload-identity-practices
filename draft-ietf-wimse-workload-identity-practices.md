@@ -113,11 +113,11 @@ not take into account the standards work in progress for the WIMSE architecture
 
 # Introduction
 
-Just like people, the workloads inside container orchestration systems (e.g.,
-Kubernetes) need identities to authenticate with other systems, such as
-databases, web servers, or other workloads. The challenge for workloads is to
-obtain a credential that can be used to authenticate with these resources
-without managing secrets directly, for instance, an OAuth 2.0 access token.
+Just like people, workloads need identities and associated credentials to
+authenticate with other systems, such as databases, web servers, or other
+workloads. The challenge for workloads is to obtain a credential that can
+be used to authenticate with these resources without managing secrets directly,
+for instance, an OAuth 2.0 access token.
 
 The common use of the OAuth 2.0 framework {{RFC6749}} in this context poses
 challenges, particularly in managing credentials. To address this, the industry
@@ -174,18 +174,22 @@ B1) federate | |  B2) access                   |              |
 
 The figure outlines the following steps which are applicable in any pattern.
 
-* 1) Platform issues credential to workload. The way this is achieved varies
-     by platform, for instance, it can be pushed to the workload or
-     pulled by the workload.
+* 1) The platform verifies the workload based on its environment and attributes
+     and issues a credential that represents the workload's identity. The way
+     this is achieved varies by platform, for instance, the credential can be
+     pushed to the workload or pulled by the workload.
 
 * A) The credential can give the workload direct access to resources within the
      platform or the platform itself (e.g., to perform infrastructure operations)
 
 * B1) The workload uses the credential to federate to an Identity Provider. This
-      step is optional and only needed when accessing outside resources.
+      step is optional and only needed when accessing outside resources. The
+      Identity Provider validates the platform-issued credential, and in return,
+      issues a new credential (e.g., an OAuth 2.0 access token) that the
+      workload can use to access resources in the Identity Provider's domain.
 
-* B2) The workload accesses resources outside of the platform and uses the
-      federated identity obtained in the previous step.
+* B2) Using the credential obtained at step B1, the workload accesses resources
+      outside of the platform.
 
 Accessing different outside resources may require the workload to repeat steps
 B1) and B2), federating to multiple Identity Providers. It is also possible that
@@ -361,9 +365,11 @@ Now, the Pod can use the token to:
 
   * C1) The application within the Pod uses the Service Account Token to
         federate to an Identity Provider outside of the Kubernetes Cluster.
+        The Identity Provider validates the token and issues a new credential
+        (e.g., an OAuth 2.0 access token) to the workload.
 
-  * C2) Using the federated identity, the application within the Pod accesses
-        resources outside of the cluster.
+  * C2) Using the credential issued in step C1, the application within the Pod
+        accesses resources outside of the cluster.
 
 As an example, the following JSON illustrates the claims contained in a Kubernetes Service
 Account token.
@@ -403,27 +409,30 @@ Account token.
 
 The Secure Production Identity Framework For Everyone, also known as SPIFFE [SPIFFE], is
 a Cloud Native Computing Foundation (CNCF) project that defines a "Workload API"
-to deliver machine identity to workloads. Workloads can retrieve either X.509
-certificates or JWTs. The Workload API does not require clients to authenticate themselves.
-Instead, implementations collect identifying information of the workload from the
-environment, such as the workload platform or the operating system.
+to deliver machine identity to workloads. Workloads can retrieve identity
+credentials in one of two forms: as an X509-SVID, which consists of an X.509
+certificate containing the workload's SPIFFE ID in the Subject Alternative Name
+(SAN) URI field, along with the corresponding key pair; or as a JWT-SVID, which
+is a signed JWT containing the workload's SPIFFE ID in the `sub` claim.
+The Workload API does not require clients to authenticate themselves.
+Instead, the API implementation identifies workloads by collecting contextual
+information from the environment, such as process attributes, kernel metadata,
+or orchestrator-provided labels. This out-of-band identification allows
+workloads to obtain their identity credentials without needing a pre-existing
+secret, avoiding the bootstrapping problem of requiring a credential to obtain
+a credential.
 
-SPIFFE refers to the JWT-formatted credential as a "JWT-SVID" (JWT - SPIFFE
-Verifiable Identity Document) and the X509-formatted credential as "X509-SVID".
+For validation, SPIFFE defines a "trust bundle" per trust domain. A trust
+bundle is a set of public keys encoded in JWK format {{RFC7517}} that can be
+used to validate credentials. For JWT-SVIDs, the bundle contains signing keys
+identified by a `use` value of `jwt-svid`. For X509-SVIDs, the bundle contains
+CA certificates identified by a `use` value of `x509-svid`. Trust bundle
+contents can be retrieved from the Workload API or from a dedicated SPIFFE
+Bundle Endpoint (see {{SPIFFE}}).
 
-Workloads are required to specify at least one audience when requesting a
-JWT-SVID from the Workload API.
-
-For validation, SPIFFE offers:
-
-* A set of public keys encoded in JWK format {{RFC7517}} retrieved from the Workload
-  API that can be used to validate signatures. In SPIFFE this is referred to as
-  the "trust bundle".
-
-* An endpoint where the public keys used for signing are published in JWK format {{RFC7517}}. See SPIFFE Bundle Endpoint at {{SPIFFE}}.
-
-The following figure illustrates how a workload can use its JWT-SVID to access a
-protected resource outside of SPIFFE:
+The following figure illustrates how a workload can use its SPIFFE identity to
+access a protected resource outside of the trust domain. The example uses a
+JWT-SVID, ut using an X509-SVID is also possible.
 
 ~~~aasvg
       +--------------------------------------------------------+
@@ -461,10 +470,12 @@ The steps shown in {{fig-spiffe}} are:
      within the same SPIFFE Trust Domain.
 
 * B1) To access resources protected by other Identity Providers, the workload
-      uses the SPIFFE JWT-SVID to federate to the Identity Provider.
+      uses the SPIFFE JWT-SVID to federate to the Identity Provider. The
+      Identity Provider validates the JWT-SVID and issues a new credential
+      (e.g., an OAuth 2.0 access token) to the workload.
 
-* B2) Once federated, the workload can access resources outside of its trust
-      domain.
+* B2) Using the credential issued in step B1, the workload can access resources
+      outside of its trust domain.
 
 Here are example claims for a JWT-SVID:
 
@@ -512,38 +523,38 @@ different security boundaries (e.g., different account or tenant). The actual
 flows and implementations may vary in these situations though.
 
 ~~~aasvg
-    +----------------------------------------------------------+
-    |                                                    Cloud |
-    |                                                          |
-    |                                   +-------------------+  |
-    |  +--------------+ 1) get identity |                   |  |
-    |  |              +---------------->| Instance Metadata |  |
-    |  |   Workload   |                 |  Service/Endpoint |  |
-    |  |              |                 |                   |  |
-    |  +-----+-+----+-+                 +-------------------+  |
-    |        | |    |                                          |
-    |        | |    |                        +--------------+  |
-    |        | |    |     A) access          |              |  |
-    |        | |    +----------------------->|   Resource   |  |
-    |        | |                             |              |  |
-    |        | |                             +--------------+  |
-    +--------+-+-----------------------------------------------+
+    +-------------------------------------------------------------+
+    |                                                       Cloud |
+    |                                                             |
+    |                                      +-------------------+  |
+    |  +--------------+ 1) get credentials |                   |  |
+    |  |              +------------------->| Instance Metadata |  |
+    |  |   Workload   |                    |  Service/Endpoint |  |
+    |  |              |                    |                   |  |
+    |  +-----+-+----+-+                    +-------------------+  |
+    |        | |    |                                             |
+    |        | |    |                           +--------------+  |
+    |        | |    |     A) access             |              |  |
+    |        | |    +-------------------------->|   Resource   |  |
+    |        | |                                |              |  |
+    |        | |                                +--------------+  |
+    +--------+-+--------------------------------------------------+
              | |
 B1) federate | | B2) access
              | |
-    +--------+-+-----------------------------------------------+
-    |        | |                   External (e.g. other cloud) |
-    |        | |                                               |
-    |        | |                             +--------------+  |
-    |        | |                             |              |  |
-    |        | +---------------------------->|   Resource   |  |
-    |        v                               |              |  |
-    |  +-----------------------------+       +--------------+  |
-    |  |                             |                         |
-    |  |  Secure Token Service (STS) |                         |
-    |  |                             |                         |
-    |  +-----------------------------+                         |
-    +----------------------------------------------------------+
+    +--------+-+--------------------------------------------------+
+    |        | |                      External (e.g. other cloud) |
+    |        | |                                                  |
+    |        | |                                +--------------+  |
+    |        | |                                |              |  |
+    |        | +------------------------------->|   Resource   |  |
+    |        v                                  |              |  |
+    |  +-----------------------------+          +--------------+  |
+    |  |                             |                            |
+    |  |  Secure Token Service (STS) |                            |
+    |  |                             |                            |
+    |  +-----------------------------+                            |
+    +-------------------------------------------------------------+
 ~~~
 {: #fig-cloud title="Workload identity in a cloud provider"}
 
@@ -564,10 +575,11 @@ When the workload needs to access a resource outside of the cloud (e.g.,
 different cloud; same cloud, but different security boundary):
 
 * B1) The workload uses the cloud-issued credential to federate to the Secure Token
-      Service of the other cloud/account.
+      Service of the other cloud/account. The STS validates the credential and
+      issues a new credential (e.g., an access token) to the workload.
 
-* B2) Using the federated identity, the workload can access the resource outside,
-      assuming the federated identity has the necessary permissions.
+* B2) Using the credential issued in step B1, the workload can access the
+      resource outside, assuming the credential has the necessary permissions.
 
 ## Continuous Integration and Deployment Systems {#cicd}
 
@@ -605,9 +617,11 @@ The steps shown in {{fig-cicd}} are:
 * 1) The CI-CD platform schedules a workload (pipeline or task). Based on
      configuration, a Workload Identity is made available by the platform.
 
-* 2) The workload uses the identity to federate to an Identity Provider.
+* 2) The workload uses the platform-issued credential to federate to an
+     Identity Provider, which validates the credential and issues a new
+     credential (e.g., an access token) for the workload.
 
-* 3) The workload uses the federated identity to access resources. For instance,
+* 3) The workload uses the issued credential to access resources. For instance,
      an artifact store to upload compiled binaries, or to download libraries
      needed to resolve dependencies. It is also common to access actual
      infrastructure as resources to make deployments or changes to it.
@@ -626,40 +640,43 @@ to sidecar proxies rather than directly to application workloads. The sidecar in
 network traffic and handles authentication transparently to the application code.
 
 ~~~aasvg
-                    +--------------+
-                    |              |
-            +-------+ Service Mesh +--------+
-1) issue    |       |              |        | 1) issue
-   identity |       +--------------+        |    identity
-            |                               |
-            v       3) communicate          v
-      +-----------+    on behalf of   +-----------+
-      |           |    workloads      |           |
-      |   Proxy   |<=================>|   Proxy   |
-      |           |                   |           |
-      +-----------+                   +-----------+
-            ^                               ^
-            | 2) delegate                   | 2) delegate
-            |                               |
-      +-----+-----+                   +-----+-----+
-      |           |                   |           |
-      | Workload  |                   | Workload  |
-      |           |                   |           |
-      +-----------+                   +-----------+
+                       +--------------+
+                       |              |
+               +-------+ Service Mesh +--------+
+1) issue       |       |              |        | 1) issue
+   identity    |       +--------------+        |    identity
+   and         |                               |    and
+   credentials |                               |    credentials
+               v       3) communicate          v
+         +-----------+    on behalf of   +-----------+
+         |           |    workloads      |           |
+         |   Proxy   |<=================>|   Proxy   |
+         |           |                   |           |
+         +-----------+                   +-----------+
+               ^                               ^
+               | 2) delegate                   | 2) delegate
+               |                               |
+         +-----+-----+                   +-----+-----+
+         |           |                   |           |
+         | Workload  |                   | Workload  |
+         |           |                   |           |
+         +-----------+                   +-----------+
 ~~~
 {: #fig-servicemesh title="Simple service mesh communication between 2 workloads"}
 
 The steps shown in {{fig-servicemesh}} are:
 
-* 1) The Service Mesh issues identities in the form of credentials
-     to proxies.
+* 1) The Service Mesh issues identity credentials to proxies. For X.509-based
+     meshes, this consists of an X.509 certificate containing the workload's
+     identity along with the associated key pair.
 
 * 2) The proxies act on behalf of workloads that delegate their
      communication to them. In above figure each workload has its
      own proxy that solely represents it and no other workload.
 
 * 3) The proxies communicate with each other on behalf of the workloads
-     they represent. This communication includes authentication aspects, for instance in the form of X.509 certificates.
+     they represent. This communication includes authentication aspects,
+     for instance mutual TLS using X.509 certificates.
 
 In above pattern each workload has a specific sidecar. An alternative deployment is to share proxies between workloads. This often results in a single proxy on each node acting on behalf of all workloads on the node.
 
@@ -696,7 +713,7 @@ setup of the application.
 
 Local APIs often operate in clear-text such as unencrypted HTTP without any
 confidentiality or integrity protection. Privileged component on the machine or
-in the infrastructure can be able to eyes-drop the connection and the credential
+in the infrastructure can be able to eavesdrop on the connection and the credential
 within it.
 
 Mitigating measures are required to mitigate a particular variant of Server-Side Request Forgery attacks
@@ -704,13 +721,14 @@ against local APIs. For example, requiring a specific header that
 cannot be controlled externally or preventing the use of link-local IPs,
 including through redirects. See {{application-interaction-with-credential-sources}} for details.
 
-Adequate attestation is required to make sure unauthorized access is denied and credentials
-are not issued to other parties when the Local API is unauthenticated. Introspection of the platform, like in SPIFFE or
-cloud providers, can be used to identify workloads and grant access. The more
-fine-grained and strict the attestation, the smaller the attack surface. For
-instance, allowing access by IP or other machine-global identifiers permits any
-process to receive the identity, while including user ID or other process-scoped
-identifiers prevents this broader access.
+Adequate assurance that the identity represents the workload is required to make
+sure unauthorized access is denied and credentials are not issued to other
+parties when the Local API is unauthenticated. Introspection of the platform,
+like in SPIFFE or cloud providers, can be used to identify workloads and grant
+access. The more fine-grained and strict this verification, the smaller the
+attack surface. For instance, allowing access by IP or other machine-global
+identifiers permits any process to receive the identity, while including user ID
+or other process-scoped identifiers prevents this broader access.
 
 The potential for denial-of-service attacks against Local APIs need to be taken
 into account and protective measures should be implemented. Depending on the platform
@@ -781,10 +799,13 @@ is not in scope of this document.
 
 ## Proof of possession
 
-Credentials SHOULD be bound to workloads, and proof of possession SHOULD be
-performed when these credentials are used. This mitigates token theft. This
-proof of possession applies to both the platform credential and the access token of
-the external authorization domains.
+Identity credentials SHOULD be bound to workloads, and proof of possession
+SHOULD be performed when these credentials are used. This mitigates token theft.
+For X.509-based credentials, proof of possession is inherent through the private
+key associated with the certificate. For JWT-based credentials, the JWT SHOULD
+be key-bound with an adequate proof-of-key-possession mechanism. This
+proof of possession applies to both the platform credential and the access token
+of the external authorization domains.
 
 ## Audience
 
@@ -836,6 +857,12 @@ While {{RFC7521}} and {{RFC7523}} are the proposed standards for this pattern, s
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -04
+
+   * Address review feedback from Kathleen Moriarty
+   * Clarify distinction between identity and credentials throughout
+   * Clarify what is issued during federation steps across all practices
 
    -03
 
