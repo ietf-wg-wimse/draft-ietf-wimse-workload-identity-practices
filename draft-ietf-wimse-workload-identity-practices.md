@@ -177,16 +177,26 @@ The figure outlines the following steps which are applicable in any pattern.
 * 1) The platform verifies the workload based on its environment and attributes
      and issues a credential that represents the workload's identity. The way
      this is achieved varies by platform, for instance, the credential can be
-     pushed to the workload or pulled by the workload.
+     pushed to the workload or pulled by the workload. A workload may obtain
+     multiple credentials from the platform, each with its own audience and
+     lifetime, tailored to the specific resource or Identity Provider it
+     needs to interact with. It is best practice to use credentials with a
+     minimal set of audiences (ideally one) to limit the scope of any single
+     credential. See {{audience}} for more details and security implications.
 
 * A) The credential can give the workload direct access to resources within the
-     platform or the platform itself (e.g., to perform infrastructure operations)
+     platform or the platform itself (e.g., to perform infrastructure operations).
+     The credential used for this step SHOULD be scoped specifically to the
+     platform resource being accessed.
 
-* B1) The workload uses the credential to federate to an Identity Provider. This
+* B1) The workload uses a credential to federate to an Identity Provider. This
       step is optional and only needed when accessing outside resources. The
-      Identity Provider validates the platform-issued credential, and in return,
-      issues a new credential (e.g., an OAuth 2.0 access token) that the
-      workload can use to access resources in the Identity Provider's domain.
+      credential used for federation SHOULD carry the Identity Provider as its
+      sole audience and SHOULD NOT be the same credential used for platform
+      access in step A). The Identity Provider validates the platform-issued
+      credential, and in return, issues a new credential (e.g., an OAuth 2.0
+      access token) that the workload can use to access resources in the
+      Identity Provider's domain.
 
 * B2) Using the credential obtained at step B1, the workload accesses resources
       outside of the platform.
@@ -301,6 +311,13 @@ Both options allow workloads to:
   only detected when the Token Review API {{TokenReviewV1}} of Kubernetes is
   used to validate the token.
 
+* Obtain multiple tokens, each with its own customized audience and lifetime.
+  For example, a workload may obtain one token audienced for the Kubernetes API
+  server, another for an internal service, and yet another for federation with
+  an external Identity Provider. It is best practice to use tokens with a
+  minimal set (ideally one) of audiences; see {{audience}} for more details
+  and security implications.
+
 To validate service account tokens, Kubernetes allows workloads to:
 
 * Make use of the Token Review API {{TokenReviewV1}}. This API introspects the
@@ -350,23 +367,28 @@ C1) federate | | C2) access               |              |
 The steps shown in {{fig-kubernetes}} are:
 
 * 1) The kubelet is tasked to schedule a Pod. Based on configuration, it requests
-     a Service Account Token from the Kubernetes API server.
+     one or more Service Account Tokens from the Kubernetes API server, each
+     scoped to its intended use (e.g., with a distinct audience).
 
 * 2) The kubelet starts the Pod and, based on the configuration of the Pod,
-     delivers the token to the containers within the Pod.
+     delivers the token(s) to the containers within the Pod.
 
-Now, the Pod can use the token to:
+Now, the Pod can use the tokens to:
 
-* A) Access the Kubernetes Control Plane, considering it has access to it.
+* A) Access the Kubernetes Control Plane, using a token audienced for the
+     API server, considering it has access to it.
 
-* B) Access other resources within the cluster, for instance, other Pods.
+* B) Access other resources within the cluster, for instance, other Pods, using
+     a token audienced for the target resource.
 
 * C) Access resources outside of the cluster:
 
-  * C1) The application within the Pod uses the Service Account Token to
-        federate to an Identity Provider outside of the Kubernetes Cluster.
-        The Identity Provider validates the token and issues a new credential
-        (e.g., an OAuth 2.0 access token) to the workload.
+  * C1) The application within the Pod uses a Service Account Token audienced
+        for the external Identity Provider to federate to that Identity Provider
+        outside of the Kubernetes Cluster. This token SHOULD NOT be the same
+        token used for steps A or B. The Identity Provider validates the token
+        and issues a new credential (e.g., an OAuth 2.0 access token) to the
+        workload.
 
   * C2) Using the credential issued in step C1, the application within the Pod
         accesses resources outside of the cluster.
@@ -422,6 +444,11 @@ workloads to obtain their identity credentials without needing a pre-existing
 secret, avoiding the bootstrapping problem of requiring a credential to obtain
 a credential.
 
+Workloads may request multiple JWT-SVIDs, each with a distinct audience, to
+interact with different resources or Identity Providers. As with all patterns
+in this document, it is best practice to use a separate credential for each
+target; see {{audience}} for details.
+
 For validation, SPIFFE defines a "trust bundle" per trust domain. A trust
 bundle is a set of public keys encoded in JWK format {{RFC7517}} that can be
 used to validate credentials. For JWT-SVIDs, the bundle contains signing keys
@@ -464,13 +491,15 @@ B1) federate | | B2) access                  |              |
 
 The steps shown in {{fig-spiffe}} are:
 
-* 1) The workload requests a JWT-SVID from the SPIFFE Workload API.
+* 1) The workload requests one or more JWT-SVIDs from the SPIFFE Workload API,
+     each with a distinct audience matching its intended use.
 
-* A) The JWT-SVID can be used to directly access resources or other workloads
-     within the same SPIFFE Trust Domain.
+* A) A JWT-SVID audienced for the target resource can be used to directly access
+     resources or other workloads within the same SPIFFE Trust Domain.
 
 * B1) To access resources protected by other Identity Providers, the workload
-      uses the SPIFFE JWT-SVID to federate to the Identity Provider. The
+      uses a JWT-SVID audienced for the Identity Provider to federate. This
+      SHOULD be a separate JWT-SVID from the one used in step A). The
       Identity Provider validates the JWT-SVID and issues a new credential
       (e.g., an OAuth 2.0 access token) to the workload.
 
@@ -522,6 +551,13 @@ This pattern also applies when accessing resources in the same cloud but across
 different security boundaries (e.g., different account or tenant). The actual
 flows and implementations may vary in these situations though.
 
+When a workload needs to access both internal platform resources and external
+resources, it SHOULD obtain separate credentials for each purpose. The credential
+used for internal platform access (step A) SHOULD NOT be reused for federation
+to an external STS (step B1), as these represent different trust and audience
+boundaries. The workload may need to contact the Instance Metadata Service
+multiple times to obtain appropriately scoped credentials.
+
 ~~~aasvg
     +-------------------------------------------------------------+
     |                                                       Cloud |
@@ -560,23 +596,26 @@ B1) federate | | B2) access
 
 The steps shown in {{fig-cloud}} are:
 
-* 1) The workload retrieves an identity from the Instance Metadata Service or
-     Endpoint. This endpoint exposes an API and is available at a well-
-     known, but local-only location such as 169.254.169.254.
+* 1) The workload retrieves one or more identity credentials from the Instance
+     Metadata Service or Endpoint. This endpoint exposes an API and is available
+     at a well-known, but local-only location such as 169.254.169.254. Each
+     credential SHOULD be scoped to its intended use with a distinct audience.
 
 When the workload needs to access a resource within the cloud (e.g., located in
 the same security boundary; protected by the same issuer as the workload
 identity):
 
-* A) The workload directly accesses the protected resource with the credential
-  issued in Step 1.
+* A) The workload directly accesses the protected resource with a credential
+     scoped for that resource, as issued in Step 1.
 
 When the workload needs to access a resource outside of the cloud (e.g.,
 different cloud; same cloud, but different security boundary):
 
-* B1) The workload uses the cloud-issued credential to federate to the Secure Token
-      Service of the other cloud/account. The STS validates the credential and
-      issues a new credential (e.g., an access token) to the workload.
+* B1) The workload uses a separate cloud-issued credential, audienced for the
+      external STS, to federate to the Secure Token Service of the other
+      cloud/account. This credential SHOULD NOT be the same as the one used in
+      step A). The STS validates the credential and issues a new credential
+      (e.g., an access token) to the workload.
 
 * B2) Using the credential issued in step B1, the workload can access the
       resource outside, assuming the credential has the necessary permissions.
@@ -587,6 +626,10 @@ Continuous integration and deployment (CI-CD) systems allow their pipelines (or
 workflows) to receive an identity at runtime. It is a common task to upload
 build outputs and other artifacts to external resources. For this, federation
 to external Identity Providers is often necessary.
+
+As with other platforms, CI-CD workloads may obtain multiple tokens from the
+platform, each with a distinct audience for the specific resource or Identity
+Provider it needs to interact with.
 
 ~~~aasvg
     +-------------------------------------------------+
@@ -754,7 +797,10 @@ being disclosed.
 Workloads therefore MUST treat credential locations as sensitive security boundaries.
 Untrusted input MUST NOT influence how credential files are accessed or how local credential
 APIs are contacted. Implementations SHOULD minimise which components can access credentials
-and prefer proof-of-possession credentials over bearer tokens where supported.
+and prefer proof-of-possession credentials over bearer tokens where supported. Failure to
+minimise credential access increases the attack surface by allowing more code paths to
+interact with sensitive material. Failing to use proof-of-possession credentials where
+available means that stolen bearer tokens can be replayed by an attacker from any location.
 
 These risks exist even when credential services are reachable only locally, since compromise
 often occurs through application behaviour rather than network access to the credential provider.
@@ -764,13 +810,20 @@ often occurs through application behaviour rather than network access to the cre
 Issuers SHOULD strongly type the issued tokens to workloads via the JOSE `typ`
 header and Identity Providers accepting these tokens SHOULD validate the
 value of it according to policy. See Section 3.1 of {{RFC8725}} for details
-on explicit typing.
+on explicit typing. Without explicit typing, a token intended for one purpose
+(e.g., a refresh token or an identity assertion) may be accepted in a context
+where a different token type is expected, enabling cross-protocol or
+cross-context token confusion attacks.
 
 Issuers SHOULD use `authorization-grant+jwt` as a `typ` value according to
 {{I-D.ietf-oauth-rfc7523bis}}. For broad support, `JWT` or `JOSE` MAY be used by
 issuers and accepted by authorization servers but it is important to highlight
 that a wide range of tokens, meant for all sorts of purposes, use these values
-and would be accepted.
+and would be accepted. Using generic type values such as `JWT` or `JOSE` is
+acceptable only when the deployment cannot support more specific types, for
+instance due to limitations in existing infrastructure or token libraries. Even
+in such cases, additional validation of token claims and context is essential to
+mitigate confusion.
 
 ## Custom claims are important for context
 
@@ -782,46 +835,73 @@ federate to external authorization servers. But other branches may not be
 allowed to access protected resources.
 
 Authorization servers that validate assertions SHOULD make use of these claims.
-Platform issuers SHOULD allow differentiation based on the subject claim alone.
+Ignoring custom claims may result in overly permissive authorization decisions,
+such as granting a credential issued for an untrusted branch the same access as
+one issued for a protected branch. Platform issuers SHOULD allow differentiation
+based on the subject claim alone, so that authorization policies can be
+expressed without requiring deep knowledge of vendor-specific claim structures.
 
 ## Token lifetime
 
 Tokens SHOULD NOT exceed the lifetime of the workloads they represent. For
 example, a workload that has an expected lifetime of one hour should not receive
-a token valid for two hours or more.
+a token valid for two hours or more. A token that outlives its workload may
+continue to be accepted by relying parties even after the workload (and its
+associated authorization context) has ceased to exist, enabling unauthorized
+access if the token is compromised.
 
 Within the scope of this document, where a platform-issued credential is used
 to authenticate to retrieve an access token for an external authorization
-domain, short-lived credentials are recommended.
+domain, short-lived credentials are recommended. Short-lived credentials
+reduce the window during which a stolen credential can be exploited and
+limit the need for explicit revocation infrastructure.
 
 ## Workload lifecycle and invalidation
 
 Platform issuers SHOULD invalidate tokens when the workload stops, pauses, or
 ceases to exist and SHOULD offer validators a mechanism to query this status.
-How these credentials are invalidated and the status is queried varies and
-is not in scope of this document.
+Without invalidation, tokens for terminated workloads remain usable until their
+natural expiry, creating a window for unauthorized use. Without a status query
+mechanism, relying parties have no way to detect that a workload has been
+removed and must accept the token as is. How these credentials are
+invalidated and the status is queried varies and is not in scope of this
+document.
 
-## Proof of possession
+## Proof of possession {#proof-of-possession}
 
 Identity credentials SHOULD be bound to workloads, and proof of possession
 SHOULD be performed when these credentials are used. This mitigates token theft.
+Without proof of possession, a bearer token intercepted in transit (e.g., via a
+compromised log, a man-in-the-middle, or SSRF) can be replayed by any party,
+from any location, for the remaining lifetime of the token.
 For X.509-based credentials, proof of possession is inherent through the private
 key associated with the certificate. For JWT-based credentials, the JWT SHOULD
-be key-bound with an adequate proof-of-key-possession mechanism. This
+be key-bound with an adequate proof-of-key-possession mechanism. Where proof of
+possession is not supported by the platform or the relying party, deployments
+SHOULD compensate with shorter token lifetimes, stricter audience scoping, and
+additional network-level controls such as IP allowlisting or mutual TLS. This
 proof of possession applies to both the platform credential and the access token
 of the external authorization domains.
 
-## Audience
+## Audience {#audience}
 
 For issued credentials in the form of JWTs, they MUST be audienced using the
-`aud` claim. Each JWT SHOULD only carry a single audience. We RECOMMEND using
+`aud` claim. Each JWT SHOULD only carry a single audience. Using multiple
+audiences in a single token means that any relying party listed in the `aud`
+claim can present that token to any other party listed in the same claim,
+potentially gaining unintended access. A single-audience token limits the blast
+radius if the token is compromised or misused. We RECOMMEND using
 URIs to specify audiences. See Section 3 of {{RFC8707}} for more details and
 security implications.
 
 Some workload platforms provide credentials for interacting with their own APIs
 (e.g., Kubernetes). These credentials MUST NOT be used beyond the platform API.
 In the example of Kubernetes, a token used for anything other than the Kubernetes
-API itself MUST NOT carry the Kubernetes server in the `aud` claim.
+API itself MUST NOT carry the Kubernetes server in the `aud` claim. Reusing a
+platform API token for federation or resource access outside the platform
+conflates trust boundaries: the token's audience includes the platform, so any
+relying party that accepts it could impersonate the workload back to the
+platform.
 
 ## Multi-Tenancy Considerations
 
@@ -834,7 +914,9 @@ identifier.
 
 Relying parties SHOULD ensure that attributes used for authorization are bound
 to a trust domain under their control or validated by an entity with a clearly
-defined trust boundary.
+defined trust boundary. Failing to do so may allow a malicious tenant to obtain
+credentials that are indistinguishable from those of a legitimate tenant, leading
+to cross-tenant privilege escalation or unauthorized access to shared resources.
 
 # IANA Considerations {#IANA}
 
@@ -871,6 +953,9 @@ While {{RFC7521}} and {{RFC7523}} are the proposed standards for this pattern, s
    * Improve clarity of Local API security language
    * Expand proof of possession section for X.509 vs JWT differences
    * Add environment variable spoofing risk to security considerations
+   * Explicitly discuss obtaining multiple tokens per workload across all
+     platform patterns (Kubernetes, SPIFFE, cloud providers, CI/CD)
+   * Clarify the use of credentials between internal and external resources
 
    -03
 
