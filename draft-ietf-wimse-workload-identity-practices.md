@@ -183,12 +183,12 @@ The figure outlines the following steps which are applicable in any pattern.
      needs to interact with. It is best practice to use credentials with a
      minimal set of audiences (ideally one) to limit the scope of any single
      credential. See {{audience}} for more details and security implications.
-
+     
 * A) The credential can give the workload direct access to resources within the
      platform or the platform itself (e.g., to perform infrastructure operations).
      The credential used for this step SHOULD be scoped specifically to the
      platform resource being accessed.
-
+     
 * B1) The workload uses a credential to federate to an Identity Provider. This
       step is optional and only needed when accessing outside resources. The
       credential used for federation SHOULD carry the Identity Provider as its
@@ -383,15 +383,15 @@ Now, the Pod can use the tokens to:
 
 * C) Access resources outside of the cluster:
 
-  * C1) The application within the Pod uses a Service Account Token audienced
-        for the external Identity Provider to federate to that Identity Provider
-        outside of the Kubernetes Cluster. This token SHOULD NOT be the same
-        token used for steps A or B. The Identity Provider validates the token
-        and issues a new credential (e.g., an OAuth 2.0 access token) to the
-        workload.
+* C1) The application within the Pod uses a Service Account Token audienced
+      for the external Identity Provider to federate to that Identity Provider
+      outside of the Kubernetes Cluster. This token SHOULD NOT be the same
+      token used for steps A or B. The Identity Provider validates the token
+      and issues a new credential (e.g., an OAuth 2.0 access token) to the
+      workload.
 
-  * C2) Using the credential issued in step C1, the application within the Pod
-        accesses resources outside of the cluster.
+* C2) Using the credential issued in step C1, the application within the Pod
+      accesses resources outside of the cluster.
 
 As an example, the following JSON illustrates the claims contained in a Kubernetes Service
 Account token.
@@ -617,8 +617,8 @@ different cloud; same cloud, but different security boundary):
 * B1) The workload uses a separate cloud-issued credential, audienced for the
       external STS, to federate to the Secure Token Service of the other
       cloud/account. This credential SHOULD NOT be the same as the one used in
-      step A). The STS validates the credential and issues a new credential
-      (e.g., an access token) to the workload.
+      step A). The STS validates the credential and issues a new credential, 
+      such as an access token to the workload.
 
 * B2) Using the credential issued in step B1, the workload can access the
       resource outside, assuming the credential has the necessary permissions.
