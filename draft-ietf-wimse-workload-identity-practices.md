@@ -113,7 +113,7 @@ not take into account the standards work in progress for the WIMSE architecture
 
 # Introduction
 
-Just like people, workloads need identities and associated credentials to
+Just like people, workloads need identifiers and associated credentials to
 authenticate with other systems, such as databases, web servers, or other
 workloads. The challenge for workloads is to obtain a credential that can
 be used to authenticate with these resources without managing secrets directly,
@@ -125,14 +125,14 @@ has shifted to a federation-based approach where credentials of the underlying
 workload platform are used to authenticate to identity providers, which in
 turn, issue credentials that grant access to resources.
 
-Traditionally, workloads were provisioned with client credentials (e.g.,
-passwords, API keys) and used for example the corresponding client credential
-flow (Section 1.3.4 {{RFC6749}}) to retrieve an OAuth 2.0 access token. This
-model presents a number of security and maintenance issues. Secret materials
-must be provisioned and rotated, which requires either automation to be built,
-or periodic manual effort. Secret materials can be stolen and used by attackers
-to impersonate the workload. Other, non OAuth 2.0 flows, such as direct API
-keys or other secrets, suffer from the same issues.
+Traditionally, workloads were provisioned with static client credentials (e.g.,
+passwords, API keys) and used the corresponding flow (Section 1.3.4 {{RFC6749}})
+to retrieve an OAuth 2.0 access token. This model presents a number of security
+and maintenance issues. Secrets must be provisioned and rotated, which requires
+either automation to be built, or periodic manual effort. Secrets may be stolen
+and used by attackers to impersonate the workload. Flows outside of the
+OAuth 2.0 framework (such as direct API keys or HTTP basic authentication)
+suffer from the same issues.
 
 Instead of provisioning secret material to the workload, one solution to this
 problem is to attest the workload by using its underlying platform. Many
@@ -174,10 +174,10 @@ B1) federate | |  B2) access                   |              |
 
 The figure outlines the following steps which are applicable in any pattern.
 
-* 1) The platform verifies the workload based on its environment and attributes
-     and issues a credential that represents the workload's identity. The way
-     this is achieved varies by platform, for instance, the credential can be
-     pushed to the workload or pulled by the workload.
+* 1) The platform issues a credential to represent the workload identity after
+     verification of workload environment and attributes. The way this is
+     achieved varies by platform, for instance, the credential can be pushed
+     to the workload or pulled by the workload.
 
 * A) The credential can give the workload direct access to resources within the
      platform or the platform itself (e.g., to perform infrastructure operations)
@@ -410,11 +410,14 @@ Account token.
 The Secure Production Identity Framework For Everyone, also known as SPIFFE [SPIFFE], is
 a Cloud Native Computing Foundation (CNCF) project that defines a "Workload API"
 to deliver machine identity to workloads. Workloads can retrieve identity
-credentials in one of two forms: as an X509-SVID, which consists of an X.509
-certificate containing the workload's SPIFFE ID in the Subject Alternative Name
-(SAN) URI field, along with the corresponding key pair; or as a JWT-SVID, which
-is a signed JWT containing the workload's SPIFFE ID in the `sub` claim.
-The Workload API does not require clients to authenticate themselves.
+credentials in one of two forms:
+
+* X509-SVID, a X.509 certificate containing the workload's SPIFFE ID in the Subject
+  Alternative Name (SAN) URI field, along with the corresponding key pair.
+
+* JWT-SVID, a signed JWT containing the workload's SPIFFE ID in the `sub` claim.
+  The Workload API does not require clients to authenticate themselves.
+
 Instead, the API implementation identifies workloads by collecting contextual
 information from the environment, such as process attributes, kernel metadata,
 or orchestrator-provided labels. This out-of-band identification allows
@@ -471,8 +474,8 @@ The steps shown in {{fig-spiffe}} are:
 
 * B1) To access resources protected by other Identity Providers, the workload
       uses the SPIFFE JWT-SVID to federate to the Identity Provider. The
-      Identity Provider validates the JWT-SVID and issues a new credential
-      (e.g., an OAuth 2.0 access token) to the workload.
+      Identity Provider validates the JWT-SVID and issues a new credential,
+      such as an OAuth 2.0 access token, to the workload.
 
 * B2) Using the credential issued in step B1, the workload can access resources
       outside of its trust domain.
@@ -619,7 +622,7 @@ The steps shown in {{fig-cicd}} are:
 
 * 2) The workload uses the platform-issued credential to federate to an
      Identity Provider, which validates the credential and issues a new
-     credential (e.g., an access token) for the workload.
+     credential, such as an access token, for the workload.
 
 * 3) The workload uses the issued credential to access resources. For instance,
      an artifact store to upload compiled binaries, or to download libraries
