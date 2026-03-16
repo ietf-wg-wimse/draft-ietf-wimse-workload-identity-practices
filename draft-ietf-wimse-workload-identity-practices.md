@@ -185,18 +185,18 @@ The figure outlines the following steps which are applicable in any pattern.
      credential. See {{audience}} for more details and security implications.
      
 * A) The credential can give the workload direct access to resources within the
-     platform or the platform itself (e.g., to perform infrastructure operations).
-     The credential used for this step SHOULD be scoped specifically to the
-     platform resource being accessed.
+     platform or the platform itself, for example to perform infrastructure 
+     operations. The credential used for this step SHOULD be scoped specifically 
+     to the platform resource being accessed.
      
 * B1) The workload uses a credential to federate to an Identity Provider. This
       step is optional and only needed when accessing outside resources. The
       credential used for federation SHOULD carry the Identity Provider as its
       sole audience and SHOULD NOT be the same credential used for platform
       access in step A). The Identity Provider validates the platform-issued
-      credential, and in return, issues a new credential (e.g., an OAuth 2.0
-      access token) that the workload can use to access resources in the
-      Identity Provider's domain.
+      credential, and in return, issues a new credential, such as  an OAuth 2.0
+      access token. The workload can use the obtained credential to access 
+      resources in the Identity Provider's domain.
 
 * B2) Using the credential obtained at step B1, the workload accesses resources
       outside of the platform.
@@ -368,7 +368,7 @@ The steps shown in {{fig-kubernetes}} are:
 
 * 1) The kubelet is tasked to schedule a Pod. Based on configuration, it requests
      one or more Service Account Tokens from the Kubernetes API server, each
-     scoped to its intended use (e.g., with a distinct audience).
+     scoped to its intended use, for example with a distinct audience.
 
 * 2) The kubelet starts the Pod and, based on the configuration of the Pod,
      delivers the token(s) to the containers within the Pod.
@@ -387,8 +387,8 @@ Now, the Pod can use the tokens to:
       for the external Identity Provider to federate to that Identity Provider
       outside of the Kubernetes Cluster. This token SHOULD NOT be the same
       token used for steps A or B. The Identity Provider validates the token
-      and issues a new credential (e.g., an OAuth 2.0 access token) to the
-      workload.
+      and issues a new credential to the workload, such as an OAuth 2.0 access
+      token.
 
 * C2) Using the credential issued in step C1, the application within the Pod
       accesses resources outside of the cluster.
