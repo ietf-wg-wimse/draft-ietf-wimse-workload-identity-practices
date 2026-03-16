@@ -122,17 +122,17 @@ for instance, an OAuth 2.0 access token.
 The common use of the OAuth 2.0 framework {{RFC6749}} in this context poses
 challenges, particularly in managing credentials. To address this, the industry
 has shifted to a federation-based approach where credentials of the underlying
-workload platform are used to authenticate to other identity providers, which in
+workload platform are used to authenticate to identity providers, which in
 turn, issue credentials that grant access to resources.
 
-Traditionally, workloads were provisioned with client credentials and used for
-example the corresponding client credential flow (Section 1.3.4 {{RFC6749}}) to
-retrieve an OAuth 2.0 access token. This model presents a number of security and
-maintenance issues. Secret materials must be provisioned and rotated, which
-requires either automation to be built, or periodic manual effort. Secret
-materials can be stolen and used by attackers to impersonate the workload.
-Other, non OAuth 2.0 flows, such as direct API keys or other secrets, suffer
-from the same issues.
+Traditionally, workloads were provisioned with client credentials (e.g.,
+passwords, API keys) and used for example the corresponding client credential
+flow (Section 1.3.4 {{RFC6749}}) to retrieve an OAuth 2.0 access token. This
+model presents a number of security and maintenance issues. Secret materials
+must be provisioned and rotated, which requires either automation to be built,
+or periodic manual effort. Secret materials can be stolen and used by attackers
+to impersonate the workload. Other, non OAuth 2.0 flows, such as direct API
+keys or other secrets, suffer from the same issues.
 
 Instead of provisioning secret material to the workload, one solution to this
 problem is to attest the workload by using its underlying platform. Many
@@ -432,7 +432,7 @@ Bundle Endpoint (see {{SPIFFE}}).
 
 The following figure illustrates how a workload can use its SPIFFE identity to
 access a protected resource outside of the trust domain. The example uses a
-JWT-SVID, ut using an X509-SVID is also possible.
+JWT-SVID, but using an X509-SVID is also possible.
 
 ~~~aasvg
       +--------------------------------------------------------+
@@ -693,7 +693,9 @@ limitations. Environment variables have a wide set of use cases and are observed
 by many components. They are often captured for monitoring, observability,
 debugging and logging purposes and sent to components outside of the workload.
 Access control is not trivial and does not achieve the same security results as
-other methods.
+other methods. Additionally, environment variables may be spoofed or altered
+by other processes running on the same host, making them an unreliable transport
+for credentials in environments where process isolation is not strictly enforced.
 
 This approach should be limited to non-production cases where convenience
 outweighs security considerations, and the provided secrets are limited in
@@ -723,12 +725,14 @@ including through redirects. See {{application-interaction-with-credential-sourc
 
 Adequate assurance that the identity represents the workload is required to make
 sure unauthorized access is denied and credentials are not issued to other
-parties when the Local API is unauthenticated. Introspection of the platform,
-like in SPIFFE or cloud providers, can be used to identify workloads and grant
-access. The more fine-grained and strict this verification, the smaller the
-attack surface. For instance, allowing access by IP or other machine-global
-identifiers permits any process to receive the identity, while including user ID
-or other process-scoped identifiers prevents this broader access.
+parties when the Local API is unauthenticated. What constitutes adequate
+assurance depends on the security requirements of the deployment.
+Introspection of the platform, like in SPIFFE or cloud providers, can be used
+to identify workloads and grant access. The more fine-grained and strict this
+verification, the smaller the attack surface. For instance, allowing access by
+IP or other machine-global identifiers permits any process to receive the
+identity, while including user ID or other process-scoped identifiers prevents
+this broader access.
 
 The potential for denial-of-service attacks against Local APIs need to be taken
 into account and protective measures should be implemented. Depending on the platform
@@ -863,6 +867,10 @@ While {{RFC7521}} and {{RFC7523}} are the proposed standards for this pattern, s
    * Address review feedback from Kathleen Moriarty
    * Clarify distinction between identity and credentials throughout
    * Clarify what is issued during federation steps across all practices
+   * Expand SPIFFE trust bundle concepts, authentication and credential types
+   * Improve clarity of Local API security language
+   * Expand proof of possession section for X.509 vs JWT differences
+   * Add environment variable spoofing risk to security considerations
 
    -03
 
