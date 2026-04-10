@@ -143,7 +143,7 @@ this credential attests the workload and its attributes.
 {{fig-overview}} illustrates a generic pattern that is seen across many workload
 platforms, more concrete variations are found in {{practices}}.
 
-~~~ aasvg
+~~~aasvg
      +----------------------------------------------------------+
      |                                        Workload Platform |
      | +-----------------+                 +------------------+ |
