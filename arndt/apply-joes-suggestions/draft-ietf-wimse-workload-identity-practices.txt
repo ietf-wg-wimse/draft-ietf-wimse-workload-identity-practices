@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments        A. Schwenkschuster
 Internet-Draft                                                     SPIRL
 Intended status: Informational                              Y. Rosomakho
-Expires: 17 September 2026                                       Zscaler
-                                                           16 March 2026
+Expires: 12 October 2026                                         Zscaler
+                                                           10 April 2026
 
 
                       Workload Identity Practices
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 September 2026.
+   This Internet-Draft will expire on 12 October 2026.
 
 Copyright Notice
 
@@ -166,14 +166,13 @@ Table of Contents
       by the workload.  A workload may obtain multiple credentials from
       the platform, each with its own audience and lifetime, tailored to
       the specific resource or Identity Provider it needs to interact
-      with.  It is best practice to use credentials with a minimal set
-      of audiences (ideally one) to limit the scope of any single
-      credential.  See Section 5.7 for more details and security
-      implications.
+      with.  Credentials SHOULD have as small a set of audiences as
+      possible to limit the scope of any single credential.  See
+      Section 5.7 for more details and security implications.
 
    *  A) The credential can give the workload direct access to resources
-      within the platform or the platform itself (e.g., to perform
-      infrastructure operations).  The credential used for this step
+      within the platform or the platform itself, for example to perform
+      infrastructure operations.  The credential used for this step
       SHOULD be scoped specifically to the platform resource being
       accessed.
 
@@ -183,9 +182,9 @@ Table of Contents
       carry the Identity Provider as its sole audience and SHOULD NOT be
       the same credential used for platform access in step A).  The
       Identity Provider validates the platform-issued credential, and in
-      return, issues a new credential (e.g., an OAuth 2.0 access token)
-      that the workload can use to access resources in the Identity
-      Provider's domain.
+      return, issues a new credential, such as an OAuth 2.0 access
+      token, that the workload can use to access resources in the
+      Identity Provider's domain.
 
    *  B2) Using the credential obtained at step B1, the workload
       accesses resources outside of the platform.
@@ -314,9 +313,8 @@ Table of Contents
       lifetime.  For example, a workload may obtain one token audienced
       for the Kubernetes API server, another for an internal service,
       and yet another for federation with an external Identity Provider.
-      It is best practice to use tokens with a minimal set (ideally one)
-      of audiences; see Section 5.7 for more details and security
-      implications.
+      Tokens SHOULD have a minimal set of audiences; see Section 5.7 for
+      more details and security implications.
 
    To validate service account tokens, Kubernetes allows workloads to:
 
@@ -369,8 +367,8 @@ Table of Contents
 
    *  1) The kubelet is tasked to schedule a Pod. Based on
       configuration, it requests one or more Service Account Tokens from
-      the Kubernetes API server, each scoped to its intended use (e.g.,
-      with a distinct audience).
+      the Kubernetes API server, each scoped to its intended use, for
+      example with a distinct audience.
 
    *  2) The kubelet starts the Pod and, based on the configuration of
       the Pod, delivers the token(s) to the containers within the Pod.
@@ -385,15 +383,15 @@ Table of Contents
 
    *  C) Access resources outside of the cluster:
 
-      -  C1) The application within the Pod uses a Service Account Token
-         audienced for the external Identity Provider to federate to
-         that Identity Provider outside of the Kubernetes Cluster.  This
-         token SHOULD NOT be the same token used for steps A or B.  The
-         Identity Provider validates the token and issues a new
-         credential (e.g., an OAuth 2.0 access token) to the workload.
+   *  C1) The application within the Pod uses a Service Account Token
+      audienced for the external Identity Provider to federate to that
+      Identity Provider outside of the Kubernetes Cluster.  This token
+      SHOULD NOT be the same token used for steps A or B.  The Identity
+      Provider validates the token and issues a new credential to the
+      workload, such as an OAuth 2.0 access token.
 
-      -  C2) Using the credential issued in step C1, the application
-         within the Pod accesses resources outside of the cluster.
+   *  C2) Using the credential issued in step C1, the application within
+      the Pod accesses resources outside of the cluster.
 
    As an example, the following JSON illustrates the claims contained in
    a Kubernetes Service Account token.
@@ -630,7 +628,7 @@ Table of Contents
       audienced for the external STS, to federate to the Secure Token
       Service of the other cloud/account.  This credential SHOULD NOT be
       the same as the one used in step A).  The STS validates the
-      credential and issues a new credential (e.g., an access token) to
+      credential and issues a new credential, such as an access token to
       the workload.
 
    *  B2) Using the credential issued in step B1, the workload can
@@ -1044,9 +1042,9 @@ Table of Contents
               "Updates to OAuth 2.0 JSON Web Token (JWT) Client
               Authentication and Assertion-Based Authorization Grants",
               Work in Progress, Internet-Draft, draft-ietf-oauth-
-              rfc7523bis-06, 2 March 2026,
+              rfc7523bis-07, 26 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              rfc7523bis-06>.
+              rfc7523bis-07>.
 
    [I-D.ietf-wimse-arch]
               Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
