@@ -1,0 +1,3 @@
+[tools]
+python = "latest"
+"npm:aasvg" = "0.4.3"

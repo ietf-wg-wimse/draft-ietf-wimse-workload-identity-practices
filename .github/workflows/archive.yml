@@ -22,6 +22,9 @@ jobs:
     - name: "Checkout"
       uses: actions/checkout@v4
 
+    - name: "Setup mise"
+      uses: jdx/mise-action@v2
+
     # Note: No caching for this build!
 
     - name: "Update Archive"
