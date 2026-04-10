@@ -930,16 +930,13 @@ While {{OAUTH-ASSERTION}} and {{OAUTH-JWT}} are the proposed standards for this 
 
    -04
 
-   * Address review feedback from Kathleen Moriarty
-   * Clarify distinction between identity and credentials throughout
-   * Clarify what is issued during federation steps across all practices
-   * Expand SPIFFE trust bundle concepts, authentication and credential types
-   * Improve clarity of Local API security language
-   * Expand proof of possession section for X.509 vs JWT differences
-   * Add environment variable spoofing risk to security considerations
-   * Explicitly discuss obtaining multiple tokens per workload across all
-     platform patterns (Kubernetes, SPIFFE, cloud providers, CI/CD)
-   * Clarify the use of credentials between internal and external resources
+   * Address review feedback from Kathleen Moriarty and Joe Salowey
+   * Expand introduction: explain the workload identity bootstrapping problem and the limitations of static credentials
+   * Expand SPIFFE section: trust bundles, JWT-SVID vs X509-SVID types, and Workload API identification
+   * Explicitly discuss obtaining multiple tokens with distinct audiences across all platform patterns
+   * Add "Application Interaction with Credential Sources" section covering SSRF and path traversal risks
+   * Update reference formatting
+   * Editorial improvements and updated acknowledgements
 
    -03
 
