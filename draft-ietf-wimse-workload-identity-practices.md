@@ -589,7 +589,7 @@ Service from a workload identity document commonly used in attestation systems.
 A workload identity document typically represents attestation evidence
 that is evaluated by a relying party or attestation service. In contrast,
 some credentials issued by the metadata service are already the result of such
-attestation and is intended to be directly consumed by relying services for
+attestation and are intended to be directly consumed by relying services for
 authentication and authorization decisions.
 
 In many cloud environments, the credential retrieved from the metadata service
