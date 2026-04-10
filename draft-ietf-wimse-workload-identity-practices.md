@@ -588,7 +588,7 @@ It is important to distinguish the credential obtained from the Instance Metadat
 Service from a workload identity document commonly used in attestation systems.
 A workload identity document typically represents attestation evidence
 that is evaluated by a relying party or attestation service. In contrast,
-the credential issued by the metadata service is already the result of such
+some credentials issued by the metadata service are already the result of such
 attestation and is intended to be directly consumed by relying services for
 authentication and authorization decisions.
 
