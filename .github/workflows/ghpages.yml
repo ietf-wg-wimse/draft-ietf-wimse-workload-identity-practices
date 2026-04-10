@@ -27,6 +27,9 @@ jobs:
     - name: "Setup mise"
       uses: jdx/mise-action@v2
 
+    - name: "install aasvg"
+      run: npm install -g aasvg@0.4.3
+
     - name: "Setup"
       id: setup
       run: date -u "+date=%FT%T" >>"$GITHUB_OUTPUT"
