@@ -604,6 +604,29 @@ different cloud; same cloud, but different security boundary):
 * B2) Using the credential issued in step B1, the workload can access the
       resource outside, assuming the credential has the necessary permissions.
 
+It is important to distinguish the credential obtained from the Instance Metadata
+Service from a workload identity document commonly used in attestation systems.
+A workload identity document typically represents attestation evidence
+that is evaluated by a relying party or attestation service. In contrast,
+some credentials issued by the metadata service are already the result of such
+attestation and are intended to be directly consumed by relying services for
+authentication and authorization decisions.
+
+In many cloud environments, the credential retrieved from the metadata service
+is a bearer token. Possession of such a token is sufficient to use it, which
+introduces risks around token handling and exposure. Some providers mitigate this
+by constraining token scope, lifetime, or audience, or by requiring additional
+proof-of-possession mechanisms. These mechanisms reduce the risk of token replay
+or misuse if the token is exfiltrated.
+
+Care must be taken to avoid using the same bearer credential across different
+trust domains without appropriate controls. While direct use of the issued credential
+within the same cloud security boundary is common, reusing that credential outside of
+its intended scope can increase the risk of credential leakage. The federation step
+via the Secure Token Service (Step B1) serves as a boundary, allowing the original
+credential to be exchanged for a new credential that is scoped, audience-restricted,
+and appropriate for the target resource.
+
 ## Continuous Integration and Deployment Systems {#cicd}
 
 Continuous integration and deployment (CI-CD) systems allow their pipelines (or
