@@ -26,9 +26,6 @@ jobs:
     - name: "Checkout"
       uses: actions/checkout@v4
 
-    - name: "Setup mise"
-      uses: jdx/mise-action@v2
-
     - name: "Update Generated Files"
       uses: martinthomson/i-d-template@v1
       with:
