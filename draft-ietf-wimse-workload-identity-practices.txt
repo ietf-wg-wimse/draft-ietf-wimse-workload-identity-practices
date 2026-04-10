@@ -1112,27 +1112,23 @@ Appendix B.  Document History
 
    -04
 
-   *  Address review feedback from Kathleen Moriarty
+   *  Address review feedback from Kathleen Moriarty and Joe Salowey
 
-   *  Clarify distinction between identity and credentials throughout
+   *  Expand introduction: explain the workload identity bootstrapping
+      problem and the limitations of static credentials
 
-   *  Clarify what is issued during federation steps across all
-      practices
+   *  Expand SPIFFE section: trust bundles, JWT-SVID vs X509-SVID types,
+      and Workload API identification
 
-   *  Expand SPIFFE trust bundle concepts, authentication and credential
-      types
+   *  Explicitly discuss obtaining multiple tokens with distinct
+      audiences across all platform patterns
 
-   *  Improve clarity of Local API security language
+   *  Add "Application Interaction with Credential Sources" section
+      covering SSRF and path traversal risks
 
-   *  Expand proof of possession section for X.509 vs JWT differences
+   *  Update reference formatting
 
-   *  Add environment variable spoofing risk to security considerations
-
-   *  Explicitly discuss obtaining multiple tokens per workload across
-      all platform patterns (Kubernetes, SPIFFE, cloud providers, CI/CD)
-
-   *  Clarify the use of credentials between internal and external
-      resources
+   *  Editorial improvements and updated acknowledgements
 
    -03
 
