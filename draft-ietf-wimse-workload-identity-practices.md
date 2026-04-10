@@ -55,21 +55,7 @@ contributor:
     org: Nokia
 
 normative:
-  RFC2119:
-  RFC6749:
-  RFC7517:
-  RFC7519:
-  RFC7521:
-  RFC7523:
-  RFC8174:
-  RFC8414:
-  RFC8693:
-  RFC8707:
-  RFC8725:
 informative:
-  I-D.ietf-oauth-rfc7523bis:
-  I-D.ietf-wimse-arch:
-  I-D.ietf-wimse-s2s-protocol:
   OIDC:
      author:
        org: Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore
@@ -106,8 +92,8 @@ to workloads in container orchestration, cloud platforms, and other workload
 platforms. It explains how workloads obtain credentials for external
 authentication purposes, without managing long-lived secrets directly. It does
 not take into account the standards work in progress for the WIMSE architecture
-{{I-D.ietf-wimse-arch}} and other protocols, such as
-{{I-D.ietf-wimse-s2s-protocol}}.
+{{?WIMSE-ARCH=I-D.ietf-wimse-arch}} and other protocols, such as
+{{?WIMSE-HTTPSIG=I-D.ietf-wimse-http-signature}}.
 
 --- middle
 
@@ -119,14 +105,14 @@ workloads. The challenge for workloads is to obtain a credential that can
 be used to authenticate with these resources without managing secrets directly,
 for instance, an OAuth 2.0 access token.
 
-The common use of the OAuth 2.0 framework {{RFC6749}} in this context poses
+The common use of the OAuth 2.0 framework {{!OAUTH-FRAMEWORK=RFC6749}} in this context poses
 challenges, particularly in managing credentials. To address this, the industry
 has shifted to a federation-based approach where credentials of the underlying
 workload platform are used to authenticate to identity providers, which in
 turn, issue credentials that grant access to resources.
 
 Traditionally, workloads were provisioned with static client credentials (e.g.,
-passwords, API keys) and used the corresponding flow (Section 1.3.4 {{RFC6749}})
+passwords, API keys) and used the corresponding flow as described in {{Section 1.3.4 of OAUTH-FRAMEWORK}}
 to retrieve an OAuth 2.0 access token. This model presents a number of security
 and maintenance issues. Secrets must be provisioned and rotated, which requires
 either automation to be built, or periodic manual effort. Secrets may be stolen
@@ -137,7 +123,7 @@ suffer from the same issues.
 Instead of provisioning secret material to the workload, one solution to this
 problem is to attest the workload by using its underlying platform. Many
 platforms provision workloads with a credential, such as a JWT
-({{RFC7519}}). Cryptographically signed by the platform's issuer,
+{{!JWT=RFC7519}}. Cryptographically signed by the platform's issuer,
 this credential attests the workload and its attributes.
 
 {{fig-overview}} illustrates a generic pattern that is seen across many workload
@@ -207,13 +193,9 @@ step 1) needs to be repeated, for instance in situations where the
 platform-issued credential is scoped to accessing a certain resource or
 federating to a specific Identity Provider.
 
-# Terminology
+# Conventions and Definitions
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-"OPTIONAL" in this document are to be interpreted as described in
-BCP 14 {{RFC2119}} {{RFC8174}} when, and only when, they appear in all
-capitals, as shown here.
+{::boilerplate bcp14-tagged}
 
 # Delivery Patterns {#delivery-patterns}
 
@@ -280,7 +262,7 @@ their delivery patterns.
 In Kubernetes, machine identity is implemented through "service accounts"
 {{KubernetesServiceAccount}}. Service accounts can be explicitly created, or a
 default one is automatically assigned. Service accounts use JSON Web Tokens
-(JWTs) {{RFC7519}} as their credential format, with the Kubernetes Control Plane
+({{JWT}}) as their credential format, with the Kubernetes Control Plane
 acting as the signer.
 
 Service accounts serve multiple authentication purposes within the Kubernetes
@@ -326,7 +308,7 @@ To validate service account tokens, Kubernetes allows workloads to:
   workload. This allows workloads to validate a token's signature without
   calling the Token Review API.
 
-* Optionally, a JSON Web Key Set {{RFC7517}} is exposed via a web server. This
+* Optionally, a JSON Web Key Set {{!JWK=RFC7517}} is exposed via a web server. This
   allows the Service Account Token to be validated outside of the cluster and
   access to the actual Kubernetes Control Plane API.
 
@@ -452,7 +434,7 @@ in this document, it is best practice to use a separate credential for each
 target; see {{audience}} for details.
 
 For validation, SPIFFE defines a "trust bundle" per trust domain. A trust
-bundle is a set of public keys encoded in JWK format {{RFC7517}} that can be
+bundle is a set of public keys encoded in JWK format {{JWK}} that can be
 used to validate credentials. For JWT-SVIDs, the bundle contains signing keys
 identified by a `use` value of `jwt-svid`. For X509-SVIDs, the bundle contains
 CA certificates identified by a `use` value of `x509-svid`. Trust bundle
@@ -727,7 +709,7 @@ In above pattern each workload has a specific sidecar. An alternative deployment
 
 # Security Considerations {#security}
 
-All security considerations in section 8 of {{RFC7521}} apply.
+All security considerations in section 8 of {{!OAUTH-ASSERTION=RFC7521}} apply.
 
 ## Credential Delivery {#security-credential-delivery}
 
@@ -811,14 +793,14 @@ often occurs through application behaviour rather than network access to the cre
 
 Issuers SHOULD strongly type the issued tokens to workloads via the JOSE `typ`
 header and Identity Providers accepting these tokens SHOULD validate the
-value of it according to policy. See Section 3.1 of {{RFC8725}} for details
+value of it according to policy. See {{Section 3.1 of !JWT-BCP=RFC8725}} for details
 on explicit typing. Without explicit typing, a token intended for one purpose
 (e.g., a refresh token or an identity assertion) may be accepted in a context
 where a different token type is expected, enabling cross-protocol or
 cross-context token confusion attacks.
 
 Issuers SHOULD use `authorization-grant+jwt` as a `typ` value according to
-{{I-D.ietf-oauth-rfc7523bis}}. For broad support, `JWT` or `JOSE` MAY be used by
+{{!OAUTH-JWT=I-D.ietf-oauth-rfc7523bis}}. For broad support, `JWT` or `JOSE` MAY be used by
 issuers and accepted by authorization servers but it is important to highlight
 that a wide range of tokens, meant for all sorts of purposes, use these values
 and would be accepted. Using generic type values such as `JWT` or `JOSE` is
@@ -893,7 +875,7 @@ audiences in a single token means that any relying party listed in the `aud`
 claim can present that token to any other party listed in the same claim,
 potentially gaining unintended access. A single-audience token limits the blast
 radius if the token is compromised or misused. We RECOMMEND using
-URIs to specify audiences. See Section 3 of {{RFC8707}} for more details and
+URIs to specify audiences. See {{Section 3 of !OAUTH-RESOURCEINDICATORS=RFC8707}} for more details and
 security implications.
 
 Some workload platforms provide credentials for interacting with their own APIs
@@ -940,7 +922,7 @@ In this case, technically, the protected resource and workload are part of the s
 
 ## Custom assertion flows
 
-While {{RFC7521}} and {{RFC7523}} are the proposed standards for this pattern, some authorization servers use {{RFC8693}} or a custom API for the issuance of an access token based on existing platform identity credentials. These patterns are not recommended and prevent interoperability.
+While {{OAUTH-ASSERTION}} and {{OAUTH-JWT}} are the proposed standards for this pattern, some authorization servers use {{!OAUTH-TOKENEXCHANGE=RFC8693}} or a custom API for the issuance of an access token based on existing platform identity credentials. These patterns are not recommended and prevent interoperability.
 
 # Document History
 
