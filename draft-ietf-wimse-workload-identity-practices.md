@@ -180,23 +180,23 @@ The figure outlines the following steps which are applicable in any pattern.
      to the workload or pulled by the workload. A workload may obtain
      multiple credentials from the platform, each with its own audience and
      lifetime, tailored to the specific resource or Identity Provider it
-     needs to interact with. It is best practice to use credentials with a
-     minimal set of audiences (ideally one) to limit the scope of any single
-     credential. See {{audience}} for more details and security implications.
-     
+     needs to interact with. Credentials SHOULD have as small a set of audiences
+     as possible to limit the scope of any single credential. See {{audience}}
+     for more details and security implications.
+
 * A) The credential can give the workload direct access to resources within the
-     platform or the platform itself, for example to perform infrastructure 
-     operations. The credential used for this step SHOULD be scoped specifically 
+     platform or the platform itself, for example to perform infrastructure
+     operations. The credential used for this step SHOULD be scoped specifically
      to the platform resource being accessed.
-     
+
 * B1) The workload uses a credential to federate to an Identity Provider. This
       step is optional and only needed when accessing outside resources. The
       credential used for federation SHOULD carry the Identity Provider as its
       sole audience and SHOULD NOT be the same credential used for platform
       access in step A). The Identity Provider validates the platform-issued
-      credential, and in return, issues a new credential, such as  an OAuth 2.0
-      access token. The workload can use the obtained credential to access 
-      resources in the Identity Provider's domain.
+      credential, and in return, issues a new credential, such as an OAuth 2.0
+      access token, that the workload can use to access resources in the
+      Identity Provider's domain.
 
 * B2) Using the credential obtained at step B1, the workload accesses resources
       outside of the platform.
@@ -314,9 +314,8 @@ Both options allow workloads to:
 * Obtain multiple tokens, each with its own customized audience and lifetime.
   For example, a workload may obtain one token audienced for the Kubernetes API
   server, another for an internal service, and yet another for federation with
-  an external Identity Provider. It is best practice to use tokens with a
-  minimal set (ideally one) of audiences; see {{audience}} for more details
-  and security implications.
+  an external Identity Provider. Tokens SHOULD have a minimal set of audiences;
+  see {{audience}} for more details and security implications.
 
 To validate service account tokens, Kubernetes allows workloads to:
 
@@ -617,7 +616,7 @@ different cloud; same cloud, but different security boundary):
 * B1) The workload uses a separate cloud-issued credential, audienced for the
       external STS, to federate to the Secure Token Service of the other
       cloud/account. This credential SHOULD NOT be the same as the one used in
-      step A). The STS validates the credential and issues a new credential, 
+      step A). The STS validates the credential and issues a new credential,
       such as an access token to the workload.
 
 * B2) Using the credential issued in step B1, the workload can access the
