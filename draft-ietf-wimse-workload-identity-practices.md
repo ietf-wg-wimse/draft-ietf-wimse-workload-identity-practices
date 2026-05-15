@@ -92,8 +92,7 @@ to workloads in container orchestration, cloud platforms, and other workload
 platforms. It explains how workloads obtain credentials for external
 authentication purposes, without managing long-lived secrets directly. It does
 not take into account the standards work in progress for the WIMSE architecture
-{{?WIMSE-ARCH=I-D.ietf-wimse-arch}} and other protocols, such as
-{{?WIMSE-HTTPSIG=I-D.ietf-wimse-http-signature}}.
+and associated protocols.
 
 --- middle
 
