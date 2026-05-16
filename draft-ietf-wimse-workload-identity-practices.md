@@ -505,7 +505,7 @@ Here are example claims for a JWT-SVID:
 
 ## Cloud Providers {#cloudproviders}
 
-Workloads in cloud platforms can have any shape or form. Historically, virtual
+Workload forms in cloud platforms vary. Historically, virtual
 machines were the most common. The introduction of containerization brought
 hosted container environments or Kubernetes clusters. Containers have evolved
 into `serverless` offerings. Regardless of the actual workload packaging,
@@ -514,7 +514,7 @@ distribution, or runtime platform, all these workloads need identities.
 The biggest cloud providers have established the pattern of an "Instance
 Metadata Endpoint". Aside from allowing workloads to retrieve metadata about
 themselves, it also allows them to receive identity. The credential types
-offered can vary. JWT, however, is the one that is common across all of them.
+offered can vary, and JWTs are commonly found across cloud providers.
 The issued credential provides proof to anyone it is being presented to that the
 workload platform has attested the workload and it can be considered
 authenticated.
