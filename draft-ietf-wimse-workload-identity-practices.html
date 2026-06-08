@@ -1436,6 +1436,10 @@ fast deployments. Applications can directly access them through system-level
 mechanisms, e.g., through the <code>env</code> command in Linux. Note that environment
 variables are static in nature in that they cannot be changed after application
 initialization.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">This delivery pattern is generally discouraged for production workload identity
+credentials, because environment variables are frequently exposed through
+debugging, logging, process inspection, and observability tooling. Security
+considerations for this pattern are discussed in <a href="#security-credential-delivery-env" class="auto internal xref">Section 5.1.1</a>.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="filesystem">
@@ -2229,7 +2233,7 @@ network traffic and handles authentication transparently to the application code
         <h3 id="name-credential-delivery">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-credential-delivery" class="section-name selfRef">Credential Delivery</a>
         </h3>
-<div id="environment-variables-1">
+<div id="security-credential-delivery-env">
 <section id="section-5.1.1">
           <h4 id="name-environment-variables-2">
 <a href="#section-5.1.1" class="section-number selfRef">5.1.1. </a><a href="#name-environment-variables-2" class="section-name selfRef">Environment Variables</a>
