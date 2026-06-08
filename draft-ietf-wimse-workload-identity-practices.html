@@ -2019,6 +2019,26 @@ different cloud; same cloud, but different security boundary):<a href="#section-
     resource outside, assuming the credential has the necessary permissions.<a href="#section-4.3-13.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
+<p id="section-4.3-14">It is important to distinguish the credential obtained from the Instance Metadata
+Service from a workload identity document commonly used in attestation systems.
+A workload identity document typically represents attestation evidence
+that is evaluated by a relying party or attestation service. In contrast,
+some credentials issued by the metadata service are already the result of such
+attestation and are intended to be directly consumed by relying services for
+authentication and authorization decisions.<a href="#section-4.3-14" class="pilcrow">¶</a></p>
+<p id="section-4.3-15">In many cloud environments, the credential retrieved from the metadata service
+is a bearer token. Possession of such a token is sufficient to use it, which
+introduces risks around token handling and exposure. Some providers mitigate this
+by constraining token scope, lifetime, or audience, or by requiring additional
+proof-of-possession mechanisms. These mechanisms reduce the risk of token replay
+or misuse if the token is exfiltrated.<a href="#section-4.3-15" class="pilcrow">¶</a></p>
+<p id="section-4.3-16">Care must be taken to avoid using the same bearer credential across different
+trust domains without appropriate controls. While direct use of the issued credential
+within the same cloud security boundary is common, reusing that credential outside of
+its intended scope can increase the risk of credential leakage. The federation step
+via the Secure Token Service (Step B1) serves as a boundary, allowing the original
+credential to be exchanged for a new credential that is scoped, audience-restricted,
+and appropriate for the target resource.<a href="#section-4.3-16" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="cicd">
