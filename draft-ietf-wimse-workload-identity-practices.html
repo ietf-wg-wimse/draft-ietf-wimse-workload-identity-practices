@@ -1879,7 +1879,7 @@ JWT-SVID, but using an X509-SVID is also possible.<a href="#section-4.2-6" class
         <h3 id="name-cloud-providers">
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-cloud-providers" class="section-name selfRef">Cloud Providers</a>
         </h3>
-<p id="section-4.3-1">Workloads in cloud platforms can have any shape or form. Historically, virtual
+<p id="section-4.3-1">Workload forms in cloud platforms vary. Historically, virtual
 machines were the most common. The introduction of containerization brought
 hosted container environments or Kubernetes clusters. Containers have evolved
 into <code>serverless</code> offerings. Regardless of the actual workload packaging,
@@ -1887,7 +1887,7 @@ distribution, or runtime platform, all these workloads need identities.<a href="
 <p id="section-4.3-2">The biggest cloud providers have established the pattern of an "Instance
 Metadata Endpoint". Aside from allowing workloads to retrieve metadata about
 themselves, it also allows them to receive identity. The credential types
-offered can vary. JWT, however, is the one that is common across all of them.
+offered can vary, and JWTs are commonly found across cloud providers.
 The issued credential provides proof to anyone it is being presented to that the
 workload platform has attested the workload and it can be considered
 authenticated.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
