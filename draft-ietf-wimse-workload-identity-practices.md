@@ -366,16 +366,26 @@ Account token.
 
 ~~~json
 {
-  "aud": [  # matches the requested audiences, or the API server's default audiences when none are explicitly requested
+  "aud": [
+    # matches the requested audiences, or the API server's
+    # default audiences when none are explicitly requested
     "https://kubernetes.default.svc"
   ],
   "exp": 1731613413,
   "iat": 1700077413,
-  "iss": "https://kubernetes.default.svc",  # matches the first value passed to the --service-account-issuer flag
-  "jti": "ea28ed49-2e11-4280-9ec5-bc3d1d84661a",  # ServiceAccountTokenJTI feature must be enabled for the claim to be present
+  "iss":
+    # matches the first value passed to the
+    # --service-account-issuer flag
+    "https://kubernetes.default.svc",
+  "jti":
+    # ServiceAccountTokenJTI feature must be enabled
+    # for the claim to be present
+    "ea28ed49-2e11-4280-9ec5-bc3d1d84661a",
   "kubernetes.io": {
     "namespace": "my-namespace",
-    "node": {  # ServiceAccountTokenPodNodeInfo feature must be enabled for the API server to add this node reference claim
+    "node": {
+      # ServiceAccountTokenPodNodeInfo feature must be enabled
+      # for the API server to add this node reference claim
       "name": "127.0.0.1",
       "uid": "58456cb0-dd00-45ed-b797-5578fdceaced"
     },
