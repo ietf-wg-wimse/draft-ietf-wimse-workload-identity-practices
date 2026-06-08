@@ -200,6 +200,11 @@ mechanisms, e.g., through the `env` command in Linux. Note that environment
 variables are static in nature in that they cannot be changed after application
 initialization.
 
+This delivery pattern is generally discouraged for production workload identity
+credentials, because environment variables are frequently exposed through
+debugging, logging, process inspection, and observability tooling. Security
+considerations for this pattern are discussed in {{security-credential-delivery-env}}.
+
 ## Filesystem
 
 Filesystem delivery allows both container secret injection and access control.
@@ -710,7 +715,7 @@ All security considerations in section 8 of {{!OAUTH-ASSERTION=RFC7521}} apply.
 
 ## Credential Delivery {#security-credential-delivery}
 
-### Environment Variables
+### Environment Variables {#security-credential-delivery-env}
 
 Leveraging environment variables to provide credentials presents many security
 limitations. Environment variables have a wide set of use cases and are observed
