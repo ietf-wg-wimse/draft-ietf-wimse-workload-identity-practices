@@ -1043,17 +1043,6 @@ Table of Contents
               <https://kubernetes.io/docs/concepts/security/service-
               accounts/>.
 
-   [OIDC]     Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and
-              C. Mortimore, "OpenID Connect Core 1.0 incorporating
-              errata set 1", November 2014,
-              <https://openid.net/specs/openid-connect-core-1_0.html>.
-
-   [OIDCDiscovery]
-              Sakimura, N., Bradley, J., Jones, M. and Jay, E., "OpenID
-              Connect Discovery 1.0 incorporating errata set 2",
-              December 2023, <https://openid.net/specs/openid-connect-
-              discovery-1_0.html>.
-
    [SPIFFE]   "Secure Production Identity Framework for Everyone
               (SPIFFE)", May 2023,
               <https://github.com/spiffe/spiffe/blob/main/standards/
