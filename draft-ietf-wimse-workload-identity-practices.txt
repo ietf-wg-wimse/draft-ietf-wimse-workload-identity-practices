@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments        A. Schwenkschuster
 Internet-Draft                                                     SPIRL
 Intended status: Informational                              Y. Rosomakho
-Expires: 12 October 2026                                         Zscaler
-                                                           10 April 2026
+Expires: 10 December 2026                                        Zscaler
+                                                             8 June 2026
 
 
                       Workload Identity Practices
@@ -19,8 +19,8 @@ Abstract
    and other workload platforms.  It explains how workloads obtain
    credentials for external authentication purposes, without managing
    long-lived secrets directly.  It does not take into account the
-   standards work in progress for the WIMSE architecture [WIMSE-ARCH]
-   and other protocols, such as [WIMSE-HTTPSIG].
+   standards work in progress for the WIMSE architecture and associated
+   protocols.
 
 Status of This Memo
 
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 October 2026.
+   This Internet-Draft will expire on 10 December 2026.
 
 Copyright Notice
 
@@ -1012,9 +1012,9 @@ Table of Contents
               "Updates to OAuth 2.0 JSON Web Token (JWT) Client
               Authentication and Assertion-Based Authorization Grants",
               Work in Progress, Internet-Draft, draft-ietf-oauth-
-              rfc7523bis-07, 26 March 2026,
+              rfc7523bis-11, 28 April 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              rfc7523bis-07>.
+              rfc7523bis-11>.
 
    [OAUTH-RESOURCEINDICATORS]
               Campbell, B., Bradley, J., and H. Tschofenig, "Resource
@@ -1068,21 +1068,6 @@ Table of Contents
               "Kubernetes Token Review API V1", August 2024,
               <https://kubernetes.io/docs/reference/kubernetes-api/
               authentication-resources/token-review-v1/>.
-
-   [WIMSE-ARCH]
-              Salowey, J. A., Rosomakho, Y., and H. Tschofenig,
-              "Workload Identity in a Multi System Environment (WIMSE)
-              Architecture", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-arch-07, 2 March 2026,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              arch-07>.
-
-   [WIMSE-HTTPSIG]
-              Salowey, J. A. and Y. Sheffer, "WIMSE Workload-to-Workload
-              Authentication with HTTP Signatures", Work in Progress,
-              Internet-Draft, draft-ietf-wimse-http-signature-03, 7
-              April 2026, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-wimse-http-signature-03>.
 
 Appendix A.  Variations
 
