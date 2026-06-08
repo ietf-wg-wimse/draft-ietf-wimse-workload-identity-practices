@@ -56,18 +56,6 @@ contributor:
 
 normative:
 informative:
-  OIDC:
-     author:
-       org: Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore
-     title: OpenID Connect Core 1.0 incorporating errata set 1
-     target: https://openid.net/specs/openid-connect-core-1_0.html
-     date: 8 November 2014
-  OIDCDiscovery:
-    author:
-      org: Sakimura, N., Bradley, J., Jones, M. and Jay, E.
-    title: OpenID Connect Discovery 1.0 incorporating errata set 2
-    target: https://openid.net/specs/openid-connect-discovery-1_0.html
-    date: 15 December 2023
   KubernetesServiceAccount:
      title: Kubernetes Service Account
      target: https://kubernetes.io/docs/concepts/security/service-accounts/
@@ -409,7 +397,7 @@ Account token.
 
 ## Secure Production Identity Framework For Everyone (SPIFFE) {#spiffe}
 
-The Secure Production Identity Framework For Everyone, also known as SPIFFE [SPIFFE], is
+The Secure Production Identity Framework For Everyone, also known as SPIFFE {{SPIFFE}}, is
 a Cloud Native Computing Foundation (CNCF) project that defines a "Workload API"
 to deliver machine identity to workloads. Workloads can retrieve identity
 credentials in one of two forms:
