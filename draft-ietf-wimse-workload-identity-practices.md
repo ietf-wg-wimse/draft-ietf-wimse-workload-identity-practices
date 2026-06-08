@@ -308,7 +308,7 @@ To validate service account tokens, Kubernetes allows workloads to:
          +-------------------------------------------------+
          |                                     Kubernetes  |
          |                      +--------------+           |
-         |         A) access    |              |           |
+         |        A1) access    |              |           |
          |      +-------------->|  API Server  |           |
          |      |               |              |           |
          |      |               +--------------+           |
@@ -318,7 +318,7 @@ To validate service account tokens, Kubernetes allows workloads to:
          | |         |             +---------+             |
          | +-+-+---+-+                                     |
          |   | |   |                      +--------------+ |
-         |   | |   |    B) access         |              | |
+         |   | |   |   A2) access         |              | |
          |   | |   +--------------------->|   Resource   | |
          |   | |                          |              | |
          |   | |                          +--------------+ |
@@ -326,7 +326,7 @@ To validate service account tokens, Kubernetes allows workloads to:
          +---+-+-------------------------------------------+
              | |
              | |                          +--------------+
-C1) federate | | C2) access               |              |
+B1) federate | | B2) access               |              |
              | +------------------------->|   Resource   |
              v                            |              |
            +---------------------+        +--------------+
@@ -348,22 +348,22 @@ The steps shown in {{fig-kubernetes}} are:
 
 Now, the Pod can use the tokens to:
 
-* A) Access the Kubernetes Control Plane, using a token audienced for the
+* A1) Access the Kubernetes Control Plane, using a token audienced for the
      API server, considering it has access to it.
 
-* B) Access other resources within the cluster, for instance, other Pods, using
+* A2) Access other resources within the cluster, for instance, other Pods, using
      a token audienced for the target resource.
 
-* C) Access resources outside of the cluster:
+* B) Access resources outside of the cluster:
 
-* C1) The application within the Pod uses a Service Account Token audienced
+* B1) The application within the Pod uses a Service Account Token audienced
       for the external Identity Provider to federate to that Identity Provider
       outside of the Kubernetes Cluster. This token SHOULD NOT be the same
-      token used for steps A or B. The Identity Provider validates the token
+      token used for steps A1 or A2. The Identity Provider validates the token
       and issues a new credential to the workload, such as an OAuth 2.0 access
       token.
 
-* C2) Using the credential issued in step C1, the application within the Pod
+* B2) Using the credential issued in step C1, the application within the Pod
       accesses resources outside of the cluster.
 
 As an example, the following JSON illustrates the claims contained in a Kubernetes Service
@@ -627,12 +627,12 @@ Provider it needs to interact with.
     | |   (Workload)    |             |            |  |
     | |                 |             +------------+  |
     | +-----+-+---------+                             |
-    +-------+-+---------------------------------------+
-            | |
-            | |                     +--------------+
-2) federate | | 3) access           |              |
-            | +-------------------->|   Resource   |
-            v                       |              |
+    +--------+-+--------------------------------------+
+             | |
+             | |                    +--------------+
+B1) federate | | B2) access         |              |
+             | +------------------->|   Resource   |
+             v                      |              |
       +-------------------+         +--------------+
       |                   |
       | Identity Provider |
@@ -646,11 +646,11 @@ The steps shown in {{fig-cicd}} are:
 * 1) The CI-CD platform schedules a workload (pipeline or task). Based on
      configuration, a Workload Identity is made available by the platform.
 
-* 2) The workload uses the platform-issued credential to federate to an
+* B1) The workload uses the platform-issued credential to federate to an
      Identity Provider, which validates the credential and issues a new
      credential, such as an access token, for the workload.
 
-* 3) The workload uses the issued credential to access resources. For instance,
+* B2) The workload uses the issued credential to access resources. For instance,
      an artifact store to upload compiled binaries, or to download libraries
      needed to resolve dependencies. It is also common to access actual
      infrastructure as resources to make deployments or changes to it.
