@@ -710,23 +710,19 @@ All security considerations in section 8 of {{!OAUTH-ASSERTION=RFC7521}} apply.
 
 ### General Credentials Requirements {#general-requirements}
 
-Workload platforms and Identity Providers SHOULD issue credentials with as
-small a set of audiences as possible to limit the scope of any single
-credential. For JWT-based credentials, more specific requirements and security
-considerations for the `aud` claim are described in {{audience}}.
+Credentials SHOULD be scoped as narrowly as possible: each SHOULD carry the
+smallest set of audiences that lets it serve its purpose. A credential for direct access
+to a platform resource SHOULD be scoped to that resource; a credential used to
+federate to an Identity Provider SHOULD carry that Identity Provider as its sole audience.
+See {{audience}} for the rationale and for specific requirements on the `aud` claim of
+JWT-based credentials.
 
-Credentials used for direct access to platform resources SHOULD be scoped
-specifically to the platform resource being accessed.
-
-Credentials used to federate to an Identity Provider SHOULD carry that Identity
-Provider as their sole audience. A credential used for federation SHOULD NOT be
-the same credential used for direct platform access. Reusing a credential across
-platform access and federation contexts can conflate trust boundaries and
-increase the impact of credential compromise.
-
-When a workload needs to access multiple resources or federate to multiple
-Identity Providers, it SHOULD obtain separate credentials for each intended
-resource or Identity Provider, where supported by the workload platform.
+As long as the workload platform supports issuance of multiple credentials, a workload
+SHOULD obtain a distinct credential for each resource or Identity
+Provider it interacts with. In particular, the credential used to federate to an Identity
+Provider SHOULD NOT be used for direct platform access; reusing a credential across these
+contexts conflates trust boundaries and increases the impact of a compromise
+(see {{audience}}).
 
 ### Environment Variables
 
