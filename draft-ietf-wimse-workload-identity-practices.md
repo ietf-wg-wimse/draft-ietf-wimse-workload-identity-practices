@@ -56,18 +56,6 @@ contributor:
 
 normative:
 informative:
-  OIDC:
-     author:
-       org: Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and C. Mortimore
-     title: OpenID Connect Core 1.0 incorporating errata set 1
-     target: https://openid.net/specs/openid-connect-core-1_0.html
-     date: 8 November 2014
-  OIDCDiscovery:
-    author:
-      org: Sakimura, N., Bradley, J., Jones, M. and Jay, E.
-    title: OpenID Connect Discovery 1.0 incorporating errata set 2
-    target: https://openid.net/specs/openid-connect-discovery-1_0.html
-    date: 15 December 2023
   KubernetesServiceAccount:
      title: Kubernetes Service Account
      target: https://kubernetes.io/docs/concepts/security/service-accounts/
@@ -92,8 +80,7 @@ to workloads in container orchestration, cloud platforms, and other workload
 platforms. It explains how workloads obtain credentials for external
 authentication purposes, without managing long-lived secrets directly. It does
 not take into account the standards work in progress for the WIMSE architecture
-{{?WIMSE-ARCH=I-D.ietf-wimse-arch}} and other protocols, such as
-{{?WIMSE-HTTPSIG=I-D.ietf-wimse-http-signature}}.
+and associated protocols.
 
 --- middle
 
@@ -208,6 +195,11 @@ mechanisms, e.g., through the `env` command in Linux. Note that environment
 variables are static in nature in that they cannot be changed after application
 initialization.
 
+This delivery pattern is generally discouraged for production workload identity
+credentials, because environment variables are frequently exposed through
+debugging, logging, process inspection, and observability tooling. Security
+considerations for this pattern are discussed in {{security-credential-delivery-env}}.
+
 ## Filesystem
 
 Filesystem delivery allows both container secret injection and access control.
@@ -311,7 +303,7 @@ To validate service account tokens, Kubernetes allows workloads to:
          +-------------------------------------------------+
          |                                     Kubernetes  |
          |                      +--------------+           |
-         |         A) access    |              |           |
+         |        A1) access    |              |           |
          |      +-------------->|  API Server  |           |
          |      |               |              |           |
          |      |               +--------------+           |
@@ -321,7 +313,7 @@ To validate service account tokens, Kubernetes allows workloads to:
          | |         |             +---------+             |
          | +-+-+---+-+                                     |
          |   | |   |                      +--------------+ |
-         |   | |   |    B) access         |              | |
+         |   | |   |   A2) access         |              | |
          |   | |   +--------------------->|   Resource   | |
          |   | |                          |              | |
          |   | |                          +--------------+ |
@@ -329,7 +321,7 @@ To validate service account tokens, Kubernetes allows workloads to:
          +---+-+-------------------------------------------+
              | |
              | |                          +--------------+
-C1) federate | | C2) access               |              |
+B1) federate | | B2) access               |              |
              | +------------------------->|   Resource   |
              v                            |              |
            +---------------------+        +--------------+
@@ -351,22 +343,22 @@ The steps shown in {{fig-kubernetes}} are:
 
 Now, the Pod can use the tokens to:
 
-* A) Access the Kubernetes Control Plane, using a token audienced for the
+* A1) Access the Kubernetes Control Plane, using a token audienced for the
      API server, considering it has access to it.
 
-* B) Access other resources within the cluster, for instance, other Pods, using
+* A2) Access other resources within the cluster, for instance, other Pods, using
      a token audienced for the target resource.
 
-* C) Access resources outside of the cluster:
+* B) Access resources outside of the cluster:
 
-* C1) The application within the Pod uses a Service Account Token audienced
+* B1) The application within the Pod uses a Service Account Token audienced
       for the external Identity Provider to federate to that Identity Provider
       outside of the Kubernetes Cluster. This token SHOULD NOT be the same
-      token used for steps A or B. The Identity Provider validates the token
+      token used for steps A1 or A2. The Identity Provider validates the token
       and issues a new credential to the workload, such as an OAuth 2.0 access
       token.
 
-* C2) Using the credential issued in step C1, the application within the Pod
+* B2) Using the credential issued in step C1, the application within the Pod
       accesses resources outside of the cluster.
 
 As an example, the following JSON illustrates the claims contained in a Kubernetes Service
@@ -374,16 +366,26 @@ Account token.
 
 ~~~json
 {
-  "aud": [  # matches the requested audiences, or the API server's default audiences when none are explicitly requested
+  "aud": [
+    # matches the requested audiences, or the API server's
+    # default audiences when none are explicitly requested
     "https://kubernetes.default.svc"
   ],
   "exp": 1731613413,
   "iat": 1700077413,
-  "iss": "https://kubernetes.default.svc",  # matches the first value passed to the --service-account-issuer flag
-  "jti": "ea28ed49-2e11-4280-9ec5-bc3d1d84661a",  # ServiceAccountTokenJTI feature must be enabled for the claim to be present
+  "iss":
+    # matches the first value passed to the
+    # --service-account-issuer flag
+    "https://kubernetes.default.svc",
+  "jti":
+    # ServiceAccountTokenJTI feature must be enabled
+    # for the claim to be present
+    "ea28ed49-2e11-4280-9ec5-bc3d1d84661a",
   "kubernetes.io": {
     "namespace": "my-namespace",
-    "node": {  # ServiceAccountTokenPodNodeInfo feature must be enabled for the API server to add this node reference claim
+    "node": {
+      # ServiceAccountTokenPodNodeInfo feature must be enabled
+      # for the API server to add this node reference claim
       "name": "127.0.0.1",
       "uid": "58456cb0-dd00-45ed-b797-5578fdceaced"
     },
@@ -405,7 +407,7 @@ Account token.
 
 ## Secure Production Identity Framework For Everyone (SPIFFE) {#spiffe}
 
-The Secure Production Identity Framework For Everyone, also known as SPIFFE [SPIFFE], is
+The Secure Production Identity Framework For Everyone, also known as SPIFFE {{SPIFFE}}, is
 a Cloud Native Computing Foundation (CNCF) project that defines a "Workload API"
 to deliver machine identity to workloads. Workloads can retrieve identity
 credentials in one of two forms:
@@ -500,7 +502,7 @@ Here are example claims for a JWT-SVID:
 
 ## Cloud Providers {#cloudproviders}
 
-Workloads in cloud platforms can have any shape or form. Historically, virtual
+Workload forms in cloud platforms vary. Historically, virtual
 machines were the most common. The introduction of containerization brought
 hosted container environments or Kubernetes clusters. Containers have evolved
 into `serverless` offerings. Regardless of the actual workload packaging,
@@ -509,7 +511,7 @@ distribution, or runtime platform, all these workloads need identities.
 The biggest cloud providers have established the pattern of an "Instance
 Metadata Endpoint". Aside from allowing workloads to retrieve metadata about
 themselves, it also allows them to receive identity. The credential types
-offered can vary. JWT, however, is the one that is common across all of them.
+offered can vary, and JWTs are commonly found across cloud providers.
 The issued credential provides proof to anyone it is being presented to that the
 workload platform has attested the workload and it can be considered
 authenticated.
@@ -599,6 +601,29 @@ different cloud; same cloud, but different security boundary):
 * B2) Using the credential issued in step B1, the workload can access the
       resource outside, assuming the credential has the necessary permissions.
 
+It is important to distinguish the credential obtained from the Instance Metadata
+Service from a workload identity document commonly used in attestation systems.
+A workload identity document typically represents attestation evidence
+that is evaluated by a relying party or attestation service. In contrast,
+some credentials issued by the metadata service are already the result of such
+attestation and are intended to be directly consumed by relying services for
+authentication and authorization decisions.
+
+In many cloud environments, the credential retrieved from the metadata service
+is a bearer token. Possession of such a token is sufficient to use it, which
+introduces risks around token handling and exposure. Some providers mitigate this
+by constraining token scope, lifetime, or audience, or by requiring additional
+proof-of-possession mechanisms. These mechanisms reduce the risk of token replay
+or misuse if the token is exfiltrated.
+
+Care must be taken to avoid using the same bearer credential across different
+trust domains without appropriate controls. While direct use of the issued credential
+within the same cloud security boundary is common, reusing that credential outside of
+its intended scope can increase the risk of credential leakage. The federation step
+via the Secure Token Service (Step B1) serves as a boundary, allowing the original
+credential to be exchanged for a new credential that is scoped, audience-restricted,
+and appropriate for the target resource.
+
 ## Continuous Integration and Deployment Systems {#cicd}
 
 Continuous integration and deployment (CI-CD) systems allow their pipelines (or
@@ -620,12 +645,12 @@ Provider it needs to interact with.
     | |   (Workload)    |             |            |  |
     | |                 |             +------------+  |
     | +-----+-+---------+                             |
-    +-------+-+---------------------------------------+
-            | |
-            | |                     +--------------+
-2) federate | | 3) access           |              |
-            | +-------------------->|   Resource   |
-            v                       |              |
+    +--------+-+--------------------------------------+
+             | |
+             | |                    +--------------+
+B1) federate | | B2) access         |              |
+             | +------------------->|   Resource   |
+             v                      |              |
       +-------------------+         +--------------+
       |                   |
       | Identity Provider |
@@ -639,11 +664,11 @@ The steps shown in {{fig-cicd}} are:
 * 1) The CI-CD platform schedules a workload (pipeline or task). Based on
      configuration, a Workload Identity is made available by the platform.
 
-* 2) The workload uses the platform-issued credential to federate to an
+* B1) The workload uses the platform-issued credential to federate to an
      Identity Provider, which validates the credential and issues a new
      credential, such as an access token, for the workload.
 
-* 3) The workload uses the issued credential to access resources. For instance,
+* B2) The workload uses the issued credential to access resources. For instance,
      an artifact store to upload compiled binaries, or to download libraries
      needed to resolve dependencies. It is also common to access actual
      infrastructure as resources to make deployments or changes to it.
@@ -724,7 +749,7 @@ Provider SHOULD NOT be used for direct platform access; reusing a credential acr
 contexts conflates trust boundaries and increases the impact of a compromise
 (see {{audience}}).
 
-### Environment Variables
+### Environment Variables {#security-credential-delivery-env}
 
 Leveraging environment variables to provide credentials presents many security
 limitations. Environment variables have a wide set of use cases and are observed
