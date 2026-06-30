@@ -153,23 +153,18 @@ The figure outlines the following steps which are applicable in any pattern.
      to the workload or pulled by the workload. A workload may obtain
      multiple credentials from the platform, each with its own audience and
      lifetime, tailored to the specific resource or Identity Provider it
-     needs to interact with. Credentials SHOULD have as small a set of audiences
-     as possible to limit the scope of any single credential. See {{audience}}
+     needs to interact with. See {{general-requirements}} and {{audience}}
      for more details and security implications.
 
 * A) The credential can give the workload direct access to resources within the
      platform or the platform itself, for example to perform infrastructure
-     operations. The credential used for this step SHOULD be scoped specifically
-     to the platform resource being accessed.
+     operations.
 
 * B1) The workload uses a credential to federate to an Identity Provider. This
       step is optional and only needed when accessing outside resources. The
-      credential used for federation SHOULD carry the Identity Provider as its
-      sole audience and SHOULD NOT be the same credential used for platform
-      access in step A). The Identity Provider validates the platform-issued
-      credential, and in return, issues a new credential, such as an OAuth 2.0
-      access token, that the workload can use to access resources in the
-      Identity Provider's domain.
+      Identity Provider validates the platform-issued credential, and in return,
+      issues a new credential, such as an OAuth 2.0 access token, that the
+      workload can use to access resources in the Identity Provider's domain.
 
 * B2) Using the credential obtained at step B1, the workload accesses resources
       outside of the platform.
@@ -737,6 +732,22 @@ In above pattern each workload has a specific sidecar. An alternative deployment
 All security considerations in section 8 of {{!OAUTH-ASSERTION=RFC7521}} apply.
 
 ## Credential Delivery {#security-credential-delivery}
+
+### General Credentials Requirements {#general-requirements}
+
+Credentials SHOULD be scoped as narrowly as possible: each SHOULD carry the
+smallest set of audiences that lets it serve its purpose. A credential for direct access
+to a platform resource SHOULD be scoped to that resource; a credential used to
+federate to an Identity Provider SHOULD carry that Identity Provider as its sole audience.
+See {{audience}} for the rationale and for specific requirements on the `aud` claim of
+JWT-based credentials.
+
+As long as the workload platform supports issuance of multiple credentials, a workload
+SHOULD obtain a distinct credential for each resource or Identity
+Provider it interacts with. In particular, the credential used to federate to an Identity
+Provider SHOULD NOT be used for direct platform access; reusing a credential across these
+contexts conflates trust boundaries and increases the impact of a compromise
+(see {{audience}}).
 
 ### Environment Variables {#security-credential-delivery-env}
 
