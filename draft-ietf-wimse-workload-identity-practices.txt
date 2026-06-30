@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments        A. Schwenkschuster
 Internet-Draft                                                     SPIRL
 Intended status: Informational                              Y. Rosomakho
-Expires: 10 December 2026                                        Zscaler
-                                                             8 June 2026
+Expires: 1 January 2027                                          Zscaler
+                                                            30 June 2026
 
 
                       Workload Identity Practices
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 December 2026.
+   This Internet-Draft will expire on 1 January 2027.
 
 Copyright Notice
 
@@ -69,10 +69,11 @@ Table of Contents
      4.5.  Service Meshes
    5.  Security Considerations
      5.1.  Credential Delivery
-       5.1.1.  Environment Variables
-       5.1.2.  Filesystem
-       5.1.3.  Local APIs
-       5.1.4.  Application Interaction with Credential Sources
+       5.1.1.  General Credentials Requirements
+       5.1.2.  Environment Variables
+       5.1.3.  Filesystem
+       5.1.4.  Local APIs
+       5.1.5.  Application Interaction with Credential Sources
      5.2.  Token typing
      5.3.  Custom claims are important for context
      5.4.  Token lifetime
@@ -166,25 +167,19 @@ Table of Contents
       by the workload.  A workload may obtain multiple credentials from
       the platform, each with its own audience and lifetime, tailored to
       the specific resource or Identity Provider it needs to interact
-      with.  Credentials SHOULD have as small a set of audiences as
-      possible to limit the scope of any single credential.  See
-      Section 5.7 for more details and security implications.
+      with.  See Section 5.1.1 and Section 5.7 for more details and
+      security implications.
 
    *  A) The credential can give the workload direct access to resources
       within the platform or the platform itself, for example to perform
-      infrastructure operations.  The credential used for this step
-      SHOULD be scoped specifically to the platform resource being
-      accessed.
+      infrastructure operations.
 
    *  B1) The workload uses a credential to federate to an Identity
       Provider.  This step is optional and only needed when accessing
-      outside resources.  The credential used for federation SHOULD
-      carry the Identity Provider as its sole audience and SHOULD NOT be
-      the same credential used for platform access in step A).  The
-      Identity Provider validates the platform-issued credential, and in
-      return, issues a new credential, such as an OAuth 2.0 access
-      token, that the workload can use to access resources in the
-      Identity Provider's domain.
+      outside resources.  The Identity Provider validates the platform-
+      issued credential, and in return, issues a new credential, such as
+      an OAuth 2.0 access token, that the workload can use to access
+      resources in the Identity Provider's domain.
 
    *  B2) Using the credential obtained at step B1, the workload
       accesses resources outside of the platform.
@@ -224,7 +219,7 @@ Table of Contents
    workload identity credentials, because environment variables are
    frequently exposed through debugging, logging, process inspection,
    and observability tooling.  Security considerations for this pattern
-   are discussed in Section 5.1.1.
+   are discussed in Section 5.1.2.
 
 3.2.  Filesystem
 
@@ -268,7 +263,7 @@ Table of Contents
    pattern requires client-side code that is specific to the exposed
    API, which may introduce portability challenges across platforms and
    providers.  Further security considerations for local APIs are
-   discussed in Section 5.1.3.
+   discussed in Section 5.1.4.
 
 4.  Practices
 
@@ -792,7 +787,25 @@ Table of Contents
 
 5.1.  Credential Delivery
 
-5.1.1.  Environment Variables
+5.1.1.  General Credentials Requirements
+
+   Credentials SHOULD be scoped as narrowly as possible: each SHOULD
+   carry the smallest set of audiences that lets it serve its purpose.
+   A credential for direct access to a platform resource SHOULD be
+   scoped to that resource; a credential used to federate to an Identity
+   Provider SHOULD carry that Identity Provider as its sole audience.
+   See Section 5.7 for the rationale and for specific requirements on
+   the aud claim of JWT-based credentials.
+
+   As long as the workload platform supports issuance of multiple
+   credentials, a workload SHOULD obtain a distinct credential for each
+   resource or Identity Provider it interacts with.  In particular, the
+   credential used to federate to an Identity Provider SHOULD NOT be
+   used for direct platform access; reusing a credential across these
+   contexts conflates trust boundaries and increases the impact of a
+   compromise (see Section 5.7).
+
+5.1.2.  Environment Variables
 
    Leveraging environment variables to provide credentials presents many
    security limitations.  Environment variables have a wide set of use
@@ -810,7 +823,7 @@ Table of Contents
    secrets are limited in validity or utility.  For example, an initial
    secret might be used during the setup of the application.
 
-5.1.2.  Filesystem
+5.1.3.  Filesystem
 
    *  1) Access control to the mounted file should be configured to
       limit reads to authorized applications.  Linux supports solutions
@@ -820,7 +833,7 @@ Table of Contents
       paths and processes.  For example, on Linux this can be achieved
       by using namespaces.
 
-5.1.3.  Local APIs
+5.1.4.  Local APIs
 
    Local APIs often operate in clear-text such as unencrypted HTTP
    without any confidentiality or integrity protection.  Privileged
@@ -831,7 +844,7 @@ Table of Contents
    Server-Side Request Forgery attacks against local APIs.  For example,
    requiring a specific header that cannot be controlled externally or
    preventing the use of link-local IPs, including through redirects.
-   See Section 5.1.4 for details.
+   See Section 5.1.5 for details.
 
    Adequate assurance that the identity represents the workload is
    required to make sure unauthorized access is denied and credentials
@@ -850,7 +863,7 @@ Table of Contents
    implemented.  Depending on the platform these attacks can affect
    other workloads and their ability to receive a platform credential.
 
-5.1.4.  Application Interaction with Credential Sources
+5.1.5.  Application Interaction with Credential Sources
 
    Implementations MUST assume that application vulnerabilities can
    expose workload credentials even when platform isolation is correctly
