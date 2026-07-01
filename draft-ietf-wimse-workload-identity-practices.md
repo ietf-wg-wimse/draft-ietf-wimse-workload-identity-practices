@@ -113,6 +113,15 @@ platforms provision workloads with a credential, such as a JWT
 {{!JWT=RFC7519}}. Cryptographically signed by the platform's issuer,
 this credential attests the workload and its attributes.
 
+A platform-issued workload credential can represent the result of
+platform-side validation, but it is not necessarily fresh RATS Evidence or an
+Attestation Result as defined in {{?RATS=RFC9334}} unless the platform
+explicitly defines it that way. A relying party that needs current workload
+state, platform posture, or key-protection properties should not infer those
+properties only from possession of a credential. It should instead rely on the
+credential lifetime, audience, proof-of-possession, invalidation or status
+checks, or an explicit attestation mechanism appropriate to the deployment.
+
 {{fig-overview}} illustrates a generic pattern that is seen across many workload
 platforms, more concrete variations are found in {{practices}}.
 
