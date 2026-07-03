@@ -680,7 +680,7 @@ such as git branch, initiation context and more.
 A specific use case in this pattern is using the identity to perform code
 signing operations or gain access to the signing material and use it to attach
 integrity proof to the build output. Particularly in this use case it is important
-to consider that the stength of the integrity is limited to the strength of 
+to consider that the stength of the integrity is limited to the strength of
 the credential used and security considerations listed in this document.
 
 ## Service Meshes
