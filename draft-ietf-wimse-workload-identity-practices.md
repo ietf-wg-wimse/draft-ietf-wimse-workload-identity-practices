@@ -677,6 +677,12 @@ While token structure is vendor-specific, all tokens contain claims carrying
 the basic context of the executed tasks, such as source code management data
 such as git branch, initiation context and more.
 
+A specific use case in this pattern is using the identity to perform code
+signing operations or gain access to the signing material and use it to attach
+integrity proof to the build output. Particularly in this use case it is important
+to consider that the stength of the integrity is limited to the strength of 
+the credential used and security considerations listed in this document.
+
 ## Service Meshes
 
 Service meshes provide infrastructure-level workload identity and secure communication
@@ -878,18 +884,18 @@ limit the need for explicit revocation infrastructure.
 
 ## Workload lifecycle and invalidation
 
-Platform issuers SHOULD invalidate tokens when the workload stops, pauses, or
+Platform issuers SHOULD invalidate credentials when the instance stops, pauses, or
 ceases to exist and SHOULD offer validators a mechanism to query this status.
-Without invalidation, tokens for terminated workloads remain usable until their
+Without this capability, tokens for terminated instances remain usable until their
 natural expiry, creating a window for unauthorized use. Without a status query
-mechanism, relying parties have no way to detect that a workload has been
+mechanism, relying parties have no way to detect that an instance has been
 removed and must accept the token as is. How these credentials are
 invalidated and the status is queried varies and is not in scope of this
 document.
 
 ## Proof of possession {#proof-of-possession}
 
-Identity credentials SHOULD be bound to workloads, and proof of possession
+Identity credentials SHOULD be bound to their instances, and proof of possession
 SHOULD be performed when these credentials are used. This mitigates token theft.
 Without proof of possession, a bearer token intercepted in transit (e.g., via a
 compromised log, a man-in-the-middle, or SSRF) can be replayed by any party,
