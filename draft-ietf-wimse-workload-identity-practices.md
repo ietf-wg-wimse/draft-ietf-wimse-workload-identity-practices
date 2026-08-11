@@ -899,10 +899,12 @@ document.
 
 Identity credentials SHOULD be bound to the workload instance they represent,
 and proof of possession SHOULD be performed when these credentials are used.
-This mitigates token theft.
+This reduces the impact of token theft to the scope of the proof of posession.
+
 Without proof of possession, a bearer token intercepted in transit (e.g., via a
 compromised log, a man-in-the-middle, or SSRF) can be replayed by any party,
 from any location, for the remaining lifetime of the token.
+
 For X.509-based credentials, proof of possession is inherent through the private
 key associated with the certificate. For JWT-based credentials, the JWT SHOULD
 be key-bound with an adequate proof-of-key-possession mechanism. Where proof of
