@@ -899,7 +899,7 @@ document.
 
 Identity credentials SHOULD be bound to the workload instance they represent,
 and proof of possession SHOULD be performed when these credentials are used.
-This reduces the impact of token theft to the scope of the proof of posession.
+This reduces the impact of token theft to the scope of the proof of possession.
 
 Without proof of possession, a bearer token intercepted in transit (e.g., via a
 compromised log, a man-in-the-middle, or SSRF) can be replayed by any party,
