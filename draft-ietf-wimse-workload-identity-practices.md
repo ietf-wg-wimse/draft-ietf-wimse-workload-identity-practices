@@ -626,7 +626,7 @@ without appropriate controls. While direct use of the issued credential
 within the same cloud security boundary is common, reusing that credential outside of
 its intended scope can increase the risk of credential leakage and enable
 impersonation. The federation step via the Secure Token Service (Step B1) serves as
-a boundary, allowing the original credential to be exchanged for a new credential 
+a boundary, allowing the original credential to be exchanged for a new credential
 that is scoped, audience-restricted, and appropriate for the target resource.
 
 ## Continuous Integration and Deployment Systems {#cicd}
