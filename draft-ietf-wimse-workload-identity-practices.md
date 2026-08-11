@@ -677,6 +677,10 @@ While token structure is vendor-specific, all tokens contain claims carrying
 the basic context of the executed tasks, such as source code management data
 such as git branch, initiation context and more.
 
+CI-CD pipelines sometimes use credentials to perform code signing
+operations integrity proof of the build output. As explained in the {{security}}, strength of the integrity is limited to the strength of
+the credential used.
+
 ## Service Meshes
 
 Service meshes provide infrastructure-level workload identity and secure communication
@@ -863,10 +867,10 @@ expressed without requiring deep knowledge of vendor-specific claim structures.
 
 ## Token lifetime
 
-Tokens SHOULD NOT exceed the lifetime of the workloads they represent. For
-example, a workload that has an expected lifetime of one hour should not receive
-a token valid for two hours or more. A token that outlives its workload may
-continue to be accepted by relying parties even after the workload (and its
+Tokens SHOULD NOT exceed the lifetime of the workload instance they represent.
+For example, an instance that has an expected lifetime of one hour should not
+receive a token valid for two hours or more. A token that outlives its instance
+may continue to be accepted by relying parties even after the instance (and its
 associated authorization context) has ceased to exist, enabling unauthorized
 access if the token is compromised.
 
@@ -878,22 +882,27 @@ limit the need for explicit revocation infrastructure.
 
 ## Workload lifecycle and invalidation
 
-Platform issuers SHOULD invalidate tokens when the workload stops, pauses, or
-ceases to exist and SHOULD offer validators a mechanism to query this status.
-Without invalidation, tokens for terminated workloads remain usable until their
-natural expiry, creating a window for unauthorized use. Without a status query
-mechanism, relying parties have no way to detect that a workload has been
-removed and must accept the token as is. How these credentials are
+Platform issuers SHOULD invalidate credentials when an instance of the workload
+stops, pauses, or ceases to exist and SHOULD offer validators a mechanism to
+query this status. Because a workload may run as multiple instances (for
+example, replicas or parallel tasks), this applies to each instance
+individually. Without this capability, credentials for terminated instances
+remain usable until their natural expiry, creating a window for unauthorized
+use. Without a status query mechanism, relying parties have no way to detect
+that an instance has been removed and must accept the credential as is. How these credentials are
 invalidated and the status is queried varies and is not in scope of this
 document.
 
 ## Proof of possession {#proof-of-possession}
 
-Identity credentials SHOULD be bound to workloads, and proof of possession
-SHOULD be performed when these credentials are used. This mitigates token theft.
+Identity credentials SHOULD be bound to the workload instance they represent,
+and proof of possession SHOULD be performed when these credentials are used.
+This reduces the impact of token theft to the scope of the proof of possession.
+
 Without proof of possession, a bearer token intercepted in transit (e.g., via a
 compromised log, a man-in-the-middle, or SSRF) can be replayed by any party,
 from any location, for the remaining lifetime of the token.
+
 For X.509-based credentials, proof of possession is inherent through the private
 key associated with the certificate. For JWT-based credentials, the JWT SHOULD
 be key-bound with an adequate proof-of-key-possession mechanism. Where proof of
