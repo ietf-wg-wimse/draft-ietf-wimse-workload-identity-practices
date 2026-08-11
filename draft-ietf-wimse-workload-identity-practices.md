@@ -624,8 +624,8 @@ or misuse if the token is exfiltrated.
 The same bearer credential MUST NOT be used across different trust domains
 without appropriate controls. While direct use of the issued credential
 within the same cloud security boundary is common, reusing that credential outside of
-its intended scope can increase the risk of credential leakage and allows for 
-impersonation. The federation step via the Secure Token Service (Step B1) serves as 
+its intended scope can increase the risk of credential leakage and enable
+impersonation. The federation step via the Secure Token Service (Step B1) serves as
 a boundary, allowing the original credential to be exchanged for a new credential 
 that is scoped, audience-restricted, and appropriate for the target resource.
 
@@ -773,10 +773,11 @@ confidentiality or integrity protection. Privileged components on a host or in
 the infrastructure may be able to eavesdrop on a connection and view a
 credential within it.
 
-Mitigations are required for a particular variant of Server-Side Request Forgery
-(SSRF) attacks against Local APIs. For example, requiring a specific header that
-cannot be controlled externally or preventing the use of link-local IPs,
-including through redirects. See {{application-interaction-with-credential-sources}} for details.
+Mitigations are required for Server-Side Request Forgery (SSRF) attacks against
+Local APIs. For example, implementations can require a specific header that
+cannot be controlled externally or prevent untrusted input from triggering
+requests to link-local IPs, including through redirects. See
+{{application-interaction-with-credential-sources}} for details.
 
 Adequate assurance that the identity represents the workload is required to make
 sure unauthorized access is denied and credentials are not issued to other
@@ -806,8 +807,8 @@ by other processes running on the same host, making them an unreliable transport
 for credentials in environments where process isolation is not strictly enforced.
 
 For these reasons, environment variables MUST NOT be used to deliver workload
-identity credentials in production deployments, except where the platform offers
-no other delivery pattern.
+identity credentials in production deployments where the platform offers another
+delivery pattern.
 
 ### Application Interaction with Credential Sources {#application-interaction-with-credential-sources}
 
