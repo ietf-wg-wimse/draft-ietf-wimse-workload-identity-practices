@@ -2525,7 +2525,8 @@ to cross-tenant privilege escalation or unauthorized access to shared resources.
       <h2 id="name-acknowledgements">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
       </h2>
-<p id="section-7-1">The authors and contributors would like to thank the following people for their feedback and contributions to this document (in no particular order): Dag Sneeggen, Ned Smith, Dean H. Saxe, Yaron Sheffer, Andrii Deinega, Marcel Levy, Justin Richer, Pieter Kasselmann, Simon Canning, Evan Gilman, Joseph Salowey, Kathleen Moriarty and Flemming Andreasen.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">The authors and contributors would like to thank the following people for their feedback and contributions to this document (in no particular order): Dag Sneeggen, Ned Smith, Dean H. Saxe, Yaron Sheffer, Andrii Deinega, Marcel Levy, Pieter Kasselmann, Simon Canning, Evan Gilman, Joseph Salowey, Kathleen Moriarty, Brian Campbell, Judith Kahrer and Flemming Andreasen.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">The authors would also like to thank Justin Richer for serving as document shepherd and Charles Eckel for his AD evaluation of this document.<a href="#section-7-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-combined-references">
@@ -2649,162 +2650,189 @@ to cross-tenant privilege escalation or unauthorized access to shared resources.
           <p id="appendix-B-3.1.1">Address AD evaluation comments from Charles Eckel<a href="#appendix-B-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-3.2">
-          <p id="appendix-B-3.2.1">Review use of BCP 14 language for consistency<a href="#appendix-B-3.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-3.2.1">Address review feedback from Andrii Deinega<a href="#appendix-B-3.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-3.3">
-          <p id="appendix-B-3.3.1">Reformat the filesystem security considerations and cover
-credentials on durable storage<a href="#appendix-B-3.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-3.3.1">Review use of BCP 14 language for consistency<a href="#appendix-B-3.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-3.4">
-          <p id="appendix-B-3.4.1">Reference RFC 7515 for the JOSE "typ" header parameter<a href="#appendix-B-3.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-3.4.1">Reformat the filesystem security considerations and cover
+credentials on durable storage<a href="#appendix-B-3.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-3.5">
-          <p id="appendix-B-3.5.1">Clarify Kubernetes JWK Set validation, SPIFFE Workload API client
-authentication, custom claim validation and workload invalidation<a href="#appendix-B-3.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-3.5.1">Reference RFC 7515 for the JOSE "typ" header parameter<a href="#appendix-B-3.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-3.6">
-          <p id="appendix-B-3.6.1">Editorial improvements<a href="#appendix-B-3.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-3.6.1">Clarify Kubernetes JWK Set validation, SPIFFE Workload API client
+authentication, custom claim validation and workload invalidation<a href="#appendix-B-3.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-3.7">
+          <p id="appendix-B-3.7.1">Update author affiliation<a href="#appendix-B-3.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-3.8">
+          <p id="appendix-B-3.8.1">Update acknowledgements<a href="#appendix-B-3.8.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-3.9">
+          <p id="appendix-B-3.9.1">Editorial improvements<a href="#appendix-B-3.9.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-4">-04<a href="#appendix-B-4" class="pilcrow">¶</a></p>
+<p id="appendix-B-4">-05<a href="#appendix-B-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-5.1">
-          <p id="appendix-B-5.1.1">Address review feedback from Kathleen Moriarty and Joe Salowey<a href="#appendix-B-5.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-5.1.1">Rework introduction and abstract to remove normative language<a href="#appendix-B-5.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-5.2">
-          <p id="appendix-B-5.2.1">Expand introduction: explain the workload identity bootstrapping problem and the limitations of static credentials<a href="#appendix-B-5.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-5.2.1">Differentiate cloud provider credentials from workload identities<a href="#appendix-B-5.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-5.3">
-          <p id="appendix-B-5.3.1">Expand SPIFFE section: trust bundles, JWT-SVID vs X509-SVID types, and Workload API identification<a href="#appendix-B-5.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-5.3.1">Discourage the use of environment variables for credentials<a href="#appendix-B-5.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-5.4">
-          <p id="appendix-B-5.4.1">Explicitly discuss obtaining multiple tokens with distinct audiences across all platform patterns<a href="#appendix-B-5.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-5.4.1">Clean up references and make diagram labelling consistent<a href="#appendix-B-5.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-5.5">
-          <p id="appendix-B-5.5.1">Add "Application Interaction with Credential Sources" section covering SSRF and path traversal risks<a href="#appendix-B-5.5.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-5.6">
-          <p id="appendix-B-5.6.1">Update reference formatting<a href="#appendix-B-5.6.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-5.7">
-          <p id="appendix-B-5.7.1">Editorial improvements and updated acknowledgements<a href="#appendix-B-5.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-5.5.1">Editorial improvements to the abstract, cloud provider section and examples<a href="#appendix-B-5.5.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-6">-03<a href="#appendix-B-6" class="pilcrow">¶</a></p>
+<p id="appendix-B-6">-04<a href="#appendix-B-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-7.1">
-          <p id="appendix-B-7.1.1">Add service-mesh section<a href="#appendix-B-7.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-7.1.1">Address review feedback from Kathleen Moriarty and Joe Salowey<a href="#appendix-B-7.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-7.2">
-          <p id="appendix-B-7.2.1">Add multi-tenancy considerations<a href="#appendix-B-7.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-7.2.1">Expand introduction: explain the workload identity bootstrapping problem and the limitations of static credentials<a href="#appendix-B-7.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-7.3">
-          <p id="appendix-B-7.3.1">Add atomicity and flushing requirements to filesystem section<a href="#appendix-B-7.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-7.3.1">Expand SPIFFE section: trust bundles, JWT-SVID vs X509-SVID types, and Workload API identification<a href="#appendix-B-7.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-7.4">
-          <p id="appendix-B-7.4.1">Make it clear that invalidation is a matter of querying the status<a href="#appendix-B-7.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-7.4.1">Explicitly discuss obtaining multiple tokens with distinct audiences across all platform patterns<a href="#appendix-B-7.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-7.5">
-          <p id="appendix-B-7.5.1">Rework local api section &amp; security considerations<a href="#appendix-B-7.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-7.5.1">Add "Application Interaction with Credential Sources" section covering SSRF and path traversal risks<a href="#appendix-B-7.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-7.6">
-          <p id="appendix-B-7.6.1">Refer to RFC7517 in SPIFFE and add clarity on key distribution<a href="#appendix-B-7.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-7.6.1">Update reference formatting<a href="#appendix-B-7.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-7.7">
-          <p id="appendix-B-7.7.1">Editorial changes<a href="#appendix-B-7.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-7.7.1">Editorial improvements and updated acknowledgements<a href="#appendix-B-7.7.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-8">-02<a href="#appendix-B-8" class="pilcrow">¶</a></p>
+<p id="appendix-B-8">-03<a href="#appendix-B-8" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-9.1">
-          <p id="appendix-B-9.1.1">Updated structure, bringing concrete examples back into the main text.<a href="#appendix-B-9.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-9.1.1">Add service-mesh section<a href="#appendix-B-9.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-9.2">
-          <p id="appendix-B-9.2.1">Use more generic "federation" term instead of RFC 7523 specifics.<a href="#appendix-B-9.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-9.2.1">Add multi-tenancy considerations<a href="#appendix-B-9.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-9.3">
-          <p id="appendix-B-9.3.1">Overall editorial improvements.<a href="#appendix-B-9.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-9.3.1">Add atomicity and flushing requirements to filesystem section<a href="#appendix-B-9.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-9.4">
-          <p id="appendix-B-9.4.1">Fix reference of Kubernetes Token Request API<a href="#appendix-B-9.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-9.4.1">Make it clear that invalidation is a matter of querying the status<a href="#appendix-B-9.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-9.5">
-          <p id="appendix-B-9.5.1">Prefer the term "document" over "specification".<a href="#appendix-B-9.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-9.5.1">Rework local api section &amp; security considerations<a href="#appendix-B-9.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-9.6">
-          <p id="appendix-B-9.6.1">Update contributor and acknowledgements sections.<a href="#appendix-B-9.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-9.6.1">Refer to RFC7517 in SPIFFE and add clarity on key distribution<a href="#appendix-B-9.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-9.7">
-          <p id="appendix-B-9.7.1">Remove section about OIDC as it is too specific to a certain implementation.<a href="#appendix-B-9.7.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-9.8">
-          <p id="appendix-B-9.8.1">Rewrite abstract to better reflect the current content of the document.<a href="#appendix-B-9.8.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-9.7.1">Editorial changes<a href="#appendix-B-9.7.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-10">-01<a href="#appendix-B-10" class="pilcrow">¶</a></p>
+<p id="appendix-B-10">-02<a href="#appendix-B-10" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-11.1">
-          <p id="appendix-B-11.1.1">Add credential delivery mechanisms<a href="#appendix-B-11.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-11.1.1">Updated structure, bringing concrete examples back into the main text.<a href="#appendix-B-11.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-11.2">
-          <p id="appendix-B-11.2.1">Highlight relationship to other WIMSE work<a href="#appendix-B-11.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-11.2.1">Use more generic "federation" term instead of RFC 7523 specifics.<a href="#appendix-B-11.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-11.3">
-          <p id="appendix-B-11.3.1">Add details about token typing and relation to OpenID Connect<a href="#appendix-B-11.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-11.3.1">Overall editorial improvements.<a href="#appendix-B-11.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-11.4">
-          <p id="appendix-B-11.4.1">Add security considerations for audience<a href="#appendix-B-11.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-11.4.1">Fix reference of Kubernetes Token Request API<a href="#appendix-B-11.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-11.5">
+          <p id="appendix-B-11.5.1">Prefer the term "document" over "specification".<a href="#appendix-B-11.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-11.6">
+          <p id="appendix-B-11.6.1">Update contributor and acknowledgements sections.<a href="#appendix-B-11.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-11.7">
+          <p id="appendix-B-11.7.1">Remove section about OIDC as it is too specific to a certain implementation.<a href="#appendix-B-11.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-11.8">
+          <p id="appendix-B-11.8.1">Rewrite abstract to better reflect the current content of the document.<a href="#appendix-B-11.8.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-12">-00<a href="#appendix-B-12" class="pilcrow">¶</a></p>
+<p id="appendix-B-12">-01<a href="#appendix-B-12" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-13.1">
-          <p id="appendix-B-13.1.1">Rename draft with no content changes.<a href="#appendix-B-13.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-13.1.1">Add credential delivery mechanisms<a href="#appendix-B-13.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-13.2">
-          <p id="appendix-B-13.2.1">Set Arndt to Editor role.<a href="#appendix-B-13.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-13.2.1">Highlight relationship to other WIMSE work<a href="#appendix-B-13.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-13.3">
+          <p id="appendix-B-13.3.1">Add details about token typing and relation to OpenID Connect<a href="#appendix-B-13.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-13.4">
+          <p id="appendix-B-13.4.1">Add security considerations for audience<a href="#appendix-B-13.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-14"><strong>[as draft-wimse-workload-identity-bcp]</strong><a href="#appendix-B-14" class="pilcrow">¶</a></p>
-<p id="appendix-B-15">-02<a href="#appendix-B-15" class="pilcrow">¶</a></p>
+<p id="appendix-B-14">-00<a href="#appendix-B-14" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-B-16.1">
-          <p id="appendix-B-16.1.1">Move scope from Kubernetes to generic workload identity platform<a href="#appendix-B-16.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-B-15.1">
+          <p id="appendix-B-15.1.1">Rename draft with no content changes.<a href="#appendix-B-15.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-16.2">
-          <p id="appendix-B-16.2.1">Add various patterns to appendix<a href="#appendix-B-16.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-15.2">
+          <p id="appendix-B-15.2.1">Set Arndt to Editor role.<a href="#appendix-B-15.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-B-16"><strong>[as draft-wimse-workload-identity-bcp]</strong><a href="#appendix-B-16" class="pilcrow">¶</a></p>
+<p id="appendix-B-17">-02<a href="#appendix-B-17" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-B-16.2.2.1">
-              <p id="appendix-B-16.2.2.1.1">Kubernetes<a href="#appendix-B-16.2.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-B-18.1">
+          <p id="appendix-B-18.1.1">Move scope from Kubernetes to generic workload identity platform<a href="#appendix-B-18.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-B-16.2.2.2">
-              <p id="appendix-B-16.2.2.2.1">Cloud providers<a href="#appendix-B-16.2.2.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-18.2">
+          <p id="appendix-B-18.2.1">Add various patterns to appendix<a href="#appendix-B-18.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-18.2.2.1">
+              <p id="appendix-B-18.2.2.1.1">Kubernetes<a href="#appendix-B-18.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-B-16.2.2.3">
-              <p id="appendix-B-16.2.2.3.1">SPIFFE<a href="#appendix-B-16.2.2.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-B-18.2.2.2">
+              <p id="appendix-B-18.2.2.2.1">Cloud providers<a href="#appendix-B-18.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-B-16.2.2.4">
-              <p id="appendix-B-16.2.2.4.1">CI/CD<a href="#appendix-B-16.2.2.4.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-B-18.2.2.3">
+              <p id="appendix-B-18.2.2.3.1">SPIFFE<a href="#appendix-B-18.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-18.2.2.4">
+              <p id="appendix-B-18.2.2.4.1">CI/CD<a href="#appendix-B-18.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
-        <li class="normal" id="appendix-B-16.3">
-          <p id="appendix-B-16.3.1">Add some security considerations<a href="#appendix-B-16.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-18.3">
+          <p id="appendix-B-18.3.1">Add some security considerations<a href="#appendix-B-18.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-16.4">
-          <p id="appendix-B-16.4.1">Update title<a href="#appendix-B-16.4.1" class="pilcrow">¶</a></p>
-</li>
-      </ul>
-<p id="appendix-B-17">-01<a href="#appendix-B-17" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-B-18.1">
-          <p id="appendix-B-18.1.1">Editorial updates<a href="#appendix-B-18.1.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-18.4">
+          <p id="appendix-B-18.4.1">Update title<a href="#appendix-B-18.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-19">-00<a href="#appendix-B-19" class="pilcrow">¶</a></p>
+<p id="appendix-B-19">-01<a href="#appendix-B-19" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-20.1">
-          <p id="appendix-B-20.1.1">Adopted by the WIMSE WG<a href="#appendix-B-20.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-20.1.1">Editorial updates<a href="#appendix-B-20.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-B-21">-00<a href="#appendix-B-21" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-22.1">
+          <p id="appendix-B-22.1.1">Adopted by the WIMSE WG<a href="#appendix-B-22.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
