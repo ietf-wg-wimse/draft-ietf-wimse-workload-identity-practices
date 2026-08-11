@@ -994,6 +994,14 @@ While {{OAUTH-ASSERTION}} and {{OAUTH-JWT}} are the proposed standards for this 
    * Update author affiliation
    * Editorial improvements
 
+   -05
+
+   * Rework introduction and abstract to remove normative language
+   * Differentiate cloud provider credentials from workload identities
+   * Discourage the use of environment variables for credentials
+   * Clean up references and make diagram labelling consistent
+   * Editorial improvements to the abstract, cloud provider section and examples
+
    -04
 
    * Address review feedback from Kathleen Moriarty and Joe Salowey
