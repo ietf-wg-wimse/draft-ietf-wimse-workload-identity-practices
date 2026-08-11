@@ -876,9 +876,9 @@ expressed without requiring deep knowledge of vendor-specific claim structures.
 
 ## Token lifetime
 
-Tokens SHOULD NOT exceed the lifetime of the workloads instance they represent. 
-For example, a token valid for two hours or more exceeds the lifetime of a 
-workload that is expected to run for one hour. A token that outlives its workload 
+Tokens SHOULD NOT exceed the lifetime of the workloads instance they represent.
+For example, a token valid for two hours or more exceeds the lifetime of a
+workload that is expected to run for one hour. A token that outlives its workload
 may continue to be accepted by relying parties even after the workload (and its
 associated authorization context) has ceased to exist, enabling unauthorized
 access if the token is compromised.
@@ -898,7 +898,7 @@ example, replicas or parallel tasks), this applies to each instance
 individually. Without this capability, credentials for terminated instances
 remain usable until their natural expiry, creating a window for unauthorized
 use. Without a status query mechanism, relying parties have no way to detect
-that an instance has been removed. How these credentials are invalidated and 
+that an instance has been removed. How these credentials are invalidated and
 the status is queried varies and is not in scope of this document.
 
 ## Proof of possession {#proof-of-possession}
