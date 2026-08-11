@@ -27,11 +27,11 @@ and associated protocols.
     Jinja2 3.1.6
     lxml 6.1.1
     natsort 8.4.0
-    platformdirs 4.10.0
+    platformdirs 4.11.0
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.8.1
+    wcwidth 0.8.2
 -->
 <link href="draft-ietf-wimse-workload-identity-practices.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -67,7 +67,6 @@ and associated protocols.
   src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-
 @font-face {
   font-family: 'Lora';
   font-style: italic;
@@ -116,7 +115,6 @@ and associated protocols.
   src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-
 @font-face {
   font-family: 'Lora';
   font-style: normal;
@@ -181,7 +179,6 @@ and associated protocols.
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
 }
 
 @font-face {
@@ -1050,11 +1047,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Workload Identity</td>
-<td class="right">June 2026</td>
+<td class="right">August 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Schwenkschuster &amp; Rosomakho</td>
-<td class="center">Expires 1 January 2027</td>
+<td class="center">Expires 12 February 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1067,12 +1064,12 @@ svg {
 <dd class="internet-draft">draft-ietf-wimse-workload-identity-practices-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-30" class="published">30 June 2026</time>
+<time datetime="2026-08-11" class="published">11 August 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-01-01">1 January 2027</time></dd>
+<dd class="expires"><time datetime="2027-02-12">12 February 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1115,7 +1112,7 @@ and associated protocols.<a href="#section-abstract-1" class="pilcrow">¶</a></p
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 1 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 12 February 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1154,13 +1151,13 @@ and associated protocols.<a href="#section-abstract-1" class="pilcrow">¶</a></p
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-delivery-patterns" class="internal xref">Delivery Patterns</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1" class="keepWithNext"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-environment-variables" class="internal xref">Environment Variables</a></p>
+                <p id="section-toc.1-1.3.2.1.1" class="keepWithNext"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-filesystem" class="internal xref">Filesystem</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-filesystem" class="internal xref">Filesystem</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-local-apis" class="internal xref">Local APIs</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
-                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-local-apis" class="internal xref">Local APIs</a></p>
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-environment-variables" class="internal xref">Environment Variables</a></p>
 </li>
             </ul>
 </li>
@@ -1194,13 +1191,13 @@ and associated protocols.<a href="#section-abstract-1" class="pilcrow">¶</a></p
                     <p id="section-toc.1-1.5.2.1.2.1.1"><a href="#section-5.1.1" class="auto internal xref">5.1.1</a>.  <a href="#name-general-credentials-require" class="internal xref">General Credentials Requirements</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.2">
-                    <p id="section-toc.1-1.5.2.1.2.2.1"><a href="#section-5.1.2" class="auto internal xref">5.1.2</a>.  <a href="#name-environment-variables-2" class="internal xref">Environment Variables</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.2.1"><a href="#section-5.1.2" class="auto internal xref">5.1.2</a>.  <a href="#name-filesystem-2" class="internal xref">Filesystem</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.3">
-                    <p id="section-toc.1-1.5.2.1.2.3.1"><a href="#section-5.1.3" class="auto internal xref">5.1.3</a>.  <a href="#name-filesystem-2" class="internal xref">Filesystem</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.3.1"><a href="#section-5.1.3" class="auto internal xref">5.1.3</a>.  <a href="#name-local-apis-2" class="internal xref">Local APIs</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.4">
-                    <p id="section-toc.1-1.5.2.1.2.4.1"><a href="#section-5.1.4" class="auto internal xref">5.1.4</a>.  <a href="#name-local-apis-2" class="internal xref">Local APIs</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.4.1"><a href="#section-5.1.4" class="auto internal xref">5.1.4</a>.  <a href="#name-environment-variables-2" class="internal xref">Environment Variables</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.5">
                     <p id="section-toc.1-1.5.2.1.2.5.1"><a href="#section-5.1.5" class="auto internal xref">5.1.5</a>.  <a href="#name-application-interaction-wit" class="internal xref">Application Interaction with Credential Sources</a></p>
@@ -1289,7 +1286,7 @@ turn, issue credentials that grant access to resources.<a href="#section-1-2" cl
 <p id="section-1-3">Traditionally, workloads were provisioned with static client credentials (e.g.,
 passwords, API keys) and used the corresponding flow as described in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-1.3.4" class="relref">Section 1.3.4</a> of [<a href="#OAUTH-FRAMEWORK" class="cite xref">OAUTH-FRAMEWORK</a>]</span>
 to retrieve an OAuth 2.0 access token. This model presents a number of security
-and maintenance issues. Secrets must be provisioned and rotated, which requires
+and maintenance issues. Secrets need to be provisioned and rotated, which requires
 either automation to be built, or periodic manual effort. Secrets may be stolen
 and used by attackers to impersonate the workload. Flows outside of the
 OAuth 2.0 framework (such as direct API keys or HTTP basic authentication)
@@ -1425,63 +1422,66 @@ its own advantages, challenges, and security risks. The following
 section highlights the pros and cons of common solutions. Security
 recommendations for these methods are covered in
 <a href="#security-credential-delivery" class="auto internal xref">Section 5.1</a>.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<div id="environment-variables">
-<section id="section-3.1">
-        <h3 id="name-environment-variables">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-environment-variables" class="section-name selfRef">Environment Variables</a>
-        </h3>
-<p id="section-3.1-1">Injecting the credentials into the environment variables allows for simple and
-fast deployments. Applications can directly access them through system-level
-mechanisms, e.g., through the <code>env</code> command in Linux. Note that environment
-variables are static in nature in that they cannot be changed after application
-initialization.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2">This delivery pattern is generally discouraged for production workload identity
-credentials, because environment variables are frequently exposed through
-debugging, logging, process inspection, and observability tooling. Security
-considerations for this pattern are discussed in <a href="#security-credential-delivery-env" class="auto internal xref">Section 5.1.2</a>.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
-</section>
-</div>
 <div id="filesystem">
-<section id="section-3.2">
+<section id="section-3.1">
         <h3 id="name-filesystem">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-filesystem" class="section-name selfRef">Filesystem</a>
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-filesystem" class="section-name selfRef">Filesystem</a>
         </h3>
-<p id="section-3.2-1">Filesystem delivery allows both container secret injection and access control.
+<p id="section-3.1-1">Filesystem delivery allows both container secret injection and access control.
 Many solutions find the main benefit in the asynchronous provisioning of the
 credentials to the workload. This allows the workload to run independently of
-the credentials update, and to access them by reading the file.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.2-2">Credential rotation requires a solution to detect soon-to-expire secrets as a
+the credentials update, and to access them by reading the file.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">Credential rotation requires a solution to detect soon-to-expire secrets as a
 rotation trigger. One practice is that the new secret is renewed <em>before</em> the
 old secret is invalidated. For example, the solution can choose to update the
 secret an hour before it is invalidated. This gives applications time to update
-without downtime.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.2-3">Because credentials are written to a shared filesystem, the solution is responsible
+without downtime.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">Because credentials are written to a shared filesystem, the solution is responsible
 for ensuring atomicity when updating them. Writes <span class="bcp14">SHOULD</span> be performed in a way
 that prevents workloads from observing a partially written file (for example by
 writing to a temporary file and renaming it atomically). Solutions <span class="bcp14">SHOULD</span> also
 perform a flush operation immediately after the update to minimize the chance
-of race conditions and ensure durability.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+of race conditions and ensure durability.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="local-apis">
-<section id="section-3.3">
+<section id="section-3.2">
         <h3 id="name-local-apis">
-<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-local-apis" class="section-name selfRef">Local APIs</a>
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-local-apis" class="section-name selfRef">Local APIs</a>
         </h3>
-<p id="section-3.3-1">In this pattern, the workload obtains credentials by communicating with a
-local API exposed by the credential issuer. Implementations commonly use UNIX
+<p id="section-3.2-1">In this pattern, the workload obtains credentials by communicating with a
+Local API exposed by the credential issuer. Implementations commonly use UNIX
 domain sockets (e.g., SPIFFE), loopback interfaces, or link-local "magic addresses"
 169.254.169.254 commonly used for cloud provider Instance Metadata Services as
-the transport mechanism.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.3-2">Local APIs support re-provisioning of updated credentials, either on demand
+the transport mechanism.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">Local APIs support re-provisioning of updated credentials, either on demand
 or through persistent connections that enable the issuer to push new credentials.
 This enables the use of short-lived, narrowly scoped credentials, improving
-security posture compared to long-lived secrets.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
-<p id="section-3.3-3">The security of this approach relies heavily on network isolation to prevent
-unauthorised access to the local API. In addition, the pattern requires client-side
+security posture compared to long-lived secrets.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">The security of this approach relies heavily on network isolation to prevent
+unauthorized access to the Local API. In addition, the pattern requires client-side
 code that is specific to the exposed API, which may introduce portability challenges
-across platforms and providers. Further security considerations for local APIs are
-discussed in <a href="#local-api-security" class="auto internal xref">Section 5.1.4</a>.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
+across platforms and providers. Further security considerations for Local APIs are
+discussed in <a href="#local-api-security" class="auto internal xref">Section 5.1.3</a>.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="env-vars">
+<section id="section-3.3">
+        <h3 id="name-environment-variables">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-environment-variables" class="section-name selfRef">Environment Variables</a>
+        </h3>
+<p id="section-3.3-1">Injecting the credentials into the environment variables allows for simple and
+fast deployments. Applications can directly access them through system-level
+mechanisms, e.g., through the <code>env</code> command in Linux. Note that environment
+variables are static in nature in that they cannot be changed after application
+initialization.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">While environment variables are a common delivery pattern, they are highly
+susceptible to leakage through logging, process inspection, error reporting, and
+other means. Filesystem delivery (<a href="#filesystem" class="auto internal xref">Section 3.1</a>) or Local APIs
+(<a href="#local-apis" class="auto internal xref">Section 3.2</a>) are therefore preferred, and environment variables <span class="bcp14">MUST NOT</span> be used for such credentials
+where the platform offers one of these alternatives. Some platforms offer no
+other delivery pattern; that case, along with the underlying security
+considerations, is discussed in <a href="#security-credential-delivery-env" class="auto internal xref">Section 5.1.4</a>.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1557,8 +1557,9 @@ calling the Token Review API.<a href="#section-4.1-8.2.1" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-4.1-8.3">
             <p id="section-4.1-8.3.1">Optionally, a JSON Web Key Set <span>[<a href="#JWK" class="cite xref">JWK</a>]</span> is exposed via a web server. This
-allows the Service Account Token to be validated outside of the cluster and
-access to the actual Kubernetes Control Plane API.<a href="#section-4.1-8.3.1" class="pilcrow">¶</a></p>
+allows external systems to validate Service Account Tokens independently,
+without requiring direct network access to, or credentials for, the Kubernetes
+Control Plane API.<a href="#section-4.1-8.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <span id="name-kubernetes-workload-identit"></span><div id="fig-kubernetes">
@@ -1744,11 +1745,12 @@ credentials in one of two forms:<a href="#section-4.2-1" class="pilcrow">¶</a><
 Alternative Name (SAN) URI field, along with the corresponding key pair.<a href="#section-4.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.2-2.2">
-            <p id="section-4.2-2.2.1">JWT-SVID, a signed JWT containing the workload's SPIFFE ID in the <code>sub</code> claim.
-The Workload API does not require clients to authenticate themselves.<a href="#section-4.2-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.2-2.2.1">JWT-SVID, a signed JWT containing the workload's SPIFFE ID in the <code>"sub"</code>
+claim.<a href="#section-4.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-4.2-3">Instead, the API implementation identifies workloads by collecting contextual
+<p id="section-4.2-3">The Workload API does not require clients to authenticate themselves. Instead,
+the API implementation identifies workloads by collecting contextual
 information from the environment, such as process attributes, kernel metadata,
 or orchestrator-provided labels. This out-of-band identification allows
 workloads to obtain their identity credentials without needing a pre-existing
@@ -1761,8 +1763,8 @@ target; see <a href="#audience" class="auto internal xref">Section 5.7</a> for d
 <p id="section-4.2-5">For validation, SPIFFE defines a "trust bundle" per trust domain. A trust
 bundle is a set of public keys encoded in JWK format <span>[<a href="#JWK" class="cite xref">JWK</a>]</span> that can be
 used to validate credentials. For JWT-SVIDs, the bundle contains signing keys
-identified by a <code>use</code> value of <code>jwt-svid</code>. For X509-SVIDs, the bundle contains
-CA certificates identified by a <code>use</code> value of <code>x509-svid</code>. Trust bundle
+identified by a <code>"use"</code> value of <code>jwt-svid</code>. For X509-SVIDs, the bundle contains
+CA certificates identified by a <code>"use"</code> value of <code>x509-svid</code>. Trust bundle
 contents can be retrieved from the Workload API or from a dedicated SPIFFE
 Bundle Endpoint (see <span>[<a href="#SPIFFE" class="cite xref">SPIFFE</a>]</span>).<a href="#section-4.2-5" class="pilcrow">¶</a></p>
 <p id="section-4.2-6">The following figure illustrates how a workload can use its SPIFFE identity to
@@ -2031,13 +2033,13 @@ introduces risks around token handling and exposure. Some providers mitigate thi
 by constraining token scope, lifetime, or audience, or by requiring additional
 proof-of-possession mechanisms. These mechanisms reduce the risk of token replay
 or misuse if the token is exfiltrated.<a href="#section-4.3-15" class="pilcrow">¶</a></p>
-<p id="section-4.3-16">Care must be taken to avoid using the same bearer credential across different
-trust domains without appropriate controls. While direct use of the issued credential
+<p id="section-4.3-16">The same bearer credential <span class="bcp14">MUST NOT</span> be used across different trust domains
+without appropriate controls. While direct use of the issued credential
 within the same cloud security boundary is common, reusing that credential outside of
-its intended scope can increase the risk of credential leakage. The federation step
-via the Secure Token Service (Step B1) serves as a boundary, allowing the original
-credential to be exchanged for a new credential that is scoped, audience-restricted,
-and appropriate for the target resource.<a href="#section-4.3-16" class="pilcrow">¶</a></p>
+its intended scope can increase the risk of credential leakage and enable
+impersonation. The federation step via the Secure Token Service (Step B1) serves as
+a boundary, allowing the original credential to be exchanged for a new credential
+that is scoped, audience-restricted, and appropriate for the target resource.<a href="#section-4.3-16" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="cicd">
@@ -2267,7 +2269,7 @@ network traffic and handles authentication transparently to the application code
 smallest set of audiences that lets it serve its purpose. A credential for direct access
 to a platform resource <span class="bcp14">SHOULD</span> be scoped to that resource; a credential used to
 federate to an Identity Provider <span class="bcp14">SHOULD</span> carry that Identity Provider as its sole audience.
-See <a href="#audience" class="auto internal xref">Section 5.7</a> for the rationale and for specific requirements on the <code>aud</code> claim of
+See <a href="#audience" class="auto internal xref">Section 5.7</a> for the rationale and for specific requirements on the <code>"aud"</code> claim of
 JWT-based credentials.<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1.1-2">As long as the workload platform supports issuance of multiple credentials, a workload
 <span class="bcp14">SHOULD</span> obtain a distinct credential for each resource or Identity
@@ -2277,57 +2279,36 @@ contexts conflates trust boundaries and increases the impact of a compromise
 (see <a href="#audience" class="auto internal xref">Section 5.7</a>).<a href="#section-5.1.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="security-credential-delivery-env">
+<div id="security-credential-delivery-filesystem">
 <section id="section-5.1.2">
-          <h4 id="name-environment-variables-2">
-<a href="#section-5.1.2" class="section-number selfRef">5.1.2. </a><a href="#name-environment-variables-2" class="section-name selfRef">Environment Variables</a>
-          </h4>
-<p id="section-5.1.2-1">Leveraging environment variables to provide credentials presents many security
-limitations. Environment variables have a wide set of use cases and are observed
-by many components. They are often captured for monitoring, observability,
-debugging and logging purposes and sent to components outside of the workload.
-Access control is not trivial and does not achieve the same security results as
-other methods. Additionally, environment variables may be spoofed or altered
-by other processes running on the same host, making them an unreliable transport
-for credentials in environments where process isolation is not strictly enforced.<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.1.2-2">This approach should be limited to non-production cases where convenience
-outweighs security considerations, and the provided secrets are limited in
-validity or utility. For example, an initial secret might be used during the
-setup of the application.<a href="#section-5.1.2-2" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="filesystem-1">
-<section id="section-5.1.3">
           <h4 id="name-filesystem-2">
-<a href="#section-5.1.3" class="section-number selfRef">5.1.3. </a><a href="#name-filesystem-2" class="section-name selfRef">Filesystem</a>
+<a href="#section-5.1.2" class="section-number selfRef">5.1.2. </a><a href="#name-filesystem-2" class="section-name selfRef">Filesystem</a>
           </h4>
-<ul class="normal">
-<li class="normal" id="section-5.1.3-1.1">
-              <p id="section-5.1.3-1.1.1">1) Access control to the mounted file should be configured to limit reads to
-   authorized applications. Linux supports solutions such as DAC (uid and
-   gid) or MAC (e.g., SELinux, AppArmor).<a href="#section-5.1.3-1.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-5.1.3-1.2">
-              <p id="section-5.1.3-1.2.1">2) Mounted shared memory should be isolated from other host OS paths and
-   processes. For example, on Linux this can be achieved by using namespaces.<a href="#section-5.1.3-1.2.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
+<p id="section-5.1.2-1">Access control to the mounted file <span class="bcp14">SHOULD</span> be configured to limit reads to
+authorized applications. Linux supports solutions such as DAC (uid and gid) or
+MAC (e.g., SELinux, AppArmor).<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-2">Credentials written to durable storage persist until they are overwritten or
+removed, and may be captured in backups, snapshots, or images. Implementations
+therefore commonly mount credentials from memory-backed storage instead. Such a
+mount <span class="bcp14">SHOULD</span> be isolated from other host OS paths and processes. For example, on
+Linux this can be achieved by using namespaces.<a href="#section-5.1.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="local-api-security">
-<section id="section-5.1.4">
+<section id="section-5.1.3">
           <h4 id="name-local-apis-2">
-<a href="#section-5.1.4" class="section-number selfRef">5.1.4. </a><a href="#name-local-apis-2" class="section-name selfRef">Local APIs</a>
+<a href="#section-5.1.3" class="section-number selfRef">5.1.3. </a><a href="#name-local-apis-2" class="section-name selfRef">Local APIs</a>
           </h4>
-<p id="section-5.1.4-1">Local APIs often operate in clear-text such as unencrypted HTTP without any
-confidentiality or integrity protection. Privileged component on the machine or
-in the infrastructure can be able to eavesdrop on the connection and the credential
-within it.<a href="#section-5.1.4-1" class="pilcrow">¶</a></p>
-<p id="section-5.1.4-2">Mitigating measures are required to mitigate a particular variant of Server-Side Request Forgery attacks
-against local APIs. For example, requiring a specific header that
-cannot be controlled externally or preventing the use of link-local IPs,
-including through redirects. See <a href="#application-interaction-with-credential-sources" class="auto internal xref">Section 5.1.5</a> for details.<a href="#section-5.1.4-2" class="pilcrow">¶</a></p>
-<p id="section-5.1.4-3">Adequate assurance that the identity represents the workload is required to make
+<p id="section-5.1.3-1">Local APIs often operate in clear-text, such as unencrypted HTTP, without any
+confidentiality or integrity protection. Privileged components on a host or in
+the infrastructure may be able to eavesdrop on a connection and view a
+credential within it.<a href="#section-5.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.3-2">Mitigations are required for Server-Side Request Forgery (SSRF) attacks against
+Local APIs. For example, implementations can require a specific header that
+cannot be controlled externally or prevent untrusted input from triggering
+requests to link-local IPs, including through redirects. See
+<a href="#application-interaction-with-credential-sources" class="auto internal xref">Section 5.1.5</a> for details.<a href="#section-5.1.3-2" class="pilcrow">¶</a></p>
+<p id="section-5.1.3-3">Adequate assurance that the identity represents the workload is required to make
 sure unauthorized access is denied and credentials are not issued to other
 parties when the Local API is unauthenticated. What constitutes adequate
 assurance depends on the security requirements of the deployment.
@@ -2336,11 +2317,29 @@ to identify workloads and grant access. The more fine-grained and strict this
 verification, the smaller the attack surface. For instance, allowing access by
 IP or other machine-global identifiers permits any process to receive the
 identity, while including user ID or other process-scoped identifiers prevents
-this broader access.<a href="#section-5.1.4-3" class="pilcrow">¶</a></p>
-<p id="section-5.1.4-4">The potential for denial-of-service attacks against Local APIs need to be taken
-into account and protective measures should be implemented. Depending on the platform
+this broader access.<a href="#section-5.1.3-3" class="pilcrow">¶</a></p>
+<p id="section-5.1.3-4">The potential for denial-of-service attacks against Local APIs needs to be taken
+into account and protective measures <span class="bcp14">SHOULD</span> be implemented. Depending on the platform
 these attacks can affect other workloads and their ability to receive a platform
-credential.<a href="#section-5.1.4-4" class="pilcrow">¶</a></p>
+credential.<a href="#section-5.1.3-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="security-credential-delivery-env">
+<section id="section-5.1.4">
+          <h4 id="name-environment-variables-2">
+<a href="#section-5.1.4" class="section-number selfRef">5.1.4. </a><a href="#name-environment-variables-2" class="section-name selfRef">Environment Variables</a>
+          </h4>
+<p id="section-5.1.4-1">Leveraging environment variables to provide credentials presents many security
+limitations. Environment variables have a wide set of use cases and are observed
+by many components. They are often captured for monitoring, observability,
+debugging and logging purposes and sent to components outside of the workload.
+Access control is not trivial and does not achieve the same security results as
+other methods. Additionally, environment variables may be spoofed or altered
+by other processes running on the same host, making them an unreliable transport
+for credentials in environments where process isolation is not strictly enforced.<a href="#section-5.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.4-2">For these reasons, environment variables <span class="bcp14">MUST NOT</span> be used to deliver workload
+identity credentials in production deployments where the platform offers another
+delivery pattern.<a href="#section-5.1.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="application-interaction-with-credential-sources">
@@ -2353,18 +2352,18 @@ even when platform isolation is correctly configured. Attackers commonly exploit
 itself to retrieve credentials rather than accessing the credential service directly.<a href="#section-5.1.5-1" class="pilcrow">¶</a></p>
 <p id="section-5.1.5-2">For example, untrusted input may be used to manipulate file paths when credentials are mounted
 on a filesystem, or to trigger requests to local credential endpoints such as metadata or
-workload APIs (for example via server-side request forgery). Similarly, command execution or
+workload APIs (for example via SSRF). Similarly, command execution or
 unintended outbound requests may result in bearer tokens or proof-of-possession key material
 being disclosed.<a href="#section-5.1.5-2" class="pilcrow">¶</a></p>
 <p id="section-5.1.5-3">Workloads therefore <span class="bcp14">MUST</span> treat credential locations as sensitive security boundaries.
 Untrusted input <span class="bcp14">MUST NOT</span> influence how credential files are accessed or how local credential
-APIs are contacted. Implementations <span class="bcp14">SHOULD</span> minimise which components can access credentials
+APIs are contacted. Implementations <span class="bcp14">SHOULD</span> minimize which components can access credentials
 and prefer proof-of-possession credentials over bearer tokens where supported. Failure to
-minimise credential access increases the attack surface by allowing more code paths to
+minimize credential access increases the attack surface by allowing more code paths to
 interact with sensitive material. Failing to use proof-of-possession credentials where
 available means that stolen bearer tokens can be replayed by an attacker from any location.<a href="#section-5.1.5-3" class="pilcrow">¶</a></p>
 <p id="section-5.1.5-4">These risks exist even when credential services are reachable only locally, since compromise
-often occurs through application behaviour rather than network access to the credential provider.<a href="#section-5.1.5-4" class="pilcrow">¶</a></p>
+often occurs through application behavior rather than network access to the credential provider.<a href="#section-5.1.5-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2374,14 +2373,14 @@ often occurs through application behaviour rather than network access to the cre
         <h3 id="name-token-typing">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-token-typing" class="section-name selfRef">Token typing</a>
         </h3>
-<p id="section-5.2-1">Issuers <span class="bcp14">SHOULD</span> strongly type the issued tokens to workloads via the JOSE <code>typ</code>
-header and Identity Providers accepting these tokens <span class="bcp14">SHOULD</span> validate the
-value of it according to policy. See <span><a href="https://rfc-editor.org/rfc/rfc8725#section-3.1" class="relref">Section 3.1</a> of [<a href="#JWT-BCP" class="cite xref">JWT-BCP</a>]</span> for details
-on explicit typing. Without explicit typing, a token intended for one purpose
+<p id="section-5.2-1">Issuers <span class="bcp14">SHOULD</span> strongly type the issued tokens to workloads via the JOSE <code>"typ"</code>
+header parameter (<span><a href="https://rfc-editor.org/rfc/rfc7515#section-4.1.9" class="relref">Section 4.1.9</a> of [<a href="#JWS" class="cite xref">JWS</a>]</span>), and Identity Providers
+accepting these tokens <span class="bcp14">SHOULD</span> validate its value according to policy. See
+<span><a href="https://rfc-editor.org/rfc/rfc8725#section-3.1" class="relref">Section 3.1</a> of [<a href="#JWT-BCP" class="cite xref">JWT-BCP</a>]</span> for details on explicit typing. Without explicit typing, a token intended for one purpose
 (e.g., a refresh token or an identity assertion) may be accepted in a context
 where a different token type is expected, enabling cross-protocol or
 cross-context token confusion attacks.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.2-2">Issuers <span class="bcp14">SHOULD</span> use <code>authorization-grant+jwt</code> as a <code>typ</code> value according to
+<p id="section-5.2-2">Issuers <span class="bcp14">SHOULD</span> use <code>authorization-grant+jwt</code> as a <code>"typ"</code> value according to
 <span>[<a href="#OAUTH-JWT" class="cite xref">OAUTH-JWT</a>]</span>. For broad support, <code>JWT</code> or <code>JOSE</code> <span class="bcp14">MAY</span> be used by
 issuers and accepted by authorization servers but it is important to highlight
 that a wide range of tokens, meant for all sorts of purposes, use these values
@@ -2397,8 +2396,9 @@ mitigate confusion.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
         <h3 id="name-custom-claims-are-important">
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-custom-claims-are-important" class="section-name selfRef">Custom claims are important for context</a>
         </h3>
-<p id="section-5.3-1">Some platform-issued credentials have custom claims that are vital for context
-and are required to be validated. For example, in a continuous integration and
+<p id="section-5.3-1">Some platform-issued credentials carry custom claims that are vital for context.
+Relying parties need to consider the values of these claims, not merely check
+that they are present. For example, in a continuous integration and
 deployment platform where a workload is scheduled for a Git repository, the
 branch is crucial. A "main" branch may be protected and considered trusted to
 federate to external authorization servers. But other branches may not be
@@ -2407,7 +2407,7 @@ allowed to access protected resources.<a href="#section-5.3-1" class="pilcrow">�
 Ignoring custom claims may result in overly permissive authorization decisions,
 such as granting a credential issued for an untrusted branch the same access as
 one issued for a protected branch. Platform issuers <span class="bcp14">SHOULD</span> allow differentiation
-based on the subject claim alone, so that authorization policies can be
+based on the <code>"sub"</code> (subject) claim alone, so that authorization policies can be
 expressed without requiring deep knowledge of vendor-specific claim structures.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2417,14 +2417,14 @@ expressed without requiring deep knowledge of vendor-specific claim structures.<
 <a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-token-lifetime" class="section-name selfRef">Token lifetime</a>
         </h3>
 <p id="section-5.4-1">Tokens <span class="bcp14">SHOULD NOT</span> exceed the lifetime of the workloads they represent. For
-example, a workload that has an expected lifetime of one hour should not receive
-a token valid for two hours or more. A token that outlives its workload may
+example, a token valid for two hours or more exceeds the lifetime of a workload
+that is expected to run for one hour. A token that outlives its workload may
 continue to be accepted by relying parties even after the workload (and its
 associated authorization context) has ceased to exist, enabling unauthorized
 access if the token is compromised.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
 <p id="section-5.4-2">Within the scope of this document, where a platform-issued credential is used
 to authenticate to retrieve an access token for an external authorization
-domain, short-lived credentials are recommended. Short-lived credentials
+domain, short-lived credentials are <span class="bcp14">RECOMMENDED</span>. Short-lived credentials
 reduce the window during which a stolen credential can be exploited and
 limit the need for explicit revocation infrastructure.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
 </section>
@@ -2439,9 +2439,8 @@ ceases to exist and <span class="bcp14">SHOULD</span> offer validators a mechani
 Without invalidation, tokens for terminated workloads remain usable until their
 natural expiry, creating a window for unauthorized use. Without a status query
 mechanism, relying parties have no way to detect that a workload has been
-removed and must accept the token as is. How these credentials are
-invalidated and the status is queried varies and is not in scope of this
-document.<a href="#section-5.5-1" class="pilcrow">¶</a></p>
+removed. How these credentials are invalidated and the status is queried varies
+and is not in scope of this document.<a href="#section-5.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="proof-of-possession">
@@ -2470,8 +2469,8 @@ of the external authorization domains.<a href="#section-5.6-1" class="pilcrow">�
 <a href="#section-5.7" class="section-number selfRef">5.7. </a><a href="#name-audience" class="section-name selfRef">Audience</a>
         </h3>
 <p id="section-5.7-1">For issued credentials in the form of JWTs, they <span class="bcp14">MUST</span> be audienced using the
-<code>aud</code> claim. Each JWT <span class="bcp14">SHOULD</span> only carry a single audience. Using multiple
-audiences in a single token means that any relying party listed in the <code>aud</code>
+<code>"aud"</code> claim. Each JWT <span class="bcp14">SHOULD</span> only carry a single audience. Using multiple
+audiences in a single token means that any relying party listed in the <code>"aud"</code>
 claim can present that token to any other party listed in the same claim,
 potentially gaining unintended access. A single-audience token limits the blast
 radius if the token is compromised or misused. We RECOMMEND using
@@ -2480,7 +2479,7 @@ security implications.<a href="#section-5.7-1" class="pilcrow">¶</a></p>
 <p id="section-5.7-2">Some workload platforms provide credentials for interacting with their own APIs
 (e.g., Kubernetes). These credentials <span class="bcp14">MUST NOT</span> be used beyond the platform API.
 In the example of Kubernetes, a token used for anything other than the Kubernetes
-API itself <span class="bcp14">MUST NOT</span> carry the Kubernetes server in the <code>aud</code> claim. Reusing a
+API itself <span class="bcp14">MUST NOT</span> carry the Kubernetes server in the <code>"aud"</code> claim. Reusing a
 platform API token for federation or resource access outside the platform
 conflates trust boundaries: the token's audience includes the platform, so any
 relying party that accepts it could impersonate the workload back to the
@@ -2495,7 +2494,7 @@ platform.<a href="#section-5.7-2" class="pilcrow">¶</a></p>
 <p id="section-5.8-1">In multi-tenant platforms, relying parties <span class="bcp14">MUST</span> carefully evaluate which attributes
 are considered trustworthy when making authorization decisions. Access or federation
 <span class="bcp14">MUST NOT</span> be granted based solely on untrusted or easily forgeable attributes.
-In particular, the <code>issuer</code> claim in such environments may not uniquely identify
+In particular, the <code>"iss"</code> (issuer) claim in such environments may not uniquely identify
 a trusted authority, since each tenant could be configured with the same issuer
 identifier.<a href="#section-5.8-1" class="pilcrow">¶</a></p>
 <p id="section-5.8-2">Relying parties <span class="bcp14">SHOULD</span> ensure that attributes used for authorization are bound
@@ -2537,6 +2536,10 @@ to cross-tenant privilege escalation or unauthorized access to shared resources.
 <dt id="JWK">[JWK]</dt>
         <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refTitle">"JSON Web Key (JWK)"</span>, <span class="seriesInfo">RFC 7517</span>, <span class="seriesInfo">DOI 10.17487/RFC7517</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7517">https://www.rfc-editor.org/rfc/rfc7517</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="JWS">[JWS]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">N. Sakimura</span>, <span class="refTitle">"JSON Web Signature (JWS)"</span>, <span class="seriesInfo">RFC 7515</span>, <span class="seriesInfo">DOI 10.17487/RFC7515</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7515">https://www.rfc-editor.org/rfc/rfc7515</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="JWT">[JWT]</dt>
         <dd>
@@ -2623,7 +2626,7 @@ to cross-tenant privilege escalation or unauthorized access to shared resources.
         <h3 id="name-custom-assertion-flows">
 <a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-custom-assertion-flows" class="section-name selfRef">Custom assertion flows</a>
         </h3>
-<p id="appendix-A.2-1">While <span>[<a href="#OAUTH-ASSERTION" class="cite xref">OAUTH-ASSERTION</a>]</span> and <span>[<a href="#OAUTH-JWT" class="cite xref">OAUTH-JWT</a>]</span> are the proposed standards for this pattern, some authorization servers use <span>[<a href="#OAUTH-TOKENEXCHANGE" class="cite xref">OAUTH-TOKENEXCHANGE</a>]</span> or a custom API for the issuance of an access token based on existing platform identity credentials. These patterns are not recommended and prevent interoperability.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-1">While <span>[<a href="#OAUTH-ASSERTION" class="cite xref">OAUTH-ASSERTION</a>]</span> and <span>[<a href="#OAUTH-JWT" class="cite xref">OAUTH-JWT</a>]</span> are the proposed standards for this pattern, some authorization servers use <span>[<a href="#OAUTH-TOKENEXCHANGE" class="cite xref">OAUTH-TOKENEXCHANGE</a>]</span> or a custom API for the issuance of an access token based on existing platform identity credentials. These patterns are discouraged as they prevent interoperability.<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2634,145 +2637,168 @@ to cross-tenant privilege escalation or unauthorized access to shared resources.
 <a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-document-history" class="section-name selfRef">Document History</a>
       </h2>
 <p id="appendix-B-1">[[ To be removed from the final specification ]]<a href="#appendix-B-1" class="pilcrow">¶</a></p>
-<p id="appendix-B-2">-04<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<p id="appendix-B-2">-06<a href="#appendix-B-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-3.1">
-          <p id="appendix-B-3.1.1">Address review feedback from Kathleen Moriarty and Joe Salowey<a href="#appendix-B-3.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-3.1.1">Address AD evaluation comments from Charles Eckel<a href="#appendix-B-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-3.2">
-          <p id="appendix-B-3.2.1">Expand introduction: explain the workload identity bootstrapping problem and the limitations of static credentials<a href="#appendix-B-3.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-3.2.1">Review use of BCP 14 language for consistency<a href="#appendix-B-3.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-3.3">
-          <p id="appendix-B-3.3.1">Expand SPIFFE section: trust bundles, JWT-SVID vs X509-SVID types, and Workload API identification<a href="#appendix-B-3.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-3.3.1">Reformat the filesystem security considerations and cover
+credentials on durable storage<a href="#appendix-B-3.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-3.4">
-          <p id="appendix-B-3.4.1">Explicitly discuss obtaining multiple tokens with distinct audiences across all platform patterns<a href="#appendix-B-3.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-3.4.1">Reference RFC 7515 for the JOSE "typ" header parameter<a href="#appendix-B-3.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-3.5">
-          <p id="appendix-B-3.5.1">Add "Application Interaction with Credential Sources" section covering SSRF and path traversal risks<a href="#appendix-B-3.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-3.5.1">Clarify Kubernetes JWK Set validation, SPIFFE Workload API client
+authentication, custom claim validation and workload invalidation<a href="#appendix-B-3.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-3.6">
-          <p id="appendix-B-3.6.1">Update reference formatting<a href="#appendix-B-3.6.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-3.7">
-          <p id="appendix-B-3.7.1">Editorial improvements and updated acknowledgements<a href="#appendix-B-3.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-3.6.1">Editorial improvements<a href="#appendix-B-3.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-4">-03<a href="#appendix-B-4" class="pilcrow">¶</a></p>
+<p id="appendix-B-4">-04<a href="#appendix-B-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-5.1">
-          <p id="appendix-B-5.1.1">Add service-mesh section<a href="#appendix-B-5.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-5.1.1">Address review feedback from Kathleen Moriarty and Joe Salowey<a href="#appendix-B-5.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-5.2">
-          <p id="appendix-B-5.2.1">Add multi-tenancy considerations<a href="#appendix-B-5.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-5.2.1">Expand introduction: explain the workload identity bootstrapping problem and the limitations of static credentials<a href="#appendix-B-5.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-5.3">
-          <p id="appendix-B-5.3.1">Add atomicity and flushing requirements to filesystem section<a href="#appendix-B-5.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-5.3.1">Expand SPIFFE section: trust bundles, JWT-SVID vs X509-SVID types, and Workload API identification<a href="#appendix-B-5.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-5.4">
-          <p id="appendix-B-5.4.1">Make it clear that invalidation is a matter of querying the status<a href="#appendix-B-5.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-5.4.1">Explicitly discuss obtaining multiple tokens with distinct audiences across all platform patterns<a href="#appendix-B-5.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-5.5">
-          <p id="appendix-B-5.5.1">Rework local api section &amp; security considerations<a href="#appendix-B-5.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-5.5.1">Add "Application Interaction with Credential Sources" section covering SSRF and path traversal risks<a href="#appendix-B-5.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-5.6">
-          <p id="appendix-B-5.6.1">Refer to RFC7517 in SPIFFE and add clarity on key distribution<a href="#appendix-B-5.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-5.6.1">Update reference formatting<a href="#appendix-B-5.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-5.7">
-          <p id="appendix-B-5.7.1">Editorial changes<a href="#appendix-B-5.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-5.7.1">Editorial improvements and updated acknowledgements<a href="#appendix-B-5.7.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-6">-02<a href="#appendix-B-6" class="pilcrow">¶</a></p>
+<p id="appendix-B-6">-03<a href="#appendix-B-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-7.1">
-          <p id="appendix-B-7.1.1">Updated structure, bringing concrete examples back into the main text.<a href="#appendix-B-7.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-7.1.1">Add service-mesh section<a href="#appendix-B-7.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-7.2">
-          <p id="appendix-B-7.2.1">Use more generic "federation" term instead of RFC 7523 specifics.<a href="#appendix-B-7.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-7.2.1">Add multi-tenancy considerations<a href="#appendix-B-7.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-7.3">
-          <p id="appendix-B-7.3.1">Overall editorial improvements.<a href="#appendix-B-7.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-7.3.1">Add atomicity and flushing requirements to filesystem section<a href="#appendix-B-7.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-7.4">
-          <p id="appendix-B-7.4.1">Fix reference of Kubernetes Token Request API<a href="#appendix-B-7.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-7.4.1">Make it clear that invalidation is a matter of querying the status<a href="#appendix-B-7.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-7.5">
-          <p id="appendix-B-7.5.1">Prefer the term "document" over "specification".<a href="#appendix-B-7.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-7.5.1">Rework local api section &amp; security considerations<a href="#appendix-B-7.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-7.6">
-          <p id="appendix-B-7.6.1">Update contributor and acknowledgements sections.<a href="#appendix-B-7.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-7.6.1">Refer to RFC7517 in SPIFFE and add clarity on key distribution<a href="#appendix-B-7.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-7.7">
-          <p id="appendix-B-7.7.1">Remove section about OIDC as it is too specific to a certain implementation.<a href="#appendix-B-7.7.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-B-7.8">
-          <p id="appendix-B-7.8.1">Rewrite abstract to better reflect the current content of the document.<a href="#appendix-B-7.8.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-7.7.1">Editorial changes<a href="#appendix-B-7.7.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-8">-01<a href="#appendix-B-8" class="pilcrow">¶</a></p>
+<p id="appendix-B-8">-02<a href="#appendix-B-8" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-9.1">
-          <p id="appendix-B-9.1.1">Add credential delivery mechanisms<a href="#appendix-B-9.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-9.1.1">Updated structure, bringing concrete examples back into the main text.<a href="#appendix-B-9.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-9.2">
-          <p id="appendix-B-9.2.1">Highlight relationship to other WIMSE work<a href="#appendix-B-9.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-9.2.1">Use more generic "federation" term instead of RFC 7523 specifics.<a href="#appendix-B-9.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-9.3">
-          <p id="appendix-B-9.3.1">Add details about token typing and relation to OpenID Connect<a href="#appendix-B-9.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-9.3.1">Overall editorial improvements.<a href="#appendix-B-9.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-9.4">
-          <p id="appendix-B-9.4.1">Add security considerations for audience<a href="#appendix-B-9.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-9.4.1">Fix reference of Kubernetes Token Request API<a href="#appendix-B-9.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-9.5">
+          <p id="appendix-B-9.5.1">Prefer the term "document" over "specification".<a href="#appendix-B-9.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-9.6">
+          <p id="appendix-B-9.6.1">Update contributor and acknowledgements sections.<a href="#appendix-B-9.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-9.7">
+          <p id="appendix-B-9.7.1">Remove section about OIDC as it is too specific to a certain implementation.<a href="#appendix-B-9.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-9.8">
+          <p id="appendix-B-9.8.1">Rewrite abstract to better reflect the current content of the document.<a href="#appendix-B-9.8.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-10">-00<a href="#appendix-B-10" class="pilcrow">¶</a></p>
+<p id="appendix-B-10">-01<a href="#appendix-B-10" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-11.1">
-          <p id="appendix-B-11.1.1">Rename draft with no content changes.<a href="#appendix-B-11.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-11.1.1">Add credential delivery mechanisms<a href="#appendix-B-11.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-11.2">
-          <p id="appendix-B-11.2.1">Set Arndt to Editor role.<a href="#appendix-B-11.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-11.2.1">Highlight relationship to other WIMSE work<a href="#appendix-B-11.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-11.3">
+          <p id="appendix-B-11.3.1">Add details about token typing and relation to OpenID Connect<a href="#appendix-B-11.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-11.4">
+          <p id="appendix-B-11.4.1">Add security considerations for audience<a href="#appendix-B-11.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-12"><strong>[as draft-wimse-workload-identity-bcp]</strong><a href="#appendix-B-12" class="pilcrow">¶</a></p>
-<p id="appendix-B-13">-02<a href="#appendix-B-13" class="pilcrow">¶</a></p>
+<p id="appendix-B-12">-00<a href="#appendix-B-12" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-B-14.1">
-          <p id="appendix-B-14.1.1">Move scope from Kubernetes to generic workload identity platform<a href="#appendix-B-14.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-B-13.1">
+          <p id="appendix-B-13.1.1">Rename draft with no content changes.<a href="#appendix-B-13.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-14.2">
-          <p id="appendix-B-14.2.1">Add various patterns to appendix<a href="#appendix-B-14.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-13.2">
+          <p id="appendix-B-13.2.1">Set Arndt to Editor role.<a href="#appendix-B-13.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-B-14"><strong>[as draft-wimse-workload-identity-bcp]</strong><a href="#appendix-B-14" class="pilcrow">¶</a></p>
+<p id="appendix-B-15">-02<a href="#appendix-B-15" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-B-14.2.2.1">
-              <p id="appendix-B-14.2.2.1.1">Kubernetes<a href="#appendix-B-14.2.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-B-16.1">
+          <p id="appendix-B-16.1.1">Move scope from Kubernetes to generic workload identity platform<a href="#appendix-B-16.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-B-14.2.2.2">
-              <p id="appendix-B-14.2.2.2.1">Cloud providers<a href="#appendix-B-14.2.2.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-16.2">
+          <p id="appendix-B-16.2.1">Add various patterns to appendix<a href="#appendix-B-16.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-16.2.2.1">
+              <p id="appendix-B-16.2.2.1.1">Kubernetes<a href="#appendix-B-16.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-B-14.2.2.3">
-              <p id="appendix-B-14.2.2.3.1">SPIFFE<a href="#appendix-B-14.2.2.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-B-16.2.2.2">
+              <p id="appendix-B-16.2.2.2.1">Cloud providers<a href="#appendix-B-16.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-B-14.2.2.4">
-              <p id="appendix-B-14.2.2.4.1">CI/CD<a href="#appendix-B-14.2.2.4.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-B-16.2.2.3">
+              <p id="appendix-B-16.2.2.3.1">SPIFFE<a href="#appendix-B-16.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="appendix-B-16.2.2.4">
+              <p id="appendix-B-16.2.2.4.1">CI/CD<a href="#appendix-B-16.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
-        <li class="normal" id="appendix-B-14.3">
-          <p id="appendix-B-14.3.1">Add some security considerations<a href="#appendix-B-14.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-16.3">
+          <p id="appendix-B-16.3.1">Add some security considerations<a href="#appendix-B-16.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-B-14.4">
-          <p id="appendix-B-14.4.1">Update title<a href="#appendix-B-14.4.1" class="pilcrow">¶</a></p>
-</li>
-      </ul>
-<p id="appendix-B-15">-01<a href="#appendix-B-15" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-B-16.1">
-          <p id="appendix-B-16.1.1">Editorial updates<a href="#appendix-B-16.1.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-B-16.4">
+          <p id="appendix-B-16.4.1">Update title<a href="#appendix-B-16.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-B-17">-00<a href="#appendix-B-17" class="pilcrow">¶</a></p>
+<p id="appendix-B-17">-01<a href="#appendix-B-17" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-18.1">
-          <p id="appendix-B-18.1.1">Adopted by the WIMSE WG<a href="#appendix-B-18.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-18.1.1">Editorial updates<a href="#appendix-B-18.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-B-19">-00<a href="#appendix-B-19" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-20.1">
+          <p id="appendix-B-20.1.1">Adopted by the WIMSE WG<a href="#appendix-B-20.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
