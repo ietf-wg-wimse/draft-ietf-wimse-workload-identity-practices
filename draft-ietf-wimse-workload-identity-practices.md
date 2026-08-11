@@ -27,7 +27,7 @@ author:
     ins: A. Schwenkschuster
     name: Arndt Schwenkschuster
     email: arndts.ietf@gmail.com
-    org: SPIRL
+    org: Defakto Security
 
  -
     ins: Y. Rosomakho
