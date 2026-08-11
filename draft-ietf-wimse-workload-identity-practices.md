@@ -677,11 +677,9 @@ While token structure is vendor-specific, all tokens contain claims carrying
 the basic context of the executed tasks, such as source code management data
 such as git branch, initiation context and more.
 
-A specific use case in this pattern is using the identity to perform code
-signing operations or gain access to the signing material and use it to attach
-integrity proof to the build output. For this scenario, it is important
-to consider that the strength of the integrity is limited to the strength of
-the credential used and the security considerations listed in this document.
+CI-CD pipelines sometimes use credentials to perform code signing
+operations integrity proof of the build output. As explained in the {{security}}, strength of the integrity is limited to the strength of
+the credential used.
 
 ## Service Meshes
 
