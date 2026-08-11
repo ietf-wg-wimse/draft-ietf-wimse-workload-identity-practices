@@ -984,12 +984,14 @@ While {{OAUTH-ASSERTION}} and {{OAUTH-JWT}} are the proposed standards for this 
    -06
 
    * Address AD evaluation comments from Charles Eckel
+   * Address review feedback from Andrii Deinega
    * Review use of BCP 14 language for consistency
    * Reformat the filesystem security considerations and cover
      credentials on durable storage
    * Reference RFC 7515 for the JOSE "typ" header parameter
    * Clarify Kubernetes JWK Set validation, SPIFFE Workload API client
      authentication, custom claim validation and workload invalidation
+   * Update author affiliation
    * Editorial improvements
 
    -04
