@@ -101,7 +101,7 @@ turn, issue credentials that grant access to resources.
 Traditionally, workloads were provisioned with static client credentials (e.g.,
 passwords, API keys) and used the corresponding flow as described in {{Section 1.3.4 of OAUTH-FRAMEWORK}}
 to retrieve an OAuth 2.0 access token. This model presents a number of security
-and maintenance issues. Secrets must be provisioned and rotated, which requires
+and maintenance issues. Secrets need to be provisioned and rotated, which requires
 either automation to be built, or periodic manual effort. Secrets may be stolen
 and used by attackers to impersonate the workload. Flows outside of the
 OAuth 2.0 framework (such as direct API keys or HTTP basic authentication)
@@ -187,20 +187,7 @@ section highlights the pros and cons of common solutions. Security
 recommendations for these methods are covered in
 {{security-credential-delivery}}.
 
-## Environment Variables
-
-Injecting the credentials into the environment variables allows for simple and
-fast deployments. Applications can directly access them through system-level
-mechanisms, e.g., through the `env` command in Linux. Note that environment
-variables are static in nature in that they cannot be changed after application
-initialization.
-
-This delivery pattern is generally discouraged for production workload identity
-credentials, because environment variables are frequently exposed through
-debugging, logging, process inspection, and observability tooling. Security
-considerations for this pattern are discussed in {{security-credential-delivery-env}}.
-
-## Filesystem
+## Filesystem {#filesystem}
 
 Filesystem delivery allows both container secret injection and access control.
 Many solutions find the main benefit in the asynchronous provisioning of the
@@ -220,10 +207,10 @@ writing to a temporary file and renaming it atomically). Solutions SHOULD also
 perform a flush operation immediately after the update to minimize the chance
 of race conditions and ensure durability.
 
-## Local APIs
+## Local APIs {#local-apis}
 
 In this pattern, the workload obtains credentials by communicating with a
-local API exposed by the credential issuer. Implementations commonly use UNIX
+Local API exposed by the credential issuer. Implementations commonly use UNIX
 domain sockets (e.g., SPIFFE), loopback interfaces, or link-local "magic addresses"
 169.254.169.254 commonly used for cloud provider Instance Metadata Services as
 the transport mechanism.
@@ -234,10 +221,26 @@ This enables the use of short-lived, narrowly scoped credentials, improving
 security posture compared to long-lived secrets.
 
 The security of this approach relies heavily on network isolation to prevent
-unauthorised access to the local API. In addition, the pattern requires client-side
+unauthorized access to the Local API. In addition, the pattern requires client-side
 code that is specific to the exposed API, which may introduce portability challenges
-across platforms and providers. Further security considerations for local APIs are
+across platforms and providers. Further security considerations for Local APIs are
 discussed in {{local-api-security}}.
+
+## Environment Variables {#env-vars}
+
+Injecting the credentials into the environment variables allows for simple and
+fast deployments. Applications can directly access them through system-level
+mechanisms, e.g., through the `env` command in Linux. Note that environment
+variables are static in nature in that they cannot be changed after application
+initialization.
+
+While environment variables are a common delivery pattern, they are highly
+susceptible to leakage through logging, process inspection, error reporting, and
+other means. Filesystem delivery ({{filesystem}}) or Local APIs
+({{local-apis}}) are therefore preferred, and environment variables MUST NOT be used for such credentials
+where the platform offers one of these alternatives. Some platforms offer no
+other delivery pattern; that case, along with the underlying security
+considerations, is discussed in {{security-credential-delivery-env}}.
 
 # Practices {#practices}
 
@@ -296,8 +299,9 @@ To validate service account tokens, Kubernetes allows workloads to:
   calling the Token Review API.
 
 * Optionally, a JSON Web Key Set {{!JWK=RFC7517}} is exposed via a web server. This
-  allows the Service Account Token to be validated outside of the cluster and
-  access to the actual Kubernetes Control Plane API.
+  allows external systems to validate Service Account Tokens independently,
+  without requiring direct network access to, or credentials for, the Kubernetes
+  Control Plane API.
 
 ~~~aasvg
          +-------------------------------------------------+
@@ -415,10 +419,11 @@ credentials in one of two forms:
 * X509-SVID, a X.509 certificate containing the workload's SPIFFE ID in the Subject
   Alternative Name (SAN) URI field, along with the corresponding key pair.
 
-* JWT-SVID, a signed JWT containing the workload's SPIFFE ID in the `sub` claim.
-  The Workload API does not require clients to authenticate themselves.
+* JWT-SVID, a signed JWT containing the workload's SPIFFE ID in the `"sub"`
+  claim.
 
-Instead, the API implementation identifies workloads by collecting contextual
+The Workload API does not require clients to authenticate themselves. Instead,
+the API implementation identifies workloads by collecting contextual
 information from the environment, such as process attributes, kernel metadata,
 or orchestrator-provided labels. This out-of-band identification allows
 workloads to obtain their identity credentials without needing a pre-existing
@@ -433,8 +438,8 @@ target; see {{audience}} for details.
 For validation, SPIFFE defines a "trust bundle" per trust domain. A trust
 bundle is a set of public keys encoded in JWK format {{JWK}} that can be
 used to validate credentials. For JWT-SVIDs, the bundle contains signing keys
-identified by a `use` value of `jwt-svid`. For X509-SVIDs, the bundle contains
-CA certificates identified by a `use` value of `x509-svid`. Trust bundle
+identified by a `"use"` value of `jwt-svid`. For X509-SVIDs, the bundle contains
+CA certificates identified by a `"use"` value of `x509-svid`. Trust bundle
 contents can be retrieved from the Workload API or from a dedicated SPIFFE
 Bundle Endpoint (see {{SPIFFE}}).
 
@@ -616,13 +621,13 @@ by constraining token scope, lifetime, or audience, or by requiring additional
 proof-of-possession mechanisms. These mechanisms reduce the risk of token replay
 or misuse if the token is exfiltrated.
 
-Care must be taken to avoid using the same bearer credential across different
-trust domains without appropriate controls. While direct use of the issued credential
+The same bearer credential MUST NOT be used across different trust domains
+without appropriate controls. While direct use of the issued credential
 within the same cloud security boundary is common, reusing that credential outside of
-its intended scope can increase the risk of credential leakage. The federation step
-via the Secure Token Service (Step B1) serves as a boundary, allowing the original
-credential to be exchanged for a new credential that is scoped, audience-restricted,
-and appropriate for the target resource.
+its intended scope can increase the risk of credential leakage and enable
+impersonation. The federation step via the Secure Token Service (Step B1) serves as
+a boundary, allowing the original credential to be exchanged for a new credential
+that is scoped, audience-restricted, and appropriate for the target resource.
 
 ## Continuous Integration and Deployment Systems {#cicd}
 
@@ -743,7 +748,7 @@ Credentials SHOULD be scoped as narrowly as possible: each SHOULD carry the
 smallest set of audiences that lets it serve its purpose. A credential for direct access
 to a platform resource SHOULD be scoped to that resource; a credential used to
 federate to an Identity Provider SHOULD carry that Identity Provider as its sole audience.
-See {{audience}} for the rationale and for specific requirements on the `aud` claim of
+See {{audience}} for the rationale and for specific requirements on the `"aud"` claim of
 JWT-based credentials.
 
 As long as the workload platform supports issuance of multiple credentials, a workload
@@ -753,42 +758,30 @@ Provider SHOULD NOT be used for direct platform access; reusing a credential acr
 contexts conflates trust boundaries and increases the impact of a compromise
 (see {{audience}}).
 
-### Environment Variables {#security-credential-delivery-env}
+### Filesystem {#security-credential-delivery-filesystem}
 
-Leveraging environment variables to provide credentials presents many security
-limitations. Environment variables have a wide set of use cases and are observed
-by many components. They are often captured for monitoring, observability,
-debugging and logging purposes and sent to components outside of the workload.
-Access control is not trivial and does not achieve the same security results as
-other methods. Additionally, environment variables may be spoofed or altered
-by other processes running on the same host, making them an unreliable transport
-for credentials in environments where process isolation is not strictly enforced.
+Access control to the mounted file SHOULD be configured to limit reads to
+authorized applications. Linux supports solutions such as DAC (uid and gid) or
+MAC (e.g., SELinux, AppArmor).
 
-This approach should be limited to non-production cases where convenience
-outweighs security considerations, and the provided secrets are limited in
-validity or utility. For example, an initial secret might be used during the
-setup of the application.
-
-### Filesystem
-
-* 1) Access control to the mounted file should be configured to limit reads to
-     authorized applications. Linux supports solutions such as DAC (uid and
-     gid) or MAC (e.g., SELinux, AppArmor).
-
-* 2) Mounted shared memory should be isolated from other host OS paths and
-     processes. For example, on Linux this can be achieved by using namespaces.
+Credentials written to durable storage persist until they are overwritten or
+removed, and may be captured in backups, snapshots, or images. Implementations
+therefore commonly mount credentials from memory-backed storage instead. Such a
+mount SHOULD be isolated from other host OS paths and processes. For example, on
+Linux this can be achieved by using namespaces.
 
 ### Local APIs {#local-api-security}
 
-Local APIs often operate in clear-text such as unencrypted HTTP without any
-confidentiality or integrity protection. Privileged component on the machine or
-in the infrastructure can be able to eavesdrop on the connection and the credential
-within it.
+Local APIs often operate in clear-text, such as unencrypted HTTP, without any
+confidentiality or integrity protection. Privileged components on a host or in
+the infrastructure may be able to eavesdrop on a connection and view a
+credential within it.
 
-Mitigating measures are required to mitigate a particular variant of Server-Side Request Forgery attacks
-against local APIs. For example, requiring a specific header that
-cannot be controlled externally or preventing the use of link-local IPs,
-including through redirects. See {{application-interaction-with-credential-sources}} for details.
+Mitigations are required for Server-Side Request Forgery (SSRF) attacks against
+Local APIs. For example, implementations can require a specific header that
+cannot be controlled externally or prevent untrusted input from triggering
+requests to link-local IPs, including through redirects. See
+{{application-interaction-with-credential-sources}} for details.
 
 Adequate assurance that the identity represents the workload is required to make
 sure unauthorized access is denied and credentials are not issued to other
@@ -801,10 +794,25 @@ IP or other machine-global identifiers permits any process to receive the
 identity, while including user ID or other process-scoped identifiers prevents
 this broader access.
 
-The potential for denial-of-service attacks against Local APIs need to be taken
-into account and protective measures should be implemented. Depending on the platform
+The potential for denial-of-service attacks against Local APIs needs to be taken
+into account and protective measures SHOULD be implemented. Depending on the platform
 these attacks can affect other workloads and their ability to receive a platform
 credential.
+
+### Environment Variables {#security-credential-delivery-env}
+
+Leveraging environment variables to provide credentials presents many security
+limitations. Environment variables have a wide set of use cases and are observed
+by many components. They are often captured for monitoring, observability,
+debugging and logging purposes and sent to components outside of the workload.
+Access control is not trivial and does not achieve the same security results as
+other methods. Additionally, environment variables may be spoofed or altered
+by other processes running on the same host, making them an unreliable transport
+for credentials in environments where process isolation is not strictly enforced.
+
+For these reasons, environment variables MUST NOT be used to deliver workload
+identity credentials in production deployments where the platform offers another
+delivery pattern.
 
 ### Application Interaction with Credential Sources {#application-interaction-with-credential-sources}
 
@@ -814,32 +822,32 @@ itself to retrieve credentials rather than accessing the credential service dire
 
 For example, untrusted input may be used to manipulate file paths when credentials are mounted
 on a filesystem, or to trigger requests to local credential endpoints such as metadata or
-workload APIs (for example via server-side request forgery). Similarly, command execution or
+workload APIs (for example via SSRF). Similarly, command execution or
 unintended outbound requests may result in bearer tokens or proof-of-possession key material
 being disclosed.
 
 Workloads therefore MUST treat credential locations as sensitive security boundaries.
 Untrusted input MUST NOT influence how credential files are accessed or how local credential
-APIs are contacted. Implementations SHOULD minimise which components can access credentials
+APIs are contacted. Implementations SHOULD minimize which components can access credentials
 and prefer proof-of-possession credentials over bearer tokens where supported. Failure to
-minimise credential access increases the attack surface by allowing more code paths to
+minimize credential access increases the attack surface by allowing more code paths to
 interact with sensitive material. Failing to use proof-of-possession credentials where
 available means that stolen bearer tokens can be replayed by an attacker from any location.
 
 These risks exist even when credential services are reachable only locally, since compromise
-often occurs through application behaviour rather than network access to the credential provider.
+often occurs through application behavior rather than network access to the credential provider.
 
 ## Token typing
 
-Issuers SHOULD strongly type the issued tokens to workloads via the JOSE `typ`
-header and Identity Providers accepting these tokens SHOULD validate the
-value of it according to policy. See {{Section 3.1 of !JWT-BCP=RFC8725}} for details
-on explicit typing. Without explicit typing, a token intended for one purpose
+Issuers SHOULD strongly type the issued tokens to workloads via the JOSE `"typ"`
+header parameter ({{Section 4.1.9 of !JWS=RFC7515}}), and Identity Providers
+accepting these tokens SHOULD validate its value according to policy. See
+{{Section 3.1 of !JWT-BCP=RFC8725}} for details on explicit typing. Without explicit typing, a token intended for one purpose
 (e.g., a refresh token or an identity assertion) may be accepted in a context
 where a different token type is expected, enabling cross-protocol or
 cross-context token confusion attacks.
 
-Issuers SHOULD use `authorization-grant+jwt` as a `typ` value according to
+Issuers SHOULD use `authorization-grant+jwt` as a `"typ"` value according to
 {{!OAUTH-JWT=I-D.ietf-oauth-rfc7523bis}}. For broad support, `JWT` or `JOSE` MAY be used by
 issuers and accepted by authorization servers but it is important to highlight
 that a wide range of tokens, meant for all sorts of purposes, use these values
@@ -851,8 +859,9 @@ mitigate confusion.
 
 ## Custom claims are important for context
 
-Some platform-issued credentials have custom claims that are vital for context
-and are required to be validated. For example, in a continuous integration and
+Some platform-issued credentials carry custom claims that are vital for context.
+Relying parties need to consider the values of these claims, not merely check
+that they are present. For example, in a continuous integration and
 deployment platform where a workload is scheduled for a Git repository, the
 branch is crucial. A "main" branch may be protected and considered trusted to
 federate to external authorization servers. But other branches may not be
@@ -862,21 +871,21 @@ Authorization servers that validate assertions SHOULD make use of these claims.
 Ignoring custom claims may result in overly permissive authorization decisions,
 such as granting a credential issued for an untrusted branch the same access as
 one issued for a protected branch. Platform issuers SHOULD allow differentiation
-based on the subject claim alone, so that authorization policies can be
+based on the `"sub"` (subject) claim alone, so that authorization policies can be
 expressed without requiring deep knowledge of vendor-specific claim structures.
 
 ## Token lifetime
 
-Tokens SHOULD NOT exceed the lifetime of the workload instance they represent.
-For example, an instance that has an expected lifetime of one hour should not
-receive a token valid for two hours or more. A token that outlives its instance
-may continue to be accepted by relying parties even after the instance (and its
+Tokens SHOULD NOT exceed the lifetime of the workloads instance they represent.
+For example, a token valid for two hours or more exceeds the lifetime of a
+workload that is expected to run for one hour. A token that outlives its workload
+may continue to be accepted by relying parties even after the workload (and its
 associated authorization context) has ceased to exist, enabling unauthorized
 access if the token is compromised.
 
 Within the scope of this document, where a platform-issued credential is used
 to authenticate to retrieve an access token for an external authorization
-domain, short-lived credentials are recommended. Short-lived credentials
+domain, short-lived credentials are RECOMMENDED. Short-lived credentials
 reduce the window during which a stolen credential can be exploited and
 limit the need for explicit revocation infrastructure.
 
@@ -889,9 +898,8 @@ example, replicas or parallel tasks), this applies to each instance
 individually. Without this capability, credentials for terminated instances
 remain usable until their natural expiry, creating a window for unauthorized
 use. Without a status query mechanism, relying parties have no way to detect
-that an instance has been removed and must accept the credential as is. How these credentials are
-invalidated and the status is queried varies and is not in scope of this
-document.
+that an instance has been removed. How these credentials are invalidated and
+the status is queried varies and is not in scope of this document.
 
 ## Proof of possession {#proof-of-possession}
 
@@ -915,8 +923,8 @@ of the external authorization domains.
 ## Audience {#audience}
 
 For issued credentials in the form of JWTs, they MUST be audienced using the
-`aud` claim. Each JWT SHOULD only carry a single audience. Using multiple
-audiences in a single token means that any relying party listed in the `aud`
+`"aud"` claim. Each JWT SHOULD only carry a single audience. Using multiple
+audiences in a single token means that any relying party listed in the `"aud"`
 claim can present that token to any other party listed in the same claim,
 potentially gaining unintended access. A single-audience token limits the blast
 radius if the token is compromised or misused. We RECOMMEND using
@@ -926,7 +934,7 @@ security implications.
 Some workload platforms provide credentials for interacting with their own APIs
 (e.g., Kubernetes). These credentials MUST NOT be used beyond the platform API.
 In the example of Kubernetes, a token used for anything other than the Kubernetes
-API itself MUST NOT carry the Kubernetes server in the `aud` claim. Reusing a
+API itself MUST NOT carry the Kubernetes server in the `"aud"` claim. Reusing a
 platform API token for federation or resource access outside the platform
 conflates trust boundaries: the token's audience includes the platform, so any
 relying party that accepts it could impersonate the workload back to the
@@ -937,7 +945,7 @@ platform.
 In multi-tenant platforms, relying parties MUST carefully evaluate which attributes
 are considered trustworthy when making authorization decisions. Access or federation
 MUST NOT be granted based solely on untrusted or easily forgeable attributes.
-In particular, the `issuer` claim in such environments may not uniquely identify
+In particular, the `"iss"` (issuer) claim in such environments may not uniquely identify
 a trusted authority, since each tenant could be configured with the same issuer
 identifier.
 
@@ -967,11 +975,22 @@ In this case, technically, the protected resource and workload are part of the s
 
 ## Custom assertion flows
 
-While {{OAUTH-ASSERTION}} and {{OAUTH-JWT}} are the proposed standards for this pattern, some authorization servers use {{!OAUTH-TOKENEXCHANGE=RFC8693}} or a custom API for the issuance of an access token based on existing platform identity credentials. These patterns are not recommended and prevent interoperability.
+While {{OAUTH-ASSERTION}} and {{OAUTH-JWT}} are the proposed standards for this pattern, some authorization servers use {{!OAUTH-TOKENEXCHANGE=RFC8693}} or a custom API for the issuance of an access token based on existing platform identity credentials. These patterns are discouraged as they prevent interoperability.
 
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -06
+
+   * Address AD evaluation comments from Charles Eckel
+   * Review use of BCP 14 language for consistency
+   * Reformat the filesystem security considerations and cover
+     credentials on durable storage
+   * Reference RFC 7515 for the JOSE "typ" header parameter
+   * Clarify Kubernetes JWK Set validation, SPIFFE Workload API client
+     authentication, custom claim validation and workload invalidation
+   * Editorial improvements
 
    -04
 
