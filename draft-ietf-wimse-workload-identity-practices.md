@@ -961,7 +961,9 @@ This document does not require actions by IANA.
 
 # Acknowledgements
 
-The authors and contributors would like to thank the following people for their feedback and contributions to this document (in no particular order): Dag Sneeggen, Ned Smith, Dean H. Saxe, Yaron Sheffer, Andrii Deinega, Marcel Levy, Justin Richer, Pieter Kasselmann, Simon Canning, Evan Gilman, Joseph Salowey, Kathleen Moriarty and Flemming Andreasen.
+The authors and contributors would like to thank the following people for their feedback and contributions to this document (in no particular order): Dag Sneeggen, Ned Smith, Dean H. Saxe, Yaron Sheffer, Andrii Deinega, Marcel Levy, Pieter Kasselmann, Simon Canning, Evan Gilman, Joseph Salowey, Kathleen Moriarty, Brian Campbell, Judith Kahrer and Flemming Andreasen.
+
+The authors would also like to thank Justin Richer for serving as document shepherd and Charles Eckel for his AD evaluation of this document.
 
 --- back
 
@@ -992,6 +994,7 @@ While {{OAUTH-ASSERTION}} and {{OAUTH-JWT}} are the proposed standards for this 
    * Clarify Kubernetes JWK Set validation, SPIFFE Workload API client
      authentication, custom claim validation and workload invalidation
    * Update author affiliation
+   * Update acknowledgements
    * Editorial improvements
 
    -05
