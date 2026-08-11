@@ -2139,6 +2139,9 @@ Provider it needs to interact with.<a href="#section-4.4-2" class="pilcrow">¶</
 <p id="section-4.4-6">While token structure is vendor-specific, all tokens contain claims carrying
 the basic context of the executed tasks, such as source code management data
 such as git branch, initiation context and more.<a href="#section-4.4-6" class="pilcrow">¶</a></p>
+<p id="section-4.4-7">CI-CD pipelines sometimes use credentials to perform code signing
+operations integrity proof of the build output. As explained in the <a href="#security" class="auto internal xref">Section 5</a>, strength of the integrity is limited to the strength of
+the credential used.<a href="#section-4.4-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="service-meshes">
@@ -2416,10 +2419,10 @@ expressed without requiring deep knowledge of vendor-specific claim structures.<
         <h3 id="name-token-lifetime">
 <a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-token-lifetime" class="section-name selfRef">Token lifetime</a>
         </h3>
-<p id="section-5.4-1">Tokens <span class="bcp14">SHOULD NOT</span> exceed the lifetime of the workloads they represent. For
-example, a token valid for two hours or more exceeds the lifetime of a workload
-that is expected to run for one hour. A token that outlives its workload may
-continue to be accepted by relying parties even after the workload (and its
+<p id="section-5.4-1">Tokens <span class="bcp14">SHOULD NOT</span> exceed the lifetime of the workloads instance they represent.
+For example, a token valid for two hours or more exceeds the lifetime of a
+workload that is expected to run for one hour. A token that outlives its workload
+may continue to be accepted by relying parties even after the workload (and its
 associated authorization context) has ceased to exist, enabling unauthorized
 access if the token is compromised.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
 <p id="section-5.4-2">Within the scope of this document, where a platform-issued credential is used
@@ -2434,13 +2437,15 @@ limit the need for explicit revocation infrastructure.<a href="#section-5.4-2" c
         <h3 id="name-workload-lifecycle-and-inva">
 <a href="#section-5.5" class="section-number selfRef">5.5. </a><a href="#name-workload-lifecycle-and-inva" class="section-name selfRef">Workload lifecycle and invalidation</a>
         </h3>
-<p id="section-5.5-1">Platform issuers <span class="bcp14">SHOULD</span> invalidate tokens when the workload stops, pauses, or
-ceases to exist and <span class="bcp14">SHOULD</span> offer validators a mechanism to query this status.
-Without invalidation, tokens for terminated workloads remain usable until their
-natural expiry, creating a window for unauthorized use. Without a status query
-mechanism, relying parties have no way to detect that a workload has been
-removed. How these credentials are invalidated and the status is queried varies
-and is not in scope of this document.<a href="#section-5.5-1" class="pilcrow">¶</a></p>
+<p id="section-5.5-1">Platform issuers <span class="bcp14">SHOULD</span> invalidate credentials when an instance of the workload
+stops, pauses, or ceases to exist and <span class="bcp14">SHOULD</span> offer validators a mechanism to
+query this status. Because a workload may run as multiple instances (for
+example, replicas or parallel tasks), this applies to each instance
+individually. Without this capability, credentials for terminated instances
+remain usable until their natural expiry, creating a window for unauthorized
+use. Without a status query mechanism, relying parties have no way to detect
+that an instance has been removed. How these credentials are invalidated and
+the status is queried varies and is not in scope of this document.<a href="#section-5.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="proof-of-possession">
@@ -2448,19 +2453,20 @@ and is not in scope of this document.<a href="#section-5.5-1" class="pilcrow">¶
         <h3 id="name-proof-of-possession">
 <a href="#section-5.6" class="section-number selfRef">5.6. </a><a href="#name-proof-of-possession" class="section-name selfRef">Proof of possession</a>
         </h3>
-<p id="section-5.6-1">Identity credentials <span class="bcp14">SHOULD</span> be bound to workloads, and proof of possession
-<span class="bcp14">SHOULD</span> be performed when these credentials are used. This mitigates token theft.
-Without proof of possession, a bearer token intercepted in transit (e.g., via a
+<p id="section-5.6-1">Identity credentials <span class="bcp14">SHOULD</span> be bound to the workload instance they represent,
+and proof of possession <span class="bcp14">SHOULD</span> be performed when these credentials are used.
+This reduces the impact of token theft to the scope of the proof of possession.<a href="#section-5.6-1" class="pilcrow">¶</a></p>
+<p id="section-5.6-2">Without proof of possession, a bearer token intercepted in transit (e.g., via a
 compromised log, a man-in-the-middle, or SSRF) can be replayed by any party,
-from any location, for the remaining lifetime of the token.
-For X.509-based credentials, proof of possession is inherent through the private
+from any location, for the remaining lifetime of the token.<a href="#section-5.6-2" class="pilcrow">¶</a></p>
+<p id="section-5.6-3">For X.509-based credentials, proof of possession is inherent through the private
 key associated with the certificate. For JWT-based credentials, the JWT <span class="bcp14">SHOULD</span>
 be key-bound with an adequate proof-of-key-possession mechanism. Where proof of
 possession is not supported by the platform or the relying party, deployments
 <span class="bcp14">SHOULD</span> compensate with shorter token lifetimes, stricter audience scoping, and
 additional network-level controls such as IP allowlisting or mutual TLS. This
 proof of possession applies to both the platform credential and the access token
-of the external authorization domains.<a href="#section-5.6-1" class="pilcrow">¶</a></p>
+of the external authorization domains.<a href="#section-5.6-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="audience">
