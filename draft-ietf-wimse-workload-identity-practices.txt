@@ -3,7 +3,7 @@
 
 
 Workload Identity in Multi System Environments        A. Schwenkschuster
-Internet-Draft                                                     SPIRL
+Internet-Draft                                          Defakto Security
 Intended status: Informational                              Y. Rosomakho
 Expires: 12 February 2027                                        Zscaler
                                                           11 August 2026
@@ -1298,7 +1298,7 @@ Contributors
 Authors' Addresses
 
    Arndt Schwenkschuster
-   SPIRL
+   Defakto Security
    Email: arndts.ietf@gmail.com
 
 
