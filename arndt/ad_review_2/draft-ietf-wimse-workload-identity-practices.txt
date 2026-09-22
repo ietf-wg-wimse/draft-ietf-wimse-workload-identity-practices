@@ -1213,6 +1213,10 @@ Appendix B.  Document History
 
    [[ To be removed from the final specification ]]
 
+   -07
+
+   *  Address AD feedback by by hardening SHOULD/MUST normative text
+
    -06
 
    *  Address AD evaluation comments from Charles Eckel
