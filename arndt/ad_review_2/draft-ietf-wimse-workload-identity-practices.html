@@ -1685,7 +1685,7 @@ Control Plane API.<a href="#section-4.1-8.3.1" class="pilcrow">¶</a></p>
         </ul>
 <p id="section-4.1-14">The tokens presented at steps A1, A2 and B1 <span class="bcp14">MUST</span> be different tokens with different
 audiences. The token issued by Kubernetes is a Bearer token which enables any holder
-to use it, including those it got presented to. For example in <a href="#fig-kubernetes" class="auto internal xref">Figure 2</a>:
+to use it, including any party to which it is presented. For example in <a href="#fig-kubernetes" class="auto internal xref">Figure 2</a>:
 if the token of step A1 carries the same audience at steps A1 and B1 the Identity
 Provider is able to impersonate the workload at the Kubernetes API Server. See
 <a href="#audience" class="auto internal xref">Section 5.7</a> for security considerations.<a href="#section-4.1-14" class="pilcrow">¶</a></p>
@@ -2315,7 +2315,7 @@ party that accepts it (<a href="#audience" class="auto internal xref">Section 5.
 <p id="section-5.1.2-1">Access control to the mounted file <span class="bcp14">MUST</span> be configured to limit reads to
 authorized applications. Linux supports solutions such as DAC (uid and gid) or
 MAC (e.g., SELinux, AppArmor). Failing to do so allows any party within the
-workload and its platform to read them.<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
+workload and its platform to read the credentials.<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.1.2-2">Credentials written to durable storage persist until they are overwritten or
 removed, and may be captured in backups, snapshots, or images. Implementations
 therefore commonly mount credentials from memory-backed storage instead. Such a
