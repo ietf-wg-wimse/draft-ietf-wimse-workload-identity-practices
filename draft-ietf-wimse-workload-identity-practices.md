@@ -371,7 +371,7 @@ Now, the Pod can use the tokens to:
 
 The tokens presented at steps A1, A2 and B1 MUST be different tokens with different
 audiences. The token issued by Kubernetes is a Bearer token which enables any holder
-to use it, including those it got presented to. For example in {{fig-kubernetes}}:
+to use it, including any party to which it is presented. For example in {{fig-kubernetes}}:
 if the token of step A1 carries the same audience at steps A1 and B1 the Identity
 Provider is able to impersonate the workload at the Kubernetes API Server. See
 {{audience}} for security considerations.
@@ -790,7 +790,7 @@ party that accepts it ({{audience}}).
 Access control to the mounted file MUST be configured to limit reads to
 authorized applications. Linux supports solutions such as DAC (uid and gid) or
 MAC (e.g., SELinux, AppArmor). Failing to do so allows any party within the
-workload and its platform to read them.
+workload and its platform to read the credentials.
 
 Credentials written to durable storage persist until they are overwritten or
 removed, and may be captured in backups, snapshots, or images. Implementations
