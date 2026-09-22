@@ -209,7 +209,7 @@ authenticate, or fall back to a credential it should no longer use. Not every
 filesystem or mount mechanism offers an atomic replace operation; where one is
 unavailable, workloads reading the credential need to tolerate a failed read and
 retry, and renewing the credential well before it expires leaves room for such a
-retry. Solutions should also perform a flush operation immediately after the
+retry. Solutions expected to perform a flush operation immediately after the
 update to minimize the chance of race conditions and ensure durability.
 
 ## Local APIs {#local-apis}
