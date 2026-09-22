@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments        A. Schwenkschuster
 Internet-Draft                                          Defakto Security
 Intended status: Informational                              Y. Rosomakho
-Expires: 26 February 2027                                        Zscaler
-                                                          25 August 2026
+Expires: 26 March 2027                                           Zscaler
+                                                       22 September 2026
 
 
                       Workload Identity Practices
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 February 2027.
+   This Internet-Draft will expire on 26 March 2027.
 
 Copyright Notice
 
@@ -232,9 +232,9 @@ Table of Contents
    filesystem or mount mechanism offers an atomic replace operation;
    where one is unavailable, workloads reading the credential need to
    tolerate a failed read and retry, and renewing the credential well
-   before it expires leaves room for such a retry.  Solutions should
-   also perform a flush operation immediately after the update to
-   minimize the chance of race conditions and ensure durability.
+   before it expires leaves room for such a retry.  Solutions expected
+   to perform a flush operation immediately after the update to minimize
+   the chance of race conditions and ensure durability.
 
 3.2.  Local APIs
 
