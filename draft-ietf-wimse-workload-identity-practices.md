@@ -1027,6 +1027,10 @@ While {{OAUTH-ASSERTION}} and {{OAUTH-JWT}} are the proposed standards for this 
 
    [[ To be removed from the final specification ]]
 
+   -07
+
+   * Address AD feedback by by hardening SHOULD/MUST normative text
+
    -06
 
    * Address AD evaluation comments from Charles Eckel
