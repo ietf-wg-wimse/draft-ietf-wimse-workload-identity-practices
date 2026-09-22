@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments        A. Schwenkschuster
 Internet-Draft                                          Defakto Security
 Intended status: Informational                              Y. Rosomakho
-Expires: 12 February 2027                                        Zscaler
-                                                          11 August 2026
+Expires: 26 March 2027                                           Zscaler
+                                                       22 September 2026
 
 
                       Workload Identity Practices
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 February 2027.
+   This Internet-Draft will expire on 26 March 2027.
 
 Copyright Notice
 
@@ -225,10 +225,16 @@ Table of Contents
    Because credentials are written to a shared filesystem, the solution
    is responsible for ensuring atomicity when updating them.  Writes
    SHOULD be performed in a way that prevents workloads from observing a
-   partially written file (for example by writing to a temporary file
-   and renaming it atomically).  Solutions SHOULD also perform a flush
-   operation immediately after the update to minimize the chance of race
-   conditions and ensure durability.
+   partially written file, for example by writing to a temporary file
+   and renaming it atomically.  Without atomicity a workload can read a
+   truncated or mixed-generation credential and fail to authenticate, or
+   fall back to a credential it should no longer use.  Not every
+   filesystem or mount mechanism offers an atomic replace operation;
+   where one is unavailable, workloads reading the credential need to
+   tolerate a failed read and retry, and renewing the credential well
+   before it expires leaves room for such a retry.  Solutions expected
+   to perform a flush operation immediately after the update to minimize
+   the chance of race conditions and ensure durability.
 
 3.2.  Local APIs
 
@@ -316,8 +322,7 @@ Table of Contents
       lifetime.  For example, a workload may obtain one token audienced
       for the Kubernetes API server, another for an internal service,
       and yet another for federation with an external Identity Provider.
-      Tokens SHOULD have a minimal set of audiences; see Section 5.7 for
-      more details and security implications.
+      See Section 5.7 for more details and security implications.
 
    To validate service account tokens, Kubernetes allows workloads to:
 
@@ -388,13 +393,20 @@ Table of Contents
 
    *  B1) The application within the Pod uses a Service Account Token
       audienced for the external Identity Provider to federate to that
-      Identity Provider outside of the Kubernetes Cluster.  This token
-      SHOULD NOT be the same token used for steps A1 or A2.  The
-      Identity Provider validates the token and issues a new credential
-      to the workload, such as an OAuth 2.0 access token.
+      Identity Provider outside of the Kubernetes Cluster.  The Identity
+      Provider validates the token and issues a new credential to the
+      workload, such as an OAuth 2.0 access token.
 
    *  B2) Using the credential issued in step C1, the application within
       the Pod accesses resources outside of the cluster.
+
+   The tokens presented at steps A1, A2 and B1 MUST be different tokens
+   with different audiences.  The token issued by Kubernetes is a Bearer
+   token which enables any holder to use it, including any party to
+   which it is presented.  For example in Figure 2: if the token of step
+   A1 carries the same audience at steps A1 and B1 the Identity Provider
+   is able to impersonate the workload at the Kubernetes API Server.
+   See Section 5.7 for security considerations.
 
    As an example, the following JSON illustrates the claims contained in
    a Kubernetes Service Account token.
@@ -447,8 +459,8 @@ Table of Contents
    workloads.  Workloads can retrieve identity credentials in one of two
    forms:
 
-   *  X509-SVID, a X.509 certificate containing the workload's SPIFFE ID
-      in the Subject Alternative Name (SAN) URI field, along with the
+   *  X509-SVID, an X.509 certificate containing the workload's SPIFFE
+      ID in the Subject Alternative Name (SAN) URI field, along with the
       corresponding key pair.
 
    *  JWT-SVID, a signed JWT containing the workload's SPIFFE ID in the
@@ -520,13 +532,20 @@ Table of Contents
 
    *  B1) To access resources protected by other Identity Providers, the
       workload uses a JWT-SVID audienced for the Identity Provider to
-      federate.  This SHOULD be a separate JWT-SVID from the one used in
-      step A).  The Identity Provider validates the JWT-SVID and issues
+      federate.  The Identity Provider validates the JWT-SVID and issues
       a new credential such as an OAuth 2.0 access token, to the
       workload.
 
    *  B2) Using the credential issued in step B1, the workload can
       access resources outside of its trust domain.
+
+   The token presented at step B1 MUST be a different token with a
+   different audience as the one presented at step A.  The JWT-SVID
+   issued by SPIFFE is a Bearer token which enables any holder to use
+   it.  Using the same audience for tokens presented at step A and B1
+   for example allows the external Identity Provider to impersonate the
+   workload at the internal resource accessed at step A.  See
+   Section 5.7 for security considerations.
 
    Here are example claims for a JWT-SVID:
 
@@ -576,12 +595,15 @@ Table of Contents
    situations though.
 
    When a workload needs to access both internal platform resources and
-   external resources, it SHOULD obtain separate credentials for each
+   external resources, it MUST obtain separate credentials for each
    purpose.  The credential used for internal platform access (step A)
-   SHOULD NOT be reused for federation to an external STS (step B1), as
+   MUST NOT be reused for federation to an external STS (step B1), as
    these represent different trust and audience boundaries.  The
    workload may need to contact the Instance Metadata Service multiple
-   times to obtain appropriately scoped credentials.
+   times to obtain appropriately scoped credentials.  Tokens issued in
+   this pattern are often Bearer credentials and using the same audience
+   for tokens presented at multiple parties allows these parties to
+   impersonate the workload at each other.  See Section 5.7 for details.
 
        +-------------------------------------------------------------+
        |                                                       Cloud |
@@ -623,8 +645,8 @@ Table of Contents
    *  1) The workload retrieves one or more identity credentials from
       the Instance Metadata Service or Endpoint.  This endpoint exposes
       an API and is available at a well-known, but local-only location
-      such as 169.254.169.254.  Each credential SHOULD be scoped to its
-      intended use with a distinct audience.
+      such as 169.254.169.254.  Each credential MUST be scoped to its
+      intended use with a distinct audience.  See Section 5.7.
 
    When the workload needs to access a resource within the cloud (e.g.,
    located in the same security boundary; protected by the same issuer
@@ -638,7 +660,7 @@ Table of Contents
 
    *  B1) The workload uses a separate cloud-issued credential,
       audienced for the external STS, to federate to the Secure Token
-      Service of the other cloud/account.  This credential SHOULD NOT be
+      Service of the other cloud/account.  This credential MUST NOT be
       the same as the one used in step A).  The STS validates the
       credential and issues a new credential, such as an access token to
       the workload.
@@ -798,34 +820,42 @@ Table of Contents
 
 5.1.1.  General Credentials Requirements
 
-   Credentials SHOULD be scoped as narrowly as possible: each SHOULD
-   carry the smallest set of audiences that lets it serve its purpose.
-   A credential for direct access to a platform resource SHOULD be
-   scoped to that resource; a credential used to federate to an Identity
-   Provider SHOULD carry that Identity Provider as its sole audience.
-   See Section 5.7 for the rationale and for specific requirements on
-   the "aud" claim of JWT-based credentials.
+   Credentials MUST be scoped as narrowly as possible: each MUST carry
+   the smallest set of audiences that lets it serve its purpose.  A
+   credential for direct access to a platform resource MUST be scoped to
+   that resource; a credential used to federate to an Identity Provider
+   MUST carry that Identity Provider as its sole audience.  Re-using a
+   credential across contexts and resources conflates trust boundaries
+   and increases the impact of a compromise.  See Section 5.7 for the
+   rationale and for specific requirements on the "aud" claim of JWT-
+   based credentials.
 
-   As long as the workload platform supports issuance of multiple
-   credentials, a workload SHOULD obtain a distinct credential for each
-   resource or Identity Provider it interacts with.  In particular, the
-   credential used to federate to an Identity Provider SHOULD NOT be
-   used for direct platform access; reusing a credential across these
-   contexts conflates trust boundaries and increases the impact of a
-   compromise (see Section 5.7).
+   Not every platform allows this.  Some issue a single credential per
+   workload, and some do not let the workload influence the audience of
+   the credentials they issue.  Where either is the case, the
+   requirements above cannot be met and a credential is necessarily used
+   across contexts.  Such deployments cannot rely on audience scoping to
+   contain a compromise and therefore need to compensate by other means:
+   keeping credential lifetimes as short as the platform allows,
+   limiting which components can reach the credential (Section 5.1.5),
+   and treating every party that receives the credential as able to
+   impersonate the workload at every other party that accepts it
+   (Section 5.7).
 
 5.1.2.  Filesystem
 
-   Access control to the mounted file SHOULD be configured to limit
-   reads to authorized applications.  Linux supports solutions such as
-   DAC (uid and gid) or MAC (e.g., SELinux, AppArmor).
+   Access control to the mounted file MUST be configured to limit reads
+   to authorized applications.  Linux supports solutions such as DAC
+   (uid and gid) or MAC (e.g., SELinux, AppArmor).  Failing to do so
+   allows any party within the workload and its platform to read the
+   credentials.
 
    Credentials written to durable storage persist until they are
    overwritten or removed, and may be captured in backups, snapshots, or
    images.  Implementations therefore commonly mount credentials from
-   memory-backed storage instead.  Such a mount SHOULD be isolated from
-   other host OS paths and processes.  For example, on Linux this can be
-   achieved by using namespaces.
+   memory-backed storage instead.  Such a mount can be isolated from
+   other host OS paths and processes to improve security further.  For
+   example, on Linux this can be achieved by using namespaces.
 
 5.1.3.  Local APIs
 
@@ -853,9 +883,13 @@ Table of Contents
    scoped identifiers prevents this broader access.
 
    The potential for denial-of-service attacks against Local APIs needs
-   to be taken into account and protective measures SHOULD be
-   implemented.  Depending on the platform these attacks can affect
-   other workloads and their ability to receive a platform credential.
+   to be taken into account.  Depending on the platform these attacks
+   can affect other workloads and their ability to receive a platform
+   credential.  Where a single Local API serves more than one workload,
+   protective measures such as rate limiting or per-caller quotas SHOULD
+   be implemented, unless the platform already bounds the resources a
+   single caller can consume.  Without such measures one workload can
+   prevent others from obtaining their credentials.
 
 5.1.4.  Environment Variables
 
@@ -892,7 +926,7 @@ Table of Contents
    Workloads therefore MUST treat credential locations as sensitive
    security boundaries.  Untrusted input MUST NOT influence how
    credential files are accessed or how local credential APIs are
-   contacted.  Implementations SHOULD minimize which components can
+   contacted.  Implementations should minimize which components can
    access credentials and prefer proof-of-possession credentials over
    bearer tokens where supported.  Failure to minimize credential access
    increases the attack surface by allowing more code paths to interact
@@ -909,15 +943,17 @@ Table of Contents
    Issuers SHOULD strongly type the issued tokens to workloads via the
    JOSE "typ" header parameter (Section 4.1.9 of [JWS]), and Identity
    Providers accepting these tokens SHOULD validate its value according
-   to policy.  See Section 3.1 of [JWT-BCP] for details on explicit
-   typing.  Without explicit typing, a token intended for one purpose
-   (e.g., a refresh token or an identity assertion) may be accepted in a
-   context where a different token type is expected, enabling cross-
-   protocol or cross-context token confusion attacks.
+   to policy, unless the deployment cannot support specific type values
+   as described below.  See Section 3.1 of [JWT-BCP] for details on
+   explicit typing.  Without explicit typing, a token intended for one
+   purpose such as a refresh token or an identity assertion may be
+   accepted in a context where a different token type is expected,
+   enabling cross-protocol or cross-context token confusion attacks.
 
-   Issuers SHOULD use authorization-grant+jwt as a "typ" value according
-   to [OAUTH-JWT].  For broad support, JWT or JOSE MAY be used by
-   issuers and accepted by authorization servers but it is important to
+   Where the credential is used as an authorization grant, issuers
+   SHOULD use authorization-grant+jwt as a "typ" value according to
+   [OAUTH-JWT].  For broad support, JWT or JOSE MAY be used by issuers
+   and accepted by authorization servers but it is important to
    highlight that a wide range of tokens, meant for all sorts of
    purposes, use these values and would be accepted.  Using generic type
    values such as JWT or JOSE is acceptable only when the deployment
@@ -937,24 +973,27 @@ Table of Contents
    external authorization servers.  But other branches may not be
    allowed to access protected resources.
 
-   Authorization servers that validate assertions SHOULD make use of
-   these claims.  Ignoring custom claims may result in overly permissive
+   Authorization servers that validate assertions MUST evaluate the
+   claims that carry the context their authorization decision depends
+   on.  Ignoring custom claims may result in overly permissive
    authorization decisions, such as granting a credential issued for an
    untrusted branch the same access as one issued for a protected
-   branch.  Platform issuers SHOULD allow differentiation based on the
+   branch.  Platform issuers should allow differentiation based on the
    "sub" (subject) claim alone, so that authorization policies can be
    expressed without requiring deep knowledge of vendor-specific claim
    structures.
 
 5.4.  Token lifetime
 
-   Tokens SHOULD NOT exceed the lifetime of the workloads instance they
-   represent.  For example, a token valid for two hours or more exceeds
-   the lifetime of a workload that is expected to run for one hour.  A
-   token that outlives its workload may continue to be accepted by
-   relying parties even after the workload (and its associated
-   authorization context) has ceased to exist, enabling unauthorized
-   access if the token is compromised.
+   Tokens MUST NOT exceed the lifetime of the workload instance they
+   represent, unless the issuing platform cannot determine that
+   lifetime; in that case the lifetime is kept as short as the platform
+   allows.  For example, a token valid for two hours or more exceeds the
+   lifetime of a workload that is expected to run for one hour.  A token
+   that outlives its workload may continue to be accepted by relying
+   parties even after the workload (and its associated authorization
+   context) has ceased to exist, enabling unauthorized access if the
+   token is compromised.
 
    Within the scope of this document, where a platform-issued credential
    is used to authenticate to retrieve an access token for an external
@@ -965,23 +1004,29 @@ Table of Contents
 
 5.5.  Workload lifecycle and invalidation
 
-   Platform issuers SHOULD invalidate credentials when an instance of
-   the workload stops, pauses, or ceases to exist and SHOULD offer
-   validators a mechanism to query this status.  Because a workload may
-   run as multiple instances (for example, replicas or parallel tasks),
-   this applies to each instance individually.  Without this capability,
-   credentials for terminated instances remain usable until their
-   natural expiry, creating a window for unauthorized use.  Without a
-   status query mechanism, relying parties have no way to detect that an
-   instance has been removed.  How these credentials are invalidated and
-   the status is queried varies and is not in scope of this document.
+   Platform issuers MUST invalidate credentials when an instance of the
+   workload stops, pauses, or ceases to exist, unless the credential
+   lifetime is short enough that the remaining validity window is
+   acceptable for the deployment.  Where invalidation is not immediate,
+   issuers SHOULD offer validators a mechanism to query this status,
+   unless the deployment relies solely on short lifetimes as described
+   in Section 5.4.  Because a workload may run as multiple instances
+   (for example, replicas or parallel tasks), this applies to each
+   instance individually.  Without this capability, credentials for
+   terminated instances remain usable until their natural expiry,
+   creating a window for unauthorized use.  Without a status query
+   mechanism, relying parties have no way to detect that an instance has
+   been removed.  How these credentials are invalidated and the status
+   is queried varies and is not in scope of this document.
 
 5.6.  Proof of possession
 
    Identity credentials SHOULD be bound to the workload instance they
    represent, and proof of possession SHOULD be performed when these
-   credentials are used.  This reduces the impact of token theft to the
-   scope of the proof of possession.
+   credentials are used, unless neither the platform nor the relying
+   party supports a proof-of-possession mechanism; in that case the
+   compensating controls described below apply.  This reduces the impact
+   of token theft to the scope of the proof of possession.
 
    Without proof of possession, a bearer token intercepted in transit
    (e.g., via a compromised log, a man-in-the-middle, or SSRF) can be
@@ -992,7 +1037,7 @@ Table of Contents
    the private key associated with the certificate.  For JWT-based
    credentials, the JWT SHOULD be key-bound with an adequate proof-of-
    key-possession mechanism.  Where proof of possession is not supported
-   by the platform or the relying party, deployments SHOULD compensate
+   by the platform or the relying party, deployments MUST compensate
    with shorter token lifetimes, stricter audience scoping, and
    additional network-level controls such as IP allowlisting or mutual
    TLS.  This proof of possession applies to both the platform
@@ -1002,14 +1047,17 @@ Table of Contents
 5.7.  Audience
 
    For issued credentials in the form of JWTs, they MUST be audienced
-   using the "aud" claim.  Each JWT SHOULD only carry a single audience.
-   Using multiple audiences in a single token means that any relying
-   party listed in the "aud" claim can present that token to any other
-   party listed in the same claim, potentially gaining unintended
-   access.  A single-audience token limits the blast radius if the token
-   is compromised or misused.  We RECOMMEND using URIs to specify
-   audiences.  See Section 3 of [OAUTH-RESOURCEINDICATORS] for more
-   details and security implications.
+   using the "aud" claim.  Each JWT MUST NOT carry more than one
+   audience, unless multiple credentials cannot be obtained or the
+   audience cannot be influenced as described in Section 5.1.1.  Using
+   multiple audiences in a single token means that any relying party
+   listed in the "aud" claim can present that token to any other party
+   listed in the same claim, potentially gaining unintended access.  A
+   single-audience token limits the blast radius if the token is
+   compromised or misused.  Expressing audiences as URIs avoids
+   ambiguity between deployments and is therefore recommended.  See
+   Section 3 of [OAUTH-RESOURCEINDICATORS] for more details and security
+   implications.
 
    Some workload platforms provide credentials for interacting with
    their own APIs (e.g., Kubernetes).  These credentials MUST NOT be
@@ -1031,7 +1079,7 @@ Table of Contents
    trusted authority, since each tenant could be configured with the
    same issuer identifier.
 
-   Relying parties SHOULD ensure that attributes used for authorization
+   Relying parties MUST ensure that attributes used for authorization
    are bound to a trust domain under their control or validated by an
    entity with a clearly defined trust boundary.  Failing to do so may
    allow a malicious tenant to obtain credentials that are
@@ -1164,6 +1212,10 @@ A.2.  Custom assertion flows
 Appendix B.  Document History
 
    [[ To be removed from the final specification ]]
+
+   -07
+
+   *  Address AD feedback by by hardening SHOULD/MUST normative text
 
    -06
 
