@@ -5,8 +5,8 @@
 Workload Identity in Multi System Environments        A. Schwenkschuster
 Internet-Draft                                          Defakto Security
 Intended status: Informational                              Y. Rosomakho
-Expires: 26 March 2027                                           Zscaler
-                                                       22 September 2026
+Expires: 3 May 2027                                              Zscaler
+                                                         30 October 2026
 
 
                       Workload Identity Practices
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 March 2027.
+   This Internet-Draft will expire on 3 May 2027.
 
 Copyright Notice
 
@@ -232,9 +232,9 @@ Table of Contents
    filesystem or mount mechanism offers an atomic replace operation;
    where one is unavailable, workloads reading the credential need to
    tolerate a failed read and retry, and renewing the credential well
-   before it expires leaves room for such a retry.  Solutions expected
-   to perform a flush operation immediately after the update to minimize
-   the chance of race conditions and ensure durability.
+   before it expires leaves room for such a retry.  Solutions are
+   expected to perform a flush operation immediately after the update to
+   minimize the chance of race conditions and ensure durability.
 
 3.2.  Local APIs
 
@@ -540,7 +540,7 @@ Table of Contents
       access resources outside of its trust domain.
 
    The token presented at step B1 MUST be a different token with a
-   different audience as the one presented at step A.  The JWT-SVID
+   different audience than the one presented at step A.  The JWT-SVID
    issued by SPIFFE is a Bearer token which enables any holder to use
    it.  Using the same audience for tokens presented at step A and B1
    for example allows the external Identity Provider to impersonate the
@@ -820,7 +820,11 @@ Table of Contents
 
 5.1.1.  General Credentials Requirements
 
-   Credentials MUST be scoped as narrowly as possible: each MUST carry
+   Credentials MUST be scoped as narrowly as possible unless the
+   platform issues a single credential per workload or does not let the
+   workload influence the audience.
+
+   Scoping as narrowly as possible means that each credential MUST carry
    the smallest set of audiences that lets it serve its purpose.  A
    credential for direct access to a platform resource MUST be scoped to
    that resource; a credential used to federate to an Identity Provider
@@ -830,10 +834,7 @@ Table of Contents
    rationale and for specific requirements on the "aud" claim of JWT-
    based credentials.
 
-   Not every platform allows this.  Some issue a single credential per
-   workload, and some do not let the workload influence the audience of
-   the credentials they issue.  Where either is the case, the
-   requirements above cannot be met and a credential is necessarily used
+   Where either exception applies, a credential is necessarily used
    across contexts.  Such deployments cannot rely on audience scoping to
    contain a compromise and therefore need to compensate by other means:
    keeping credential lifetimes as short as the platform allows,
@@ -1036,13 +1037,15 @@ Table of Contents
    For X.509-based credentials, proof of possession is inherent through
    the private key associated with the certificate.  For JWT-based
    credentials, the JWT SHOULD be key-bound with an adequate proof-of-
-   key-possession mechanism.  Where proof of possession is not supported
-   by the platform or the relying party, deployments MUST compensate
-   with shorter token lifetimes, stricter audience scoping, and
-   additional network-level controls such as IP allowlisting or mutual
-   TLS.  This proof of possession applies to both the platform
-   credential and the access token of the external authorization
-   domains.
+   key-possession mechanism.
+
+   This proof of possession applies to both the platform credential and
+   the access token of the external authorization domains.
+
+   Where proof of possession is not supported by the platform or the
+   relying party, deployments MUST apply compensating controls, such as
+   short-lived tokens, narrow audience scoping, or additional network-
+   level controls such as IP allowlisting or mutual TLS.
 
 5.7.  Audience
 
@@ -1213,9 +1216,13 @@ Appendix B.  Document History
 
    [[ To be removed from the final specification ]]
 
+   -08
+
+   *  Address additional AD feedback
+
    -07
 
-   *  Address AD feedback by by hardening SHOULD/MUST normative text
+   *  Address AD feedback by hardening SHOULD/MUST normative text
 
    -06
 
