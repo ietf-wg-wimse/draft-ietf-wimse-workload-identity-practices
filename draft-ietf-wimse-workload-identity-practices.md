@@ -209,7 +209,7 @@ authenticate, or fall back to a credential it should no longer use. Not every
 filesystem or mount mechanism offers an atomic replace operation; where one is
 unavailable, workloads reading the credential need to tolerate a failed read and
 retry, and renewing the credential well before it expires leaves room for such a
-retry. Solutions expected to perform a flush operation immediately after the
+retry. Solutions are expected to perform a flush operation immediately after the
 update to minimize the chance of race conditions and ensure durability.
 
 ## Local APIs {#local-apis}
@@ -503,7 +503,7 @@ The steps shown in {{fig-spiffe}} are:
       outside of its trust domain.
 
 The token presented at step B1 MUST be a different token with a different audience
-as the one presented at step A. The JWT-SVID issued by SPIFFE is a Bearer token
+than the one presented at step A. The JWT-SVID issued by SPIFFE is a Bearer token
 which enables any holder to use it. Using the same audience for tokens presented at
 step A and B1 for example allows the external Identity Provider to impersonate the
 workload at the internal resource  accessed at step A. See {{audience}} for
@@ -765,21 +765,23 @@ All security considerations in section 8 of {{!OAUTH-ASSERTION=RFC7521}} apply.
 
 ### General Credentials Requirements {#general-requirements}
 
-Credentials MUST be scoped as narrowly as possible: each MUST carry the
-smallest set of audiences that lets it serve its purpose. A credential for direct
-access to a platform resource MUST be scoped to that resource; a credential used
-to federate to an Identity Provider MUST carry that Identity Provider as its sole
-audience. Re-using a credential across contexts and resources conflates trust
-boundaries and increases the impact of a compromise. See {{audience}} for the
-rationale and for specific requirements on the `"aud"` claim of JWT-based
-credentials.
+Credentials MUST be scoped as narrowly as possible unless the platform issues a
+single credential per workload or does not let the workload influence the
+audience.
 
-Not every platform allows this. Some issue a single credential per workload, and
-some do not let the workload influence the audience of the credentials they
-issue. Where either is the case, the requirements above cannot be met and a
-credential is necessarily used across contexts. Such deployments cannot rely on
-audience scoping to contain a compromise and therefore need to compensate by
-other means: keeping credential lifetimes as short as the platform allows,
+Scoping as narrowly as possible means that each
+credential MUST carry the smallest set of audiences that lets it serve its
+purpose. A credential for direct access to a platform resource MUST be scoped to
+that resource; a credential used to federate to an Identity Provider MUST carry
+that Identity Provider as its sole audience. Re-using a credential across
+contexts and resources conflates trust boundaries and increases the impact of a
+compromise. See {{audience}} for the rationale and for specific requirements on
+the `"aud"` claim of JWT-based credentials.
+
+Where either exception applies, a credential is necessarily used across
+contexts. Such deployments cannot rely on audience scoping to contain a
+compromise and therefore need to compensate by other means: keeping credential
+lifetimes as short as the platform allows,
 limiting which components can reach the credential
 ({{application-interaction-with-credential-sources}}), and treating every party
 that receives the credential as able to impersonate the workload at every other
@@ -955,12 +957,15 @@ from any location, for the remaining lifetime of the token.
 
 For X.509-based credentials, proof of possession is inherent through the private
 key associated with the certificate. For JWT-based credentials, the JWT SHOULD
-be key-bound with an adequate proof-of-key-possession mechanism. Where proof of
-possession is not supported by the platform or the relying party, deployments
-MUST compensate with shorter token lifetimes, stricter audience scoping, and
-additional network-level controls such as IP allowlisting or mutual TLS. This
-proof of possession applies to both the platform credential and the access token
-of the external authorization domains.
+be key-bound with an adequate proof-of-key-possession mechanism.
+
+This proof of possession applies to both the platform credential and the
+access token of the external authorization domains.
+
+Where proof of possession is not supported by the platform or the relying party,
+deployments MUST apply compensating controls, such as short-lived tokens, narrow
+audience scoping, or additional network-level controls such as IP allowlisting or
+mutual TLS.
 
 ## Audience {#audience}
 
@@ -1027,9 +1032,13 @@ While {{OAUTH-ASSERTION}} and {{OAUTH-JWT}} are the proposed standards for this 
 
    [[ To be removed from the final specification ]]
 
+   -08
+
+   * Address additional AD feedback
+
    -07
 
-   * Address AD feedback by by hardening SHOULD/MUST normative text
+   * Address AD feedback by hardening SHOULD/MUST normative text
 
    -06
 
