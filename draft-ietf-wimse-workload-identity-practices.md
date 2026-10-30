@@ -769,7 +769,7 @@ Credentials MUST be scoped as narrowly as possible unless the platform issues a
 single credential per workload or does not let the workload influence the
 audience.
 
-Subject to these exceptions, scoping as narrowly as possible means that each
+Scoping as narrowly as possible means that each
 credential MUST carry the smallest set of audiences that lets it serve its
 purpose. A credential for direct access to a platform resource MUST be scoped to
 that resource; a credential used to federate to an Identity Provider MUST carry
