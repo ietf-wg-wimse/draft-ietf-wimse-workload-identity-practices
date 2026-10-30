@@ -765,12 +765,15 @@ All security considerations in section 8 of {{!OAUTH-ASSERTION=RFC7521}} apply.
 
 ### General Credentials Requirements {#general-requirements}
 
-Unless the platform issues a single credential per workload or does not let the
-workload influence the audience, credentials MUST be scoped as narrowly as
-possible: each MUST carry the smallest set of audiences that lets it serve its
-purpose; a credential for direct access to a platform resource MUST be scoped to
-that resource; and a credential used to federate to an Identity Provider MUST
-carry that Identity Provider as its sole audience. Re-using a credential across
+Credentials MUST be scoped as narrowly as possible unless the platform issues a
+single credential per workload or does not let the workload influence the
+audience.
+
+Subject to these exceptions, scoping as narrowly as possible means that each
+credential MUST carry the smallest set of audiences that lets it serve its
+purpose. A credential for direct access to a platform resource MUST be scoped to
+that resource; a credential used to federate to an Identity Provider MUST carry
+that Identity Provider as its sole audience. Re-using a credential across
 contexts and resources conflates trust boundaries and increases the impact of a
 compromise. See {{audience}} for the rationale and for specific requirements on
 the `"aud"` claim of JWT-based credentials.
@@ -954,12 +957,15 @@ from any location, for the remaining lifetime of the token.
 
 For X.509-based credentials, proof of possession is inherent through the private
 key associated with the certificate. For JWT-based credentials, the JWT SHOULD
-be key-bound with an adequate proof-of-key-possession mechanism. Where proof of
-possession is not supported by the platform or the relying party, deployments
-MUST apply compensating controls, such as short-lived tokens, narrow audience
-scoping, or additional network-level controls such as IP allowlisting or mutual
-TLS. This proof of possession applies to both the platform credential and the
+be key-bound with an adequate proof-of-key-possession mechanism.
+
+This proof of possession applies to both the platform credential and the
 access token of the external authorization domains.
+
+Where proof of possession is not supported by the platform or the relying party,
+deployments MUST apply compensating controls, such as short-lived tokens, narrow
+audience scoping, or additional network-level controls such as IP allowlisting or
+mutual TLS.
 
 ## Audience {#audience}
 
