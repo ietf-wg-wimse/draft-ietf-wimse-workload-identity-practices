@@ -710,11 +710,16 @@ the credential used.
 ## Service Meshes
 
 Service meshes provide infrastructure-level workload identity and secure communication
-for applications through sidecar proxies deployed alongside each workload.
+for applications through proxies deployed alongside each workload.
 In a service mesh, workload identity is typically implemented using X.509 certificates
 issued by the service mesh. Service meshes handle identity credential provisioning
-to sidecar proxies rather than directly to application workloads. The sidecar intercepts
-network traffic and handles authentication transparently to the application code.
+to proxies rather than directly to application workloads. The proxy intercepts
+network traffic and handles authentication without requiring changes to the application code.
+In some deployments, trusted infrastructure components can also manage private keys and
+perform application-layer proof-of-possession operations on behalf of workloads. For example,
+a proxy can generate request-bound cryptographic proofs for outbound HTTP requests without
+exposing private keys to the application. This separates credential management and
+cryptographic operations from application logic.
 
 ~~~aasvg
                        +--------------+
@@ -755,7 +760,7 @@ The steps shown in {{fig-servicemesh}} are:
      they represent. This communication includes authentication aspects,
      for instance mutual TLS using X.509 certificates.
 
-In above pattern each workload has a specific sidecar. An alternative deployment is to share proxies between workloads. This often results in a single proxy on each node acting on behalf of all workloads on the node.
+In above pattern each workload has a specific proxy. An alternative deployment is to share proxies between workloads. This often results in a single proxy on each node acting on behalf of all workloads on the node.
 
 # Security Considerations {#security}
 
@@ -859,9 +864,13 @@ workload APIs (for example via SSRF). Similarly, command execution or
 unintended outbound requests may result in bearer tokens or proof-of-possession key material
 being disclosed.
 
-Workloads therefore MUST treat credential locations as sensitive security boundaries.
-Untrusted input MUST NOT influence how credential files are accessed or how local credential
-APIs are contacted. Implementations should minimize which components can access credentials
+Workloads therefore MUST treat credential locations and access to cryptographic signing
+capabilities as sensitive security boundaries. Untrusted input MUST NOT influence how
+credential files are accessed, how local credential APIs are contacted, or authorization
+decisions for cryptographic signing operations. Trusted infrastructure components can keep
+private keys outside the application process, reducing the risk of key theft. Restricting
+signing operations to authorized uses helps limit this risk. However, a compromised workload may still misuse its authorized signing capability.
+Implementations should minimize which components can access credentials
 and prefer proof-of-possession credentials over bearer tokens where supported. Failure to
 minimize credential access increases the attack surface by allowing more code paths to
 interact with sensitive material. Failing to use proof-of-possession credentials where
@@ -945,10 +954,11 @@ the status is queried varies and is not in scope of this document.
 
 ## Proof of possession {#proof-of-possession}
 
-Identity credentials SHOULD be bound to the workload instance they represent,
-and proof of possession SHOULD be performed when these credentials are used,
-unless neither the platform nor the relying party supports a proof-of-possession
-mechanism; in that case the compensating controls described below apply.
+Identity credentials SHOULD be bound to the workload instance they represent.
+The workload or a trusted infrastructure component acting on its behalf SHOULD
+perform proof of possession when these credentials are used, unless neither the
+platform nor the relying party supports a proof-of-possession mechanism. In that
+case, the compensating controls described below apply.
 This reduces the impact of token theft to the scope of the proof of possession.
 
 Without proof of possession, a bearer token intercepted in transit (e.g., via a
@@ -1010,7 +1020,7 @@ This document does not require actions by IANA.
 
 # Acknowledgements
 
-The authors and contributors would like to thank the following people for their feedback and contributions to this document (in no particular order): Dag Sneeggen, Ned Smith, Dean H. Saxe, Yaron Sheffer, Andrii Deinega, Marcel Levy, Pieter Kasselmann, Simon Canning, Evan Gilman, Joseph Salowey, Kathleen Moriarty, Brian Campbell, Judith Kahrer and Flemming Andreasen.
+The authors and contributors would like to thank the following people for their feedback and contributions to this document (in no particular order): Shankar Garikapati, Dag Sneeggen, Ned Smith, Dean H. Saxe, Yaron Sheffer, Andrii Deinega, Marcel Levy, Pieter Kasselmann, Simon Canning, Evan Gilman, Joseph Salowey, Kathleen Moriarty, Brian Campbell, Judith Kahrer and Flemming Andreasen.
 
 The authors would also like to thank Justin Richer for serving as document shepherd and Charles Eckel for his AD evaluation of this document.
 
@@ -1031,6 +1041,11 @@ While {{OAUTH-ASSERTION}} and {{OAUTH-JWT}} are the proposed standards for this 
 # Document History
 
    [[ To be removed from the final specification ]]
+
+   -09
+
+   * Clarify that proof of posession may be attached by trusted infrastructure components.
+   * Clarify sidecar vs proxy inconsistencies.
 
    -08
 
