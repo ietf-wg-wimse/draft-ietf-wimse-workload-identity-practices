@@ -1042,6 +1042,11 @@ While {{OAUTH-ASSERTION}} and {{OAUTH-JWT}} are the proposed standards for this 
 
    [[ To be removed from the final specification ]]
 
+   -09
+
+   * Clarify that proof of posession may be attached by trusted infrastructure components.
+   * Clarify sidecar vs proxy inconsistencies.
+
    -08
 
    * Address additional AD feedback
