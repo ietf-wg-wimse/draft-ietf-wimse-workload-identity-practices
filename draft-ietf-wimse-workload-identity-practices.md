@@ -716,8 +716,8 @@ issued by the service mesh. Service meshes handle identity credential provisioni
 to proxies rather than directly to application workloads. The proxy intercepts
 network traffic and handles authentication without requiring changes to the application code.
 In some deployments, trusted infrastructure components can also manage private keys and
-perform application-layer proof-of-possession operations on behalf of workloads. For example,
-a proxy can generate request-bound cryptographic proofs for outbound HTTP requests without
+perform proof-of-possession operations on behalf of workloads. For example,
+a proxy can generate request-bound cryptographic proofs for outbound requests without
 exposing private keys to the application. This separates credential management and
 cryptographic operations from application logic.
 
@@ -870,6 +870,7 @@ credential files are accessed, how local credential APIs are contacted, or autho
 decisions for cryptographic signing operations. Trusted infrastructure components can keep
 private keys outside the application process, reducing the risk of key theft. Restricting
 signing operations to authorized uses helps limit this risk. However, a compromised workload may still misuse its authorized signing capability.
+
 Implementations should minimize which components can access credentials
 and prefer proof-of-possession credentials over bearer tokens where supported. Failure to
 minimize credential access increases the attack surface by allowing more code paths to
