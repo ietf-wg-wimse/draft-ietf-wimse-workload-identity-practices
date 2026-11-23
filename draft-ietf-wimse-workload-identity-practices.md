@@ -1020,7 +1020,7 @@ This document does not require actions by IANA.
 
 # Acknowledgements
 
-The authors and contributors would like to thank the following people for their feedback and contributions to this document (in no particular order): Shankar Garikapati, Dag Sneeggen, Ned Smith, Dean H. Saxe, Yaron Sheffer, Andrii Deinega, Marcel Levy, Pieter Kasselmann, Simon Canning, Evan Gilman, Joseph Salowey, Kathleen Moriarty, Brian Campbell, Judith Kahrer and Flemming Andreasen.
+The authors and contributors would like to thank the following people for their feedback and contributions to this document (in no particular order): Bhavani Shankar Garikapati, Dag Sneeggen, Ned Smith, Dean H. Saxe, Yaron Sheffer, Andrii Deinega, Marcel Levy, Pieter Kasselmann, Simon Canning, Evan Gilman, Joseph Salowey, Kathleen Moriarty, Brian Campbell, Judith Kahrer and Flemming Andreasen.
 
 The authors would also like to thank Justin Richer for serving as document shepherd and Charles Eckel for his AD evaluation of this document.
 
