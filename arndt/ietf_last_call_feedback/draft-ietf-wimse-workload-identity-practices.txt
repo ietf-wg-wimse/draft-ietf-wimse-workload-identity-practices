@@ -1232,7 +1232,7 @@ Appendix B.  Document History
 
    -09
 
-   *  Clarify that proof of posession may be attached by trusted
+   *  Clarify that proof of possession may be attached by trusted
       infrastructure components.
 
    *  Clarify sidecar vs proxy inconsistencies.
